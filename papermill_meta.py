@@ -185,6 +185,7 @@ def main() -> None:
         help=f"Directory for generated runner scripts (default: {DEFAULT_OUTPUT_DIR})",
     )
     args = parser.parse_args()
+    print(f"Arguments: {args}")
 
     notebook_path = _resolve_notebook(args.notebook, args.notebooks_dir.resolve())
     parameter_names = _parameter_names(notebook_path)

@@ -27,8 +27,8 @@ from pathlib import Path
 #Optional --validate-metadata checks sample selections and cohort columns against Malariagen metadata; you can provide a dataset URL with --api-url ag3=URL. For PCA, it resolves a short cohort name such as admin1_year to cohort_admin1_year when metadata confirms that column is populated. It doesn’t validate every kind of API argument, such as regions or masks.
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-DEFAULT_NOTEBOOKS_DIR = SCRIPT_DIR / "perf_testing_notebooks" / "notebooks"
-DEFAULT_OUTPUT_DIR = SCRIPT_DIR / "perf_testing_notebooks"
+DEFAULT_NOTEBOOKS_DIR = SCRIPT_DIR  / "notebooks"
+DEFAULT_OUTPUT_DIR = SCRIPT_DIR / "runners_and_csvs"
 API_PARAMETERS_NAME = "API_CALL_PARAMETERS"
 
 
