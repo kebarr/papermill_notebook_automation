@@ -23,7 +23,7 @@ from pathlib import Path
 
 # Notes from Copilot:
 # Use --set 'CALL_KEY.PARAMETER=JSON_VALUE' for a fixed override; use --sweep for values that should create separate runs. If you want to set an API argument to a list, use --set so the list is treated as one value.
-
+# ONLY CHANGES API PARAMETERS, not other notebook parameters. Use the notebook's default values for other parameters, or override them in the notebook itself.
 #Optional --validate-metadata checks sample selections and cohort columns against Malariagen metadata; you can provide a dataset URL with --api-url ag3=URL. For PCA, it resolves a short cohort name such as admin1_year to cohort_admin1_year when metadata confirms that column is populated. It doesn’t validate every kind of API argument, such as regions or masks.
 
 SCRIPT_DIR = Path(__file__).resolve().parent
