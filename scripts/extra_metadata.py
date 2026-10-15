@@ -8,6 +8,8 @@ Usage (from the repository root):
     python scripts/extra_metadata.py                      # the notebook's defaults
     python scripts/extra_metadata.py --config runs.csv    # one run per CSV row
     python scripts/extra_metadata.py --list-parameters    # what a CSV can set
+    python scripts/extra_metadata.py --output-csv my_run.csv
+                                    # performance CSV -> executed_runs_scripts/my_run.csv
 
 CSV columns are parameter names (API_KEEP_CALLSITE_VALUE, PERFORMANCE_CSV_PATH, API_CALL_PARAMETERS, FIGURE_DIR, FIGURE_FORMAT, FIGURE_NAMES).
 Values are JSON; empty cells keep the default. API_CALL_PARAMETERS and
@@ -26,7 +28,8 @@ import notebook_runtime as nbrt
 # Replace a value to override it; keep the marker to use the call-site
 # value or the method's default.
 API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
-PERFORMANCE_CSV_PATH = 'extra_metadata_performance.csv'
+# Relative to where the script is run from.
+PERFORMANCE_CSV_PATH = 'executed_runs_scripts/extra_metadata_performance.csv'
 API_CALL_PARAMETERS = {'cell_3_call_1_ag3_sample_metadata': {'sample_sets': '3.0',
                                        'sample_query': None,
                                        'sample_query_options': None,

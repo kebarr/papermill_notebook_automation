@@ -8,8 +8,8 @@ from pathlib import Path
 
 import papermill as pm
 
-NOTEBOOK_PATH = Path('/Users/katie.barr/malariagen_api_utils/perf_testing_notebooks/notebooks/plot_snps.ipynb').resolve()
-PARAMETER_NAMES = ['API_KEEP_CALLSITE_VALUE', 'API_CALL_PARAMETERS']
+NOTEBOOK_PATH = Path('/Users/katie.barr/papermill_notebook_automation/notebooks/plot_snps.ipynb').resolve()
+PARAMETER_NAMES = ['API_KEEP_CALLSITE_VALUE', 'PERFORMANCE_CSV_PATH', 'API_CALL_PARAMETERS']
 OMIT = object()
 
 

@@ -8,6 +8,8 @@ Usage (from the repository root):
     python scripts/plot_frequencies_heatmap.py                      # the notebook's defaults
     python scripts/plot_frequencies_heatmap.py --config runs.csv    # one run per CSV row
     python scripts/plot_frequencies_heatmap.py --list-parameters    # what a CSV can set
+    python scripts/plot_frequencies_heatmap.py --output-csv my_run.csv
+                                    # performance CSV -> executed_runs_scripts/my_run.csv
 
 CSV columns are parameter names (API_KEEP_CALLSITE_VALUE, PERFORMANCE_CSV_PATH, API_CALL_PARAMETERS, FIGURE_DIR, FIGURE_FORMAT, FIGURE_NAMES).
 Values are JSON; empty cells keep the default. API_CALL_PARAMETERS and
@@ -26,7 +28,8 @@ import notebook_runtime as nbrt
 # Replace a value to override it; keep the marker to use the call-site
 # value or the method's default.
 API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
-PERFORMANCE_CSV_PATH = 'plot_frequencies_heatmap_performance.csv'
+# Relative to where the script is run from.
+PERFORMANCE_CSV_PATH = 'executed_runs_scripts/plot_frequencies_heatmap_performance.csv'
 API_CALL_PARAMETERS = {'cell_4_call_1_ag3_snp_allele_frequencies': {'transcript': 'AGAP004707-RD',
                                               'region': None,
                                               'cohorts': 'admin1_year',

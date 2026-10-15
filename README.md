@@ -16,6 +16,27 @@ You can configure a CSV that edits the API_CALL_PARAMETERS section of the parame
 You can then run the resulting papermill runner for your notebook with the CSV you have configured as follows::
 ```python runners_and_csvs/generated_runners/papermill_${notebook_name}.py --config runners_and_csvs/${notebook_name}_config.csv --output-dir executed_runs```
 
+# Converting notebooks into scripts
+There is also funcitonality to convert notebooks into scripts, using notebook_to_script.py 
+For this to run, the notebooks must meet the following criteria:
+
+-One parameters cell: exactly one cell tagged parameters, containing only simple literal assignments (NAME = value). Your new PERFORMANCE_CSV_PATH is fine and automatically becomes a CSV column.
+-Helper signature: _call_api_with_parameters(method, call_key, ...). This is what links each graph to its call key for naming. If it changes, graphs still get saved, but named after the cell instead of the call.
+-Magics: only %%time (as the first line of a cell), %timeit, %memit, %load_ext and !command. Anything else, such as %%capture or %matplotlib, is rejected. Each is a small addition to _translate_magics in notebook_to_script.py. 
+
+This can be run as follows:
+```python notebook_to_script.py              # all notebooks```
+```python notebook_to_script.py plot_pca     # just one```
+
+The generated scripts are then run as follows, the CSVs are in the same format, and geenrated in the same was, as the ones used for the papermill runners::
+```python scripts/plot_pca.py                                        # notebook defaults```
+```python scripts/plot_pca.py --config runners_and_csvs/plot_pca_config.csv```
+```python scripts/plot_pca.py --list-parameters                      # what a CSV can set``
+
+A default output CSV name is used unless otherwise specified, meaning if you have run the script in the past, then run it again, it will overwrite the old CSV. You can avoid this by specifying the nae of the output CSV as follows: 
+```python scripts/plot_pca.py --output-csv my_run.csv        # -> executed_runs_scripts/my_run.csv```
+```python scripts/plot_pca.py --output-csv results/pca.csv   # -> results/pca.csv (relative to where you run it```)
+`
 
 
 

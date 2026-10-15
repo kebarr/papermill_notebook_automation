@@ -8,8 +8,10 @@ Usage (from the repository root):
     python scripts/spike_sim_test_data.py                      # the notebook's defaults
     python scripts/spike_sim_test_data.py --config runs.csv    # one run per CSV row
     python scripts/spike_sim_test_data.py --list-parameters    # what a CSV can set
+    python scripts/spike_sim_test_data.py --output-csv my_run.csv
+                                    # performance CSV -> executed_runs_scripts/my_run.csv
 
-CSV columns are parameter names (API_KEEP_CALLSITE_VALUE, API_CALL_PARAMETERS, FIGURE_DIR, FIGURE_FORMAT, FIGURE_NAMES).
+CSV columns are parameter names (API_KEEP_CALLSITE_VALUE, PERFORMANCE_CSV_PATH, API_CALL_PARAMETERS, FIGURE_DIR, FIGURE_FORMAT, FIGURE_NAMES).
 Values are JSON; empty cells keep the default. API_CALL_PARAMETERS and
 FIGURE_NAMES only need the entries you want to change.
 
@@ -26,6 +28,8 @@ import notebook_runtime as nbrt
 # Replace a value to override it; keep the marker to use the call-site
 # value or the method's default.
 API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
+# Relative to where the script is run from.
+PERFORMANCE_CSV_PATH = 'executed_runs_scripts/plot_biallelic_snps_performance.csv'
 API_CALL_PARAMETERS = {'cell_7_call_1_ag3_snp_calls': {'region': '3L',
                                  'sample_sets': 'AG1000G-BF-A',
                                  'sample_query': None,
@@ -181,7 +185,7 @@ FIGURE_NAMES = {'notebook_cell_32': '01_histogram_codon_degeneracy',
  'notebook_cell_112': '21_bar_p_ad0'}
 
 
-def run(API_KEEP_CALLSITE_VALUE, API_CALL_PARAMETERS):
+def run(API_KEEP_CALLSITE_VALUE, PERFORMANCE_CSV_PATH, API_CALL_PARAMETERS):
     # --- Notebook cell 1 ---
     nbrt.start_cell("notebook_cell_1")
     import inspect
@@ -670,6 +674,7 @@ if __name__ == "__main__":
         run=run,
         parameters={
             'API_KEEP_CALLSITE_VALUE': API_KEEP_CALLSITE_VALUE,
+            'PERFORMANCE_CSV_PATH': PERFORMANCE_CSV_PATH,
             'API_CALL_PARAMETERS': API_CALL_PARAMETERS,
             'FIGURE_DIR': FIGURE_DIR,
             'FIGURE_FORMAT': FIGURE_FORMAT,

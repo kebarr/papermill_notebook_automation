@@ -1,0 +1,2 @@
+API_CALL_PARAMETERS
+"{""cell_2_call_1_ag3_biallelic_snps_to_plink"": {""output_dir"": ""__KEEP_CALLSITE_VALUE__"", ""region"": ""2L:100000-2000000"", ""n_snps"": 2000, ""overwrite"": false, ""thin_offset"": 0, ""sample_sets"": ""AG1000G-AO"", ""sample_query"": null, ""sample_query_options"": null, ""sample_indices"": null, ""site_mask"": ""default"", ""min_minor_ac"": 2, ""max_missing_an"": 0, ""random_seed"": 42, ""inline_array"": true, ""chunks"": ""native"", ""out"": null}}"

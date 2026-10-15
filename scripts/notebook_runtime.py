@@ -29,10 +29,9 @@ from pathlib import Path
 # Render matplotlib figures off screen; they are saved, never shown.
 os.environ.setdefault("MPLBACKEND", "Agg")
 
-SCRIPTS_DIR = Path(__file__).resolve().parent
-DEFAULT_WORKDIR = SCRIPTS_DIR.parent / "notebooks"
 FIGURE_FORMATS = ("html", "png", "svg", "pdf")
 FIGURE_PARAMETERS = ("FIGURE_DIR", "FIGURE_FORMAT", "FIGURE_NAMES")
+OUTPUT_CSV_SUFFIX = "_CSV_PATH"
 # Parameters whose override must only name call keys the notebook already has.
 STRICT_KEY_PARAMETERS = ("API_CALL_PARAMETERS",)
 IGV_JS_URL = "https://cdn.jsdelivr.net/npm/igv@{version}/dist/igv.min.js"
@@ -445,6 +444,40 @@ def time_cell_report(start):
     )
 
 
+def _check_figure_format(figure_format):
+    checked = str(figure_format).lower().lstrip(".")
+    if checked not in FIGURE_FORMATS:
+        raise ValueError(
+            f"FIGURE_FORMAT must be one of {', '.join(FIGURE_FORMATS)}; "
+            f"got {figure_format!r}."
+        )
+    return checked
+
+
+def begin_console_run(figure_dir, figure_format, figure_names):
+    """Start saving figures for notebook code pasted into a console.
+
+    Used by the files in console/, which have no command line; relative paths
+    are resolved against the console's current directory.
+    """
+    global _active_saver
+    _install_display_hooks()
+    _active_saver = FigureSaver(
+        Path(figure_dir).resolve(), _check_figure_format(figure_format), figure_names
+    )
+    print(f"Running in {Path.cwd()}; figures -> {_active_saver.figure_dir}")
+
+
+def end_console_run():
+    """Save any open matplotlib figures and stop saving figures."""
+    global _active_saver
+    if _active_saver is None:
+        return
+    _active_saver.flush_matplotlib()
+    print(f"Done; saved {len(_active_saver.saved)} figure(s) to {_active_saver.figure_dir}.")
+    _active_saver = None
+
+
 # ---------------------------------------------------------------------------
 # Command line and CSV configuration
 # ---------------------------------------------------------------------------
@@ -533,6 +566,7 @@ def _print_parameters(parameters):
 
 def main(*, notebook, run, parameters):
     """Run a converted notebook from the command line."""
+    default_workdir = Path(__file__).resolve().parent.parent / "notebooks"
     parser = argparse.ArgumentParser(
         description=(
             f"Run the code from {notebook}, saving figures instead of showing "
@@ -549,10 +583,10 @@ def main(*, notebook, run, parameters):
     parser.add_argument(
         "--workdir",
         type=Path,
-        default=DEFAULT_WORKDIR,
+        default=default_workdir,
         help=(
             "Directory to run in, so relative paths in the notebook code "
-            f"resolve as they did in Jupyter (default: {DEFAULT_WORKDIR})."
+            f"resolve as they did in Jupyter (default: {default_workdir})."
         ),
     )
     parser.add_argument(
@@ -560,7 +594,36 @@ def main(*, notebook, run, parameters):
         action="store_true",
         help="Print the parameters a CSV can set, with their defaults, and exit.",
     )
+    # One option per output CSV parameter, e.g. PERFORMANCE_CSV_PATH ->
+    # --performance-csv, plus --output-csv when there is only one.
+    output_csv_parameters = [
+        name
+        for name, value in parameters.items()
+        if name.endswith(OUTPUT_CSV_SUFFIX) and isinstance(value, str)
+    ]
+    for name in output_csv_parameters:
+        flags = ["--" + name.removesuffix("_PATH").lower().replace("_", "-")]
+        if len(output_csv_parameters) == 1:
+            flags.append("--output-csv")
+        parser.add_argument(
+            *flags,
+            dest=name,
+            metavar="CSV",
+            help=(
+                f"Output CSV for {name} (default: {parameters[name]}). A bare "
+                f"file name goes in {Path(parameters[name]).parent}/; a path is "
+                "relative to where the script is run from. Overrides --config."
+            ),
+        )
     args = parser.parse_args()
+    output_csv_overrides = {}
+    for name in output_csv_parameters:
+        value = getattr(args, name)
+        if value is not None:
+            path = Path(value)
+            if path.parent == Path("."):
+                path = Path(parameters[name]).parent / path
+            output_csv_overrides[name] = str(path)
 
     if args.list_parameters:
         _print_parameters(parameters)
@@ -578,12 +641,8 @@ def main(*, notebook, run, parameters):
         label = f"run {index}/{len(runs)}"
         try:
             settings = _merge_parameters(parameters, overrides)
-            figure_format = str(settings["FIGURE_FORMAT"]).lower().lstrip(".")
-            if figure_format not in FIGURE_FORMATS:
-                raise ValueError(
-                    f"FIGURE_FORMAT must be one of {', '.join(FIGURE_FORMATS)}; "
-                    f"got {settings['FIGURE_FORMAT']!r}."
-                )
+            settings.update(output_csv_overrides)
+            figure_format = _check_figure_format(settings["FIGURE_FORMAT"])
             figure_dir = invocation_dir / settings["FIGURE_DIR"]
             if len(runs) > 1:
                 figure_dir = figure_dir / f"run_{index:03d}"
@@ -592,6 +651,11 @@ def main(*, notebook, run, parameters):
                 for name, value in settings.items()
                 if name not in FIGURE_PARAMETERS
             }
+            # Output CSV paths are relative to where the script is run from,
+            # like FIGURE_DIR, not to the working directory the code runs in.
+            for name, value in notebook_parameters.items():
+                if name.endswith(OUTPUT_CSV_SUFFIX) and isinstance(value, str):
+                    notebook_parameters[name] = str(invocation_dir / value)
             print(f"[{label}] {notebook}; figures -> {figure_dir}")
             if overrides:
                 print(f"[{label}] overrides: {', '.join(overrides)}")

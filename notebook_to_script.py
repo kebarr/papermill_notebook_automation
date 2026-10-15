@@ -6,6 +6,10 @@ Each notebook becomes scripts/<notebook>.py. The script keeps the notebook's
 FIGURE_NAMES parameters, and saves figures instead of displaying them. The
 scripts share scripts/notebook_runtime.py.
 
+Each notebook also becomes console/<notebook>.py: a self-contained version,
+with notebook_runtime.py embedded, to paste into a Python console. It runs once
+with the default parameters.
+
 Examples:
     python notebook_to_script.py              # convert every notebook
     python notebook_to_script.py plot_pca     # convert one notebook
@@ -23,6 +27,14 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 DEFAULT_NOTEBOOKS_DIR = SCRIPT_DIR / "notebooks"
 DEFAULT_OUTPUT_DIR = SCRIPT_DIR / "scripts"
+DEFAULT_CONSOLE_DIR = SCRIPT_DIR / "console"
+RUNTIME_PATH = DEFAULT_OUTPUT_DIR / "notebook_runtime.py"
+# notebook_runtime.py is embedded in console files up to this section.
+RUNTIME_CLI_MARKER = "# Command line and CSV configuration"
+# Parameters ending in OUTPUT_CSV_SUFFIX (e.g. PERFORMANCE_CSV_PATH) default to
+# a file of the same name in OUTPUT_CSV_DIR, relative to where the script is run.
+OUTPUT_CSV_SUFFIX = "_CSV_PATH"
+OUTPUT_CSV_DIR = "executed_runs_scripts"
 API_HELPER = "_call_api_with_parameters"
 KEEP_CALLSITE_VALUE = "__KEEP_CALLSITE_VALUE__"
 INDENT = "    "
@@ -65,8 +77,10 @@ def _parameters_cell(notebook_path, notebook):
             f"found {len(cells)}."
         )
     source = "".join(cells[0]["source"]).strip()
+    lines = source.splitlines()
     parameters = {}
-    for node in ast.parse(source).body:
+    # Walk backwards so replacing one assignment leaves earlier line numbers valid.
+    for node in reversed(ast.parse(source).body):
         if not (
             isinstance(node, ast.Assign)
             and len(node.targets) == 1
@@ -76,8 +90,16 @@ def _parameters_cell(notebook_path, notebook):
                 f"The parameters cell of {notebook_path} may only contain "
                 "simple assignments."
             )
-        parameters[node.targets[0].id] = ast.literal_eval(node.value)
-    return source, parameters
+        name = node.targets[0].id
+        value = ast.literal_eval(node.value)
+        if name.endswith(OUTPUT_CSV_SUFFIX) and isinstance(value, str):
+            value = f"{OUTPUT_CSV_DIR}/{Path(value).name}"
+            lines[node.lineno - 1 : node.end_lineno] = [
+                "# Relative to where the script is run from.",
+                f"{name} = {value!r}",
+            ]
+        parameters[name] = value
+    return "\n".join(lines), dict(reversed(parameters.items()))
 
 
 # ---------------------------------------------------------------------------
@@ -297,11 +319,65 @@ def _figure_names(code_cells, api_parameters):
 
 
 # ---------------------------------------------------------------------------
+# Console files
+# ---------------------------------------------------------------------------
+
+
+def _console_runtime():
+    """notebook_runtime.py without its command line, for embedding in a
+    console file as a raw string."""
+    source = RUNTIME_PATH.read_text(encoding="utf-8")
+    source = source[: source.index(RUNTIME_CLI_MARKER)].rstrip()
+    if "\'\'\'" in source or source.endswith("\\"):
+        raise ValueError(f"{RUNTIME_PATH} cannot be embedded in a raw string.")
+    return source + "\n"
+
+
+def _lines_inside_strings(source):
+    """Line numbers (1-based) that continue a multi-line string."""
+    lines = set()
+    for token in tokenize.generate_tokens(io.StringIO(source).readline):
+        if token.type == tokenize.STRING or token.type == getattr(
+            tokenize, "FSTRING_MIDDLE", None
+        ):
+            lines.update(range(token.start[0] + 1, token.end[0] + 1))
+    return lines
+
+
+def _console_safe(source):
+    """Lay out code so it can be pasted into the standard Python console.
+
+    The console ends an indented block at the first blank line, and needs a
+    blank line before a new statement can follow a block. So drop blank lines
+    inside statements (but not inside strings) and add one after each compound
+    statement.
+    """
+    in_strings = _lines_inside_strings(source)
+    in_statements = set()
+    block_ends = set()
+    for node in ast.parse(source).body:
+        start = min(
+            [node.lineno] + [d.lineno for d in getattr(node, "decorator_list", [])]
+        )
+        in_statements.update(range(start, node.end_lineno + 1))
+        if isinstance(getattr(node, "body", None), list):
+            block_ends.add(node.end_lineno)
+    output = []
+    for number, line in enumerate(source.splitlines(), start=1):
+        if not line.strip() and number in in_statements and number not in in_strings:
+            continue
+        output.append(line.rstrip() if number not in in_strings else line)
+        if number in block_ends:
+            output.append("")
+    return "\n".join(output) + "\n"
+
+
+# ---------------------------------------------------------------------------
 # Rendering the script
 # ---------------------------------------------------------------------------
 
 
-def convert(notebook_path, output_dir):
+def convert(notebook_path, output_dir, console_dir):
     notebook = json.loads(notebook_path.read_text(encoding="utf-8"))
     parameters_source, parameters = _parameters_cell(notebook_path, notebook)
     api_parameters = parameters.get("API_CALL_PARAMETERS", {})
@@ -318,7 +394,7 @@ def convert(notebook_path, output_dir):
         if not source or _is_parameters_cell(cell):
             continue
         if cell["cell_type"] == "markdown":
-            body.append(_indent(_comment(source)))
+            body.append(_comment(source))
             continue
         if cell["cell_type"] != "code":
             continue
@@ -344,7 +420,7 @@ def convert(notebook_path, output_dir):
                 "# Name figures after the API call that produced them.\n"
                 f"{API_HELPER} = nbrt.track_api_calls({API_HELPER})"
             )
-        body.append(_indent("\n".join(lines)))
+        body.append("\n".join(lines))
 
     figure_names = _figure_names(code_cells, api_parameters)
     stem = notebook_path.stem
@@ -361,6 +437,8 @@ Usage (from the repository root):
     python scripts/{stem}.py                      # the notebook's defaults
     python scripts/{stem}.py --config runs.csv    # one run per CSV row
     python scripts/{stem}.py --list-parameters    # what a CSV can set
+    python scripts/{stem}.py --output-csv my_run.csv
+                                    # performance CSV -> {OUTPUT_CSV_DIR}/my_run.csv
 
 CSV columns are parameter names ({", ".join(all_parameters)}).
 Values are JSON; empty cells keep the default. API_CALL_PARAMETERS and
@@ -398,7 +476,7 @@ FIGURE_NAMES = {pprint.pformat(figure_names, sort_dicts=False, width=79)}
 
 
 def run({", ".join(parameter_names)}):
-{chr(10).join(body) if body else INDENT + "pass"}
+{chr(10).join(_indent(chunk) for chunk in body) if body else INDENT + "pass"}
 
 
 if __name__ == "__main__":
@@ -413,7 +491,59 @@ if __name__ == "__main__":
     compile(script, str(output_dir / f"{stem}.py"), "exec")
     output_path = output_dir / f"{stem}.py"
     output_path.write_text(script, encoding="utf-8")
-    return output_path, figure_names
+
+    console = f"""# {stem}: the code from {relative_notebook}, to paste into a Python console.
+#
+# Paste the whole file. It runs once with the notebook's default parameters,
+# saving figures to FIGURE_DIR instead of displaying them; other cell outputs
+# are printed. Relative paths, in the settings below and in the notebook code
+# (e.g. ../gcs_cache), resolve against the console's current directory: start
+# the console in the notebooks folder to match Jupyter.
+#
+# The layout works in the standard Python console as well as IPython: there are
+# no blank lines inside indented blocks, and each block ends with a blank line.
+# If a statement fails, the console carries on with the next one, so check the
+# output for the first traceback.
+#
+# Generated from the notebook by notebook_to_script.py.
+
+# Support code shared by all the console files: saves figures, emulates
+# IPython magics. It is the same as scripts/notebook_runtime.py.
+import types
+nbrt = types.ModuleType("nbrt")
+exec(compile(r'''{_console_runtime()}''', "nbrt", "exec"), nbrt.__dict__)
+
+# ---------------------------------------------------------------------------
+# Parameters (the notebook's "parameters" cell)
+# ---------------------------------------------------------------------------
+
+{parameters_source}
+
+# ---------------------------------------------------------------------------
+# Figure parameters
+# ---------------------------------------------------------------------------
+
+# Directory figures are saved in.
+FIGURE_DIR = {f"figures/{stem}"!r}
+
+# One of "html" (interactive), "png", "svg" or "pdf"; see scripts/{stem}.py.
+FIGURE_FORMAT = "html"
+
+# File name (without extension) for each figure, keyed by the API call key or
+# notebook cell that displays it.
+FIGURE_NAMES = {pprint.pformat(figure_names, sort_dicts=False, width=79)}
+
+nbrt.begin_console_run(FIGURE_DIR, FIGURE_FORMAT, FIGURE_NAMES)
+
+{(chr(10) * 2).join(body)}
+
+nbrt.end_console_run()
+"""
+    console = _console_safe(console)
+    compile(console, str(console_dir / f"{stem}.py"), "exec")
+    console_path = console_dir / f"{stem}.py"
+    console_path.write_text(console, encoding="utf-8")
+    return output_path, console_path, figure_names
 
 
 def main():
@@ -427,6 +557,12 @@ def main():
     )
     parser.add_argument("--notebooks-dir", type=Path, default=DEFAULT_NOTEBOOKS_DIR)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    parser.add_argument(
+        "--console-dir",
+        type=Path,
+        default=DEFAULT_CONSOLE_DIR,
+        help="Directory for the copy-and-paste console versions.",
+    )
     args = parser.parse_args()
 
     notebooks_dir = args.notebooks_dir.resolve()
@@ -439,9 +575,12 @@ def main():
         paths = sorted(notebooks_dir.glob("*.ipynb"))
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
+    args.console_dir.mkdir(parents=True, exist_ok=True)
     for path in paths:
-        output_path, figure_names = convert(path, args.output_dir.resolve())
-        print(f"{path.name} -> {output_path} "
+        output_path, console_path, figure_names = convert(
+            path, args.output_dir.resolve(), args.console_dir.resolve()
+        )
+        print(f"{path.name} -> {output_path}, {console_path} "
               f"({len(figure_names)} figures)")
 
 

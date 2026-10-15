@@ -8,6 +8,8 @@ Usage (from the repository root):
     python scripts/igv.py                      # the notebook's defaults
     python scripts/igv.py --config runs.csv    # one run per CSV row
     python scripts/igv.py --list-parameters    # what a CSV can set
+    python scripts/igv.py --output-csv my_run.csv
+                                    # performance CSV -> executed_runs_scripts/my_run.csv
 
 CSV columns are parameter names (API_KEEP_CALLSITE_VALUE, PERFORMANCE_CSV_PATH, API_CALL_PARAMETERS, FIGURE_DIR, FIGURE_FORMAT, FIGURE_NAMES).
 Values are JSON; empty cells keep the default. API_CALL_PARAMETERS and
@@ -26,7 +28,8 @@ import notebook_runtime as nbrt
 # Replace a value to override it; keep the marker to use the call-site
 # value or the method's default.
 API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
-PERFORMANCE_CSV_PATH = 'igv_performance.csv'
+# Relative to where the script is run from.
+PERFORMANCE_CSV_PATH = 'executed_runs_scripts/igv_performance.csv'
 API_CALL_PARAMETERS = {'cell_3_call_1_ag3_igv': {'region': '2L:2,422,600-2,422,700', 'tracks': None, 'init': True},
  'cell_4_call_1_ag3_view_alignments': {'region': '2L:2,422,600-2,422,700',
                                        'sample': 'AR0002-C',
