@@ -305,7 +305,11 @@ def convert(notebook_path, output_dir):
     notebook = json.loads(notebook_path.read_text(encoding="utf-8"))
     parameters_source, parameters = _parameters_cell(notebook_path, notebook)
     api_parameters = parameters.get("API_CALL_PARAMETERS", {})
-    relative_notebook = notebook_path.relative_to(SCRIPT_DIR)
+    relative_notebook = (
+        notebook_path.relative_to(SCRIPT_DIR)
+        if notebook_path.is_relative_to(SCRIPT_DIR)
+        else notebook_path
+    )
 
     body = []
     code_cells = []
@@ -437,7 +441,7 @@ def main():
     args.output_dir.mkdir(parents=True, exist_ok=True)
     for path in paths:
         output_path, figure_names = convert(path, args.output_dir.resolve())
-        print(f"{path.name} -> {output_path.relative_to(SCRIPT_DIR)} "
+        print(f"{path.name} -> {output_path} "
               f"({len(figure_names)} figures)")
 
 
