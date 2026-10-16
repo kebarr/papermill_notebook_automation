@@ -381,7 +381,14 @@ def display(obj):
 def shell(command):
     """Run a `!command` shell line."""
     sys.stdout.flush()  # keep output in order with the command's
-    completed = subprocess.run(command, shell=True)
+    tee = _console_tee()
+    if tee is not None and tee.log is not None:
+        # The command writes straight to the terminal, bypassing sys.stdout;
+        # capture its output so the log gets it too.
+        completed = subprocess.run(command, shell=True, stdout=subprocess.PIPE, text=True)
+        print(completed.stdout, end="")
+    else:
+        completed = subprocess.run(command, shell=True)
     if completed.returncode:
         print(f"Command exited with status {completed.returncode}: {command}")
 
@@ -454,13 +461,70 @@ def _check_figure_format(figure_format):
     return checked
 
 
-def begin_console_run(figure_dir, figure_format, figure_names):
+class _Tee:
+    """Stands in for the console's stdout, copying output to a run's log file.
+
+    Once installed it stays as sys.stdout for the rest of the console session,
+    passing output straight through between runs. Libraries can keep a
+    reference to whatever sys.stdout was when they were imported:
+    malariagen_data uses it as the default log stream of Ag3, Af1 etc. Swapping
+    sys.stdout back after a run would leave them writing to a closed log file
+    in later runs.
+    """
+
+    # Marks the tee across pastes: each console file defines its own _Tee class.
+    is_nbrt_tee = True
+
+    def __init__(self, stream):
+        self.stream = stream
+        self.log = None
+
+    def open_log(self, path):
+        self.close_log()
+        self.log = path.open("w", encoding="utf-8")
+
+    def close_log(self):
+        if self.log is not None:
+            self.log.close()
+            self.log = None
+
+    def write(self, text):
+        if self.log is not None:
+            self.log.write(text)
+            self.log.flush()  # keep the log current if the run is abandoned
+        return self.stream.write(text)
+
+    def flush(self):
+        if self.log is not None:
+            self.log.flush()
+        self.stream.flush()
+
+    def __getattr__(self, name):
+        # isatty(), encoding, fileno() etc. come from the console's stdout.
+        return getattr(self.stream, name)
+
+
+def _console_tee():
+    """The tee installed as sys.stdout by an earlier console run, or None."""
+    return sys.stdout if getattr(sys.stdout, "is_nbrt_tee", False) else None
+
+
+def begin_console_run(figure_dir, figure_format, figure_names, output_log=None):
     """Start saving figures for notebook code pasted into a console.
 
     Used by the files in console/, which have no command line; relative paths
-    are resolved against the console's current directory.
+    are resolved against the console's current directory. If output_log is
+    given, everything printed until end_console_run() is also written there.
     """
     global _active_saver
+    if output_log is not None:
+        tee = _console_tee()
+        if tee is None:
+            tee = sys.stdout = _Tee(sys.stdout)
+        output_log = Path(output_log).resolve()
+        output_log.parent.mkdir(parents=True, exist_ok=True)
+        tee.open_log(output_log)
+        print(f"Printed output is also written to {output_log}")
     _install_display_hooks()
     _active_saver = FigureSaver(
         Path(figure_dir).resolve(), _check_figure_format(figure_format), figure_names
@@ -469,13 +533,17 @@ def begin_console_run(figure_dir, figure_format, figure_names):
 
 
 def end_console_run():
-    """Save any open matplotlib figures and stop saving figures."""
+    """Save any open matplotlib figures, stop saving figures and close the
+    output log."""
     global _active_saver
     if _active_saver is None:
         return
     _active_saver.flush_matplotlib()
     print(f"Done; saved {len(_active_saver.saved)} figure(s) to {_active_saver.figure_dir}.")
     _active_saver = None
+    tee = _console_tee()
+    if tee is not None:
+        tee.close_log()
 
 
 # ---------------------------------------------------------------------------

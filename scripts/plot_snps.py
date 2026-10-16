@@ -345,13 +345,13 @@ def run(API_KEEP_CALLSITE_VALUE, PERFORMANCE_CSV_PATH, API_CALL_PARAMETERS):
     # --- Notebook cell 4 ---
     nbrt.start_cell("notebook_cell_4")
     start_time = time.perf_counter()
-    peak_memory_mib = memory_usage((_call_api_with_parameters(ag3.snp_variants, 'cell_3_call_1_ag3_snp_variants', region="3L"), ()), max_usage=True)
+    peak_memory_mib = memory_usage((lambda: _call_api_with_parameters(ag3.snp_variants, 'cell_3_call_1_ag3_snp_variants', region="3L"), ()), max_usage=True)
     runtime_sec = time.perf_counter() - start_time
     nbrt.display(print(f"Runtime for cell_3_call_1_ag3_snp_variants {runtime_sec}, peak memory {peak_memory_mib}"))
     # --- Notebook cell 5 ---
     nbrt.start_cell("notebook_cell_5")
     start_time = time.perf_counter()
-    peak_memory_mib = memory_usage((_call_api_with_parameters(ag3.snp_calls, 'cell_4_call_1_ag3_snp_calls', region="3L", sample_sets="AG1000G-FR"), ()), max_usage=True)
+    peak_memory_mib, ds = memory_usage((lambda: _call_api_with_parameters(ag3.snp_calls, 'cell_4_call_1_ag3_snp_calls', region="3L", sample_sets="AG1000G-FR"), ()), max_usage=True, retval=True)
     runtime_sec = time.perf_counter() - start_time
     nbrt.display(print(f"Runtime for cell_4_call_1_ag3_snp_calls {runtime_sec}, peak memory {peak_memory_mib}"))
     # --- Notebook cell 6 ---
@@ -447,7 +447,9 @@ def run(API_KEEP_CALLSITE_VALUE, PERFORMANCE_CSV_PATH, API_CALL_PARAMETERS):
     nbrt.display(print(f"Runtime for cell_20_call_1_af1_plot_snps {runtime_sec}, peak memory {peak_memory_mib}"))
     # --- Notebook cell 22 ---
     nbrt.start_cell("notebook_cell_22")
-    nbrt.display(print(f"Finished run at {time.now()}"))
+    import datetime
+
+    nbrt.display(print(f"Finished run at {datetime.datetime.now()}"))
 
 
 if __name__ == "__main__":

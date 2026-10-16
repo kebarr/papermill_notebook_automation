@@ -1,5 +1,18 @@
 # papermill_notebook_automation
 
+#Purpose of this repo
+
+Many repos use Jupyter notebooks to demonstrate their APIs, these are usually configurd specifically to run quickly as simple demonstrations. However, many of the APIs demonstrated can quickly blow up- in terms of time and compute resources. IT is therefore important to understand how varying the arguments to methods exposed by APIs impacts running time and resource usage. These scripts enable you to create papermill runners for arbitrary ipython notebooks, create configurable CSVs, convert the notebooks into scripts to be run from the command line, and records the time and peak memory usage for each configuration run. This enables you to learn how parameters impact performance, an important consideration when planning large-scale analyses.
+
+The notebooks were first converted into a papermill compatible formats and wrapped with the performance analysis capability in the second cell using an LLM.
+
+# Dependencies
+- papermill
+- jupyter
+- memory_profiler
+- malariagen_data 
+
+
 # Basic usage
 
 This is a set of utilities for converting the notebooks in malariagen_data, which have been edited sych that they can be run through papaermill with user specified parameterisation via an input CSV. In principle, this should be useable for any suitably formated Jupyter notebook

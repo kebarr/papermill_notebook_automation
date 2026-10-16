@@ -35,6 +35,8 @@ RUNTIME_CLI_MARKER = "# Command line and CSV configuration"
 # a file of the same name in OUTPUT_CSV_DIR, relative to where the script is run.
 OUTPUT_CSV_SUFFIX = "_CSV_PATH"
 OUTPUT_CSV_DIR = "executed_runs_scripts"
+# Console files copy their printed output to <CONSOLE_OUTPUT_DIR>/<notebook>_stdout.txt.
+CONSOLE_OUTPUT_DIR = "executed_runs_console"
 API_HELPER = "_call_api_with_parameters"
 KEEP_CALLSITE_VALUE = "__KEEP_CALLSITE_VALUE__"
 INDENT = "    "
@@ -496,7 +498,7 @@ if __name__ == "__main__":
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
-# are printed. Relative paths, in the settings below and in the notebook code
+# are printed, and copied to OUTPUT_LOG. Relative paths, in the settings below and in the notebook code
 # (e.g. ../gcs_cache), resolve against the console's current directory: start
 # the console in the notebooks folder to match Jupyter.
 #
@@ -533,7 +535,10 @@ FIGURE_FORMAT = "html"
 # notebook cell that displays it.
 FIGURE_NAMES = {pprint.pformat(figure_names, sort_dicts=False, width=79)}
 
-nbrt.begin_console_run(FIGURE_DIR, FIGURE_FORMAT, FIGURE_NAMES)
+# File that printed output is copied to, as well as being shown in the console.
+OUTPUT_LOG = {f"{CONSOLE_OUTPUT_DIR}/{stem}_stdout.txt"!r}
+
+nbrt.begin_console_run(FIGURE_DIR, FIGURE_FORMAT, FIGURE_NAMES, OUTPUT_LOG)
 
 {(chr(10) * 2).join(body)}
 
