@@ -11,6 +11,23 @@ do
     python runners_and_csvs/generated_runners/papermill_${notebook_name}.py --config runners_and_csvs/${notebook_name}_config.csv --output-dir executed_runs
 done
 
+# these are missing because the CSVs weren't generated for some reason
+python papermill_csv_config.py create cohort_geometries   --validate-metadata --output runners_and_csvs/cohort_geometries_config.csv
+python runners_and_csvs/generated_runners/papermill_cohort_geometries.py --config runners_and_csvs/cohort_geometries_config.csv --output-dir executed_runs_local_papermill
+python papermill_csv_config.py create phenotype_data_demo   --validate-metadata --output runners_and_csvs/phenotype_data_demo_config.csv
+python runners_and_csvs/generated_runners/papermill_phenotype_data_demo.py --config runners_and_csvs/phenotype_data_demo_config.csv --output-dir executed_runs_local_papermill
+python papermill_csv_config.py create plot_genes   --validate-metadata --output runners_and_csvs/plot_genes_config.csv
+python runners_and_csvs/generated_runners/papermill_plot_genes.py --config runners_and_csvs/plot_genes_config.csv --output-dir executed_runs_local_papermill
+python papermill_csv_config.py create plot_h12_h1x   --validate-metadata --output runners_and_csvs/plot_h12_h1x_config.csv
+python runners_and_csvs/generated_runners/papermill_plot_h12_h1x.py --config runners_and_csvs/plot_h12_h1x_config.csv --output-dir executed_runs_local_papermill
+python papermill_csv_config.py create plot_ihs_gwss   --validate-metadata --output runners_and_csvs/plot_ihs_gwss_config.csv
+python runners_and_csvs/generated_runners/papermill_plot_ihs_gwss.py --config runners_and_csvs/plot_ihs_gwss_config.csv --output-dir executed_runs_local_papermill
+python papermill_csv_config.py create plot_pairwise_average_fst   --validate-metadata --output runners_and_csvs/plot_pairwise_average_fst_config.csv
+python runners_and_csvs/generated_runners/papermill_plot_pairwise_average_fst.py --config runners_and_csvs/plot_pairwise_average_fst_config.csv --output-dir executed_runs_local_papermill
+python papermill_csv_config.py create plot_xpehh_gwss   --validate-metadata --output runners_and_csvs/plot_xpehh_gwss_config.csv
+python runners_and_csvs/generated_runners/papermill_plot_xpehh_gwss.py --config runners_and_csvs/plot_xpehh_gwss_config.csv --output-dir executed_runs_local_papermill
+
+
 python runners_and_csvs/generated_runners/papermill_${notebook_name%.ipynb}.py --config runners_and_csvs/${notebook_name%.ipynb}_config.csv --output-dir executed_runs
 sed 's,"PERFORMANCE_CSV_PATH = '\'',"PERFORMANCE_CSV_PATH = '\''../executed_runs/,' notebooks/extra_metadata.ipynb | less
 sed 's,PERFORMANCE_CSV_PATH = '\'',PERFORMANCE_CSV_PATH = '\''../executed_runs/,' notebooks/extra_metadata.ipynb | less
@@ -81,3 +98,19 @@ ds = _call_api_with_parameters(ag3.gene_cnv_frequencies_advanced, 'cell_5_call_1
 # spike_sim_test_data
 # xpehh_gwss - got I/O operation on a closed file
 # same with ihs_gwss, plot_haplotype_networks, plot_h12_h1x
+
+# haplotype_network errored with port connection, then port in use, then no attribute x- saved
+# karyotype went above 6GB, trying againin case it was due to leftover momry from another console
+
+# papermill performance notebooks to run on 6GB
+#plot_g123_gwss.ipynb
+# plot_frequencies_heatmap
+# plot_frequencies_space_time
+# plot_fst_gwss
+# plot_h12_h1x
+# plot_haplotype_clustering
+# plot njt has assesrtion error
+
+# karyotype failed in 6GB notebook not sure if due to going idle or memory
+
+python view_performance.py executed_runs_local_papermill console/executed_runs_datalab scripts/executed_runs_datalab --output view_performance.html --open > view_performance_stdout.txt 2> view_performance_stderr.txt

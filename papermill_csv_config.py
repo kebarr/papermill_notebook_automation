@@ -30,6 +30,9 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 DEFAULT_NOTEBOOKS_DIR = SCRIPT_DIR  / "notebooks"
 DEFAULT_OUTPUT_DIR = SCRIPT_DIR / "runners_and_csvs"
 API_PARAMETERS_NAME = "API_CALL_PARAMETERS"
+# Marks an argument whose value is given at the call site in the notebook.
+KEEP_CALLSITE_VALUE = "__KEEP_CALLSITE_VALUE__"
+SAMPLE_SELECTION_PARAMETERS = ("sample_sets", "sample_query", "sample_indices")
 
 
 def _load_api_parameters(notebook_path: Path) -> dict:
@@ -275,21 +278,36 @@ def _validate_metadata(settings: dict, dataset_urls: dict):
                 f"Cannot determine the data client for API call {call_key!r}."
             )
         alias = aliases[0]
+
+        # The selection is set at the call site, so it can't be checked here.
+        at_call_site = [
+            name
+            for name in SAMPLE_SELECTION_PARAMETERS
+            if parameters.get(name) == KEEP_CALLSITE_VALUE
+        ]
+        if at_call_site:
+            print(
+                f"Note: not validating {call_key}: {', '.join(at_call_site)} "
+                "set at the call site."
+            )
+            continue
+
         if alias not in clients:
             url = dataset_urls.get(alias)
             clients[alias] = (
                 api_classes[alias](url=url) if url else api_classes[alias]()
             )
 
+        # Phenotype methods apply sample_query to the phenotype data (e.g.
+        # insecticide, dose), not to the sample metadata, so leave it out.
+        method = call_key.split(f"_{alias}_", 1)[-1]
+        selection_names = ["sample_sets", "sample_indices"]
+        if "phenotype" not in method:
+            selection_names += ["sample_query", "sample_query_options"]
         metadata_parameters = {
-            name: parameters.get(name)
-            for name in (
-                "sample_sets",
-                "sample_query",
-                "sample_query_options",
-                "sample_indices",
-            )
-            if name in parameters
+            name: parameters[name]
+            for name in selection_names
+            if name in parameters and parameters[name] != KEEP_CALLSITE_VALUE
         }
         cache_key = (alias, json.dumps(metadata_parameters, sort_keys=True, default=repr))
         if cache_key not in metadata_cache:
@@ -300,7 +318,7 @@ def _validate_metadata(settings: dict, dataset_urls: dict):
         validated_calls += 1
 
         cohorts = parameters.get("cohorts")
-        if not isinstance(cohorts, str):
+        if not isinstance(cohorts, str) or cohorts == KEEP_CALLSITE_VALUE:
             continue
         possible_columns = [cohorts]
         if not cohorts.startswith("cohort_"):
@@ -322,9 +340,9 @@ def _validate_metadata(settings: dict, dataset_urls: dict):
             parameters["cohorts"] = valid_column
 
     if not validated_calls:
-        raise ValueError(
-            "Metadata validation was requested, but no API calls in this "
-            "notebook expose sample-selection or cohort parameters."
+        print(
+            "Note: no API calls in this notebook have sample-selection "
+            "parameters to validate."
         )
 
 

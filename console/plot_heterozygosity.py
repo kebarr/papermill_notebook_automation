@@ -791,12 +791,43 @@ def _parameter_value_for_csv(value):
 
 
 
+import collections.abc
+import types
+import typing
+
+
+def _tuple_if_expected(annotation, value):
+    """Turn a list back into a tuple where the API accepts a tuple but not a
+    list, e.g. percentiles. CSV configs store values as JSON, which has no
+    tuples, so (50, 75, 100) arrives as [50, 75, 100]."""
+    if not isinstance(value, list):
+        return value
+    if typing.get_origin(annotation) is typing.Annotated:
+        annotation = typing.get_args(annotation)[0]
+    if typing.get_origin(annotation) in (typing.Union, types.UnionType):
+        options = typing.get_args(annotation)
+    else:
+        options = (annotation,)
+    accepted = {typing.get_origin(option) or option for option in options}
+    accepts_list = accepted & {
+        list, typing.Any, collections.abc.Sequence, collections.abc.Iterable,
+        collections.abc.Collection, collections.abc.MutableSequence,
+    }
+    if tuple in accepted and not accepts_list:
+        return tuple(value)
+    return value
+
+
+
 def _call_api_with_parameters(method, call_key, *args, **kwargs):
     signature = inspect.signature(method)
     bound = signature.bind_partial(*args, **kwargs)
     bound.apply_defaults()
     for name, value in API_CALL_PARAMETERS[call_key].items():
         if not (isinstance(value, str) and value == API_KEEP_CALLSITE_VALUE):
+            parameter = signature.parameters.get(name)
+            if parameter is not None:
+                value = _tuple_if_expected(parameter.annotation, value)
             bound.arguments[name] = value
     positional = []
     keyword = {}
