@@ -12,6 +12,8 @@ do
 done
 
 # these are missing because the CSVs weren't generated for some reason
+notebook_name="cohort_geometries"
+python papermill_meta.py ${notebook_name} --output-csv executed_runs_local_papermill/ --notebooks-dir ./notebooks   --output-dir runners_and_csvs/generated_runners
 python papermill_csv_config.py create cohort_geometries   --validate-metadata --output runners_and_csvs/cohort_geometries_config.csv
 python runners_and_csvs/generated_runners/papermill_cohort_geometries.py --config runners_and_csvs/cohort_geometries_config.csv --output-dir executed_runs_local_papermill
 python papermill_csv_config.py create phenotype_data_demo   --validate-metadata --output runners_and_csvs/phenotype_data_demo_config.csv
@@ -26,6 +28,9 @@ python papermill_csv_config.py create plot_pairwise_average_fst   --validate-met
 python runners_and_csvs/generated_runners/papermill_plot_pairwise_average_fst.py --config runners_and_csvs/plot_pairwise_average_fst_config.csv --output-dir executed_runs_local_papermill
 python papermill_csv_config.py create plot_xpehh_gwss   --validate-metadata --output runners_and_csvs/plot_xpehh_gwss_config.csv
 python runners_and_csvs/generated_runners/papermill_plot_xpehh_gwss.py --config runners_and_csvs/plot_xpehh_gwss_config.csv --output-dir executed_runs_local_papermill
+
+python papermill_csv_config.py create karyotype   --validate-metadata --output runners_and_csvs/karyotype_config.csv
+python runners_and_csvs/generated_runners/papermill_karyotype.py --config runners_and_csvs/karyotype_config.csv --output-dir executed_runs_local_papermill
 
 
 python runners_and_csvs/generated_runners/papermill_${notebook_name%.ipynb}.py --config runners_and_csvs/${notebook_name%.ipynb}_config.csv --output-dir executed_runs
@@ -112,5 +117,7 @@ ds = _call_api_with_parameters(ag3.gene_cnv_frequencies_advanced, 'cell_5_call_1
 # plot njt has assesrtion error
 
 # karyotype failed in 6GB notebook not sure if due to going idle or memory
+# g123_gwss failed in 6GB notebook not sure if due to going idle or memory
+# plot haplotype_networks errored with address already in use
 
-python view_performance.py executed_runs_local_papermill console/executed_runs_datalab scripts/executed_runs_datalab --output view_performance.html --open > view_performance_stdout.txt 2> view_performance_stderr.txt
+python view_performance.py executed_runs_local_papermill console/executed_runs_datalab scripts/executed_runs_datalab notebooks/executed_runs_datalab --output view_performance_each_run.html --open > view_performance_stdout.txt 2> view_performance_stderr.txt

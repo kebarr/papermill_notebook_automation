@@ -74,6 +74,8 @@ import papermill as pm
 
 NOTEBOOK_PATH = Path(__NOTEBOOK_PATH__).resolve()
 PARAMETER_NAMES = __PARAMETER_NAMES__
+# Parameters naming a CSV the notebook writes, e.g. PERFORMANCE_CSV_PATH.
+OUTPUT_CSV_PARAMETERS = [name for name in PARAMETER_NAMES if name.endswith("_CSV_PATH")]
 OMIT = object()
 
 
@@ -87,6 +89,16 @@ def parse_value(value):
         return value
 
 
+def resolve_output_csv(value, output_dir):
+    """A bare file name goes in output_dir; a path is relative to where the
+    runner is run from. Returned absolute, because the notebook runs in its
+    own directory."""
+    path = Path(value)
+    if path.parent == Path("."):
+        path = output_dir / path
+    return str(path.resolve())
+
+
 def main():
     parser = argparse.ArgumentParser(
         description=f"Run {NOTEBOOK_PATH.name} once for each CSV row."
@@ -97,9 +109,28 @@ def main():
         type=Path,
         default=NOTEBOOK_PATH.parent / "executed_runs",
     )
+    parser.add_argument(
+        "--output-csv",
+        metavar="CSV",
+        help=(
+            "CSV the notebook writes its results to "
+            f"({', '.join(OUTPUT_CSV_PARAMETERS) or 'no such parameter'}). A bare "
+            "file name goes in --output-dir; a path is relative to where this "
+            "runner is run from. Overrides the value in --config."
+        ),
+    )
     args = parser.parse_args()
     config_path = args.config.resolve()
     output_dir = args.output_dir.resolve()
+
+    output_csv = None
+    if args.output_csv is not None:
+        if len(OUTPUT_CSV_PARAMETERS) != 1:
+            parser.error(
+                f"--output-csv needs exactly one *_CSV_PATH notebook parameter; "
+                f"{NOTEBOOK_PATH.name} has {len(OUTPUT_CSV_PARAMETERS)}."
+            )
+        output_csv = resolve_output_csv(args.output_csv, output_dir)
 
     with config_path.open(newline="") as f:
         reader = csv.DictReader(f)
@@ -130,6 +161,8 @@ def main():
                 parsed = parse_value(value)
                 if parsed is not OMIT:
                     parameters[name] = parsed
+            if output_csv is not None:
+                parameters[OUTPUT_CSV_PARAMETERS[0]] = output_csv
             if not parameters:
                 raise ValueError(
                     f"Line {line_number} of {config_path} has no parameter values."
@@ -153,6 +186,8 @@ def main():
         )
 
     print(f"Completed {len(runs)} runs in {output_dir}")
+    if output_csv is not None:
+        print(f"Results CSV: {output_csv}")
 
 
 if __name__ == "__main__":
