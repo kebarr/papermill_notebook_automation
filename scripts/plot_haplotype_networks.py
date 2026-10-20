@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""plot_haplotype_networks: the code from notebooks/plot_haplotype_networks.ipynb as a runnable script.
+"""plot_haplotype_networks: the code from notebooks_fixed_parameters_cells/plot_haplotype_networks.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.
@@ -33,7 +33,8 @@ PERFORMANCE_CSV_PATH = 'executed_runs_scripts/plot_haplotype_networks_performanc
 API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_haplotype_network': {'region': '2L:2,358,158-2,431,617',
                                               'analysis': 'gamb_colu',
                                               'sample_sets': '3.0',
-                                              'sample_query': "taxon == 'coluzzii'",
+                                              'sample_query': 'taxon == '
+                                                              "'coluzzii'",
                                               'sample_query_options': None,
                                               'max_dist': 2,
                                               'color': 'country',
@@ -53,7 +54,8 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_haplotype_network': {'region': '2
  'cell_9_call_1_ag3_plot_haplotype_network': {'region': '2L:2,358,158-2,431,617',
                                               'analysis': 'gamb_colu',
                                               'sample_sets': '3.0',
-                                              'sample_query': "taxon == 'coluzzii'",
+                                              'sample_query': 'taxon == '
+                                                              "'coluzzii'",
                                               'sample_query_options': None,
                                               'max_dist': 2,
                                               'color': 'admin1_iso',
@@ -73,10 +75,11 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_haplotype_network': {'region': '2
  'cell_11_call_1_ag3_plot_haplotype_network': {'region': '2L:2,358,158-2,431,617',
                                                'analysis': 'gamb_colu',
                                                'sample_sets': '3.0',
-                                               'sample_query': "taxon == 'coluzzii'",
+                                               'sample_query': 'taxon == '
+                                                               "'coluzzii'",
                                                'sample_query_options': None,
                                                'max_dist': 2,
-                                               'color': None,
+                                               'color': '__KEEP_CALLSITE_VALUE__',
                                                'color_discrete_sequence': None,
                                                'color_discrete_map': None,
                                                'category_orders': None,
@@ -93,7 +96,8 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_haplotype_network': {'region': '2
  'cell_13_call_1_ag3_plot_haplotype_network': {'region': '2L:2,358,158-2,431,617',
                                                'analysis': 'gamb_colu',
                                                'sample_sets': '3.0',
-                                               'sample_query': "taxon == 'coluzzii'",
+                                               'sample_query': 'taxon == '
+                                                               "'coluzzii'",
                                                'sample_query_options': None,
                                                'max_dist': 2,
                                                'color': None,
@@ -113,7 +117,8 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_haplotype_network': {'region': '2
  'cell_15_call_1_ag3_plot_haplotype_network': {'region': '2L:2,358,158-2,431,617',
                                                'analysis': 'gamb_colu',
                                                'sample_sets': '3.0',
-                                               'sample_query': "taxon == 'coluzzii'",
+                                               'sample_query': 'taxon == '
+                                                               "'coluzzii'",
                                                'sample_query_options': None,
                                                'max_dist': 2,
                                                'color': 'country',
@@ -133,7 +138,8 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_haplotype_network': {'region': '2
  'cell_19_call_1_af1_plot_haplotype_network': {'region': '2RL:2,358,158-2,431,617',
                                                'analysis': 'default',
                                                'sample_sets': '1.0',
-                                               'sample_query': "country == 'Ghana'",
+                                               'sample_query': 'country == '
+                                                               "'Ghana'",
                                                'sample_query_options': None,
                                                'max_dist': 2,
                                                'color': 'sample_set',
@@ -153,7 +159,8 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_haplotype_network': {'region': '2
  'cell_21_call_1_af1_plot_haplotype_network': {'region': '2RL:2,358,158-2,431,617',
                                                'analysis': 'default',
                                                'sample_sets': '1.0',
-                                               'sample_query': "country == 'Ghana'",
+                                               'sample_query': 'country == '
+                                                               "'Ghana'",
                                                'sample_query_options': None,
                                                'max_dist': 2,
                                                'color': 'year',
@@ -173,10 +180,11 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_haplotype_network': {'region': '2
  'cell_23_call_1_af1_plot_haplotype_network': {'region': '2RL:2,358,158-2,431,617',
                                                'analysis': 'default',
                                                'sample_sets': '1.0',
-                                               'sample_query': "country == 'Ghana'",
+                                               'sample_query': 'country == '
+                                                               "'Ghana'",
                                                'sample_query_options': None,
                                                'max_dist': 2,
-                                               'color': None,
+                                               'color': '__KEEP_CALLSITE_VALUE__',
                                                'color_discrete_sequence': None,
                                                'color_discrete_map': None,
                                                'category_orders': None,
@@ -193,7 +201,8 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_haplotype_network': {'region': '2
  'cell_25_call_1_af1_plot_haplotype_network': {'region': '2RL:2,358,158-2,431,617',
                                                'analysis': 'default',
                                                'sample_sets': '1.0',
-                                               'sample_query': "country == 'Ghana'",
+                                               'sample_query': 'country == '
+                                                               "'Ghana'",
                                                'sample_query_options': None,
                                                'max_dist': 2,
                                                'color': None,

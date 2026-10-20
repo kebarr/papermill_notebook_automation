@@ -1,4 +1,4 @@
-# plot_xpehh_gwss: the code from notebooks/plot_xpehh_gwss.ipynb, to paste into a Python console.
+# plot_xpehh_gwss: the code from notebooks_fixed_parameters_cells/plot_xpehh_gwss.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -612,9 +612,11 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_xpehh_gwss': {'contig': 'X',
  'cell_4_call_1_ag3_plot_xpehh_gwss_track': {'contig': 'X',
                                              'analysis': 'gamb_colu',
                                              'sample_sets': '3.0',
-                                             'cohort1_query': 'cohort_admin2_year == '
+                                             'cohort1_query': 'cohort_admin2_year '
+                                                              '== '
                                                               "'ML-2_Kati_colu_2014'",
-                                             'cohort2_query': "country == 'Mayotte'",
+                                             'cohort2_query': 'country == '
+                                                              "'Mayotte'",
                                              'sample_query_options': None,
                                              'window_size': 1000,
                                              'percentiles': (50, 75, 100),
@@ -738,8 +740,10 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_xpehh_gwss': {'contig': 'X',
  'cell_9_call_1_af1_plot_xpehh_gwss': {'contig': 'X',
                                        'analysis': 'default',
                                        'sample_sets': '1.0',
-                                       'cohort1_query': "cohort_admin1_year == 'MZ-L_fune_2018'",
-                                       'cohort2_query': "cohort_admin1_year == 'GA-2_fune_2017'",
+                                       'cohort1_query': 'cohort_admin1_year == '
+                                                        "'MZ-L_fune_2018'",
+                                       'cohort2_query': 'cohort_admin1_year == '
+                                                        "'GA-2_fune_2017'",
                                        'sample_query_options': None,
                                        'window_size': 2000,
                                        'percentiles': (50, 75, 100),
@@ -768,8 +772,10 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_xpehh_gwss': {'contig': 'X',
  'cell_10_call_1_af1_plot_xpehh_gwss': {'contig': '2RL',
                                         'analysis': 'default',
                                         'sample_sets': '1.0',
-                                        'cohort1_query': "cohort_admin1_year == 'MZ-L_fune_2018'",
-                                        'cohort2_query': "cohort_admin1_year == 'GA-2_fune_2017'",
+                                        'cohort1_query': 'cohort_admin1_year '
+                                                         "== 'MZ-L_fune_2018'",
+                                        'cohort2_query': 'cohort_admin1_year '
+                                                         "== 'GA-2_fune_2017'",
                                         'sample_query_options': None,
                                         'window_size': 200,
                                         'percentiles': (50, 75, 100),

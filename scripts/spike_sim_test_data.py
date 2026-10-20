@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""spike_sim_test_data: the code from notebooks/spike_sim_test_data.ipynb as a runnable script.
+"""spike_sim_test_data: the code from notebooks_fixed_parameters_cells/spike_sim_test_data.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.
@@ -29,7 +29,7 @@ import notebook_runtime as nbrt
 # value or the method's default.
 API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
 # Relative to where the script is run from.
-PERFORMANCE_CSV_PATH = 'executed_runs_scripts/plot_biallelic_snps_performance.csv'
+PERFORMANCE_CSV_PATH = 'executed_runs_scripts/spike_sim_test_data_performance.csv'
 API_CALL_PARAMETERS = {'cell_7_call_1_ag3_snp_calls': {'region': '3L',
                                  'sample_sets': 'AG1000G-BF-A',
                                  'sample_query': None,
@@ -123,13 +123,17 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_snp_calls': {'region': '3L',
                                   'min_cohort_size': None,
                                   'max_cohort_size': None,
                                   'random_seed': 42},
- 'cell_101_call_1_ag3_genome_sequence': {'region': '3L', 'inline_array': True, 'chunks': 'native'},
+ 'cell_101_call_1_ag3_genome_sequence': {'region': '3L',
+                                         'inline_array': True,
+                                         'chunks': 'native'},
  'cell_105_call_1_af1_site_filters': {'region': '3RL:10,000,000-11,000,000',
                                       'mask': 'funestus',
                                       'field': 'filter_pass',
                                       'inline_array': True,
                                       'chunks': 'native'},
- 'cell_107_call_1_af1_genome_sequence': {'region': '3RL', 'inline_array': True, 'chunks': 'native'},
+ 'cell_107_call_1_af1_genome_sequence': {'region': '3RL',
+                                         'inline_array': True,
+                                         'chunks': 'native'},
  'cell_116_call_1_af1_sample_sets': {'release': None},
  'cell_117_call_1_af1_snp_calls': {'region': '3RL:10_000_000-10_500_000',
                                    'sample_sets': '1230-VO-GA-CF-AYALA-VMF00045',
@@ -190,6 +194,25 @@ def run(API_KEEP_CALLSITE_VALUE, PERFORMANCE_CSV_PATH, API_CALL_PARAMETERS):
     nbrt.start_cell("notebook_cell_1")
     import inspect
     from memory_profiler import memory_usage
+    import time
+    import json
+    import csv
+    from pathlib import Path
+
+    def _parameter_value_for_csv(value):
+        if value is None or isinstance(value, (str, int, float, bool)):
+            return value
+        if isinstance(value, dict):
+            return {str(key): _parameter_value_for_csv(item) for key, item in value.items()}
+        if isinstance(value, (list, tuple)):
+            return [_parameter_value_for_csv(item) for item in value]
+        shape = getattr(value, "shape", None)
+        if shape is not None:
+            return {
+                "type": f"{type(value).__module__}.{type(value).__qualname__}",
+                "shape": list(shape),
+            }
+        return repr(value)
 
 
     import collections.abc
@@ -246,7 +269,45 @@ def run(API_KEEP_CALLSITE_VALUE, PERFORMANCE_CSV_PATH, API_CALL_PARAMETERS):
                     keyword[parameter.name] = bound.arguments[parameter.name]
             elif parameter.kind is inspect.Parameter.VAR_KEYWORD:
                 keyword.update(bound.arguments.get(parameter.name, {}))
-        return method(*positional, **keyword)
+        result = {}
+
+        def operation():
+            result["value"] = method(*positional, **keyword)
+
+        start_time = time.perf_counter()
+        peak_memory_mib = memory_usage((operation, ()), max_usage=True)
+        runtime_sec = time.perf_counter() - start_time
+
+        output_path = Path(PERFORMANCE_CSV_PATH)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        fieldnames = [
+            "call_key",
+            "method",
+            "parameters_json",
+            "runtime_sec",
+            "peak_memory_mib",
+        ]
+        record = {
+            "call_key": call_key,
+            "method": getattr(method, "__qualname__", getattr(method, "__name__", repr(method))),
+            "parameters_json": json.dumps(
+                {
+                    name: _parameter_value_for_csv(value)
+                    for name, value in bound.arguments.items()
+                },
+                sort_keys=True,
+            ),
+            "runtime_sec": round(runtime_sec, 4),
+            "peak_memory_mib": round(peak_memory_mib, 2),
+        }
+        file_exists = output_path.exists() and output_path.stat().st_size > 0
+        with output_path.open("a", newline="", encoding="utf-8") as csv_file:
+            writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+            if not file_exists:
+                writer.writeheader()
+            writer.writerow(record)
+
+        return result["value"]
     # Name figures after the API call that produced them.
     _call_api_with_parameters = nbrt.track_api_calls(_call_api_with_parameters)
     # # Explore real data to help with simulating test data

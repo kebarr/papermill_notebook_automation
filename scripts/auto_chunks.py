@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""auto_chunks: the code from notebooks/auto_chunks.ipynb as a runnable script.
+"""auto_chunks: the code from notebooks_fixed_parameters_cells/auto_chunks.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.

@@ -1,4 +1,4 @@
-# plot_pca: the code from notebooks/plot_pca.ipynb, to paste into a Python console.
+# plot_pca: the code from notebooks_fixed_parameters_cells/plot_pca.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -720,7 +720,7 @@ API_CALL_PARAMETERS = {'cell_8_call_1_ag3_pca': {'region': '3L:15,000,000-16,000
                                         'marker_size': 10,
                                         'color_discrete_sequence': None,
                                         'color_discrete_map': None,
-                                        'category_orders': None,
+                                        'category_orders': '__KEEP_CALLSITE_VALUE__',
                                         'legend_sizing': 'constant',
                                         'show': True,
                                         'renderer': None,
@@ -864,7 +864,7 @@ API_CALL_PARAMETERS = {'cell_8_call_1_ag3_pca': {'region': '3L:15,000,000-16,000
                                            'marker_size': 2,
                                            'color_discrete_sequence': None,
                                            'color_discrete_map': None,
-                                           'category_orders': None,
+                                           'category_orders': '__KEEP_CALLSITE_VALUE__',
                                            'legend_sizing': 'constant',
                                            'show': True,
                                            'renderer': None,
@@ -872,7 +872,7 @@ API_CALL_PARAMETERS = {'cell_8_call_1_ag3_pca': {'region': '3L:15,000,000-16,000
  'cell_28_call_1_ag3_plot_pca_coords': {'data': '__KEEP_CALLSITE_VALUE__',
                                         'x': 'PC1',
                                         'y': 'PC2',
-                                        'color': None,
+                                        'color': '__KEEP_CALLSITE_VALUE__',
                                         'symbol': None,
                                         'opacity': 0.9,
                                         'jitter_frac': 0.02,
@@ -892,7 +892,7 @@ API_CALL_PARAMETERS = {'cell_8_call_1_ag3_pca': {'region': '3L:15,000,000-16,000
                                            'x': 'PC1',
                                            'y': 'PC2',
                                            'z': 'PC3',
-                                           'color': None,
+                                           'color': '__KEEP_CALLSITE_VALUE__',
                                            'symbol': None,
                                            'jitter_frac': 0.02,
                                            'random_seed': 42,
@@ -1036,7 +1036,7 @@ API_CALL_PARAMETERS = {'cell_8_call_1_ag3_pca': {'region': '3L:15,000,000-16,000
                             'min_minor_ac': 2,
                             'max_missing_an': 0,
                             'imputation_method': 'most_common',
-                            'exclude_samples': None,
+                            'exclude_samples': '__KEEP_CALLSITE_VALUE__',
                             'fit_exclude_samples': None,
                             'random_seed': 42,
                             'inline_array': True,
@@ -1084,7 +1084,7 @@ API_CALL_PARAMETERS = {'cell_8_call_1_ag3_pca': {'region': '3L:15,000,000-16,000
                             'max_missing_an': 0,
                             'imputation_method': 'most_common',
                             'exclude_samples': None,
-                            'fit_exclude_samples': None,
+                            'fit_exclude_samples': '__KEEP_CALLSITE_VALUE__',
                             'random_seed': 42,
                             'inline_array': True,
                             'chunks': 'native'},
@@ -1218,13 +1218,12 @@ nbrt.begin_console_run(FIGURE_DIR, FIGURE_FORMAT, FIGURE_NAMES, OUTPUT_LOG)
 
 # --- Notebook cell 1 ---
 nbrt.start_cell("notebook_cell_1")
-import csv
 import inspect
-import json
-from pathlib import Path
 from memory_profiler import memory_usage
 import time
-
+import json
+import csv
+from pathlib import Path
 
 def _parameter_value_for_csv(value):
     if value is None or isinstance(value, (str, int, float, bool)):
@@ -1368,186 +1367,186 @@ nbrt.shell('rm -rf results_cache')
 
 # ## Mayotte
 
-# --- Notebook cell 10 ---
-nbrt.start_cell("notebook_cell_10")
+# --- Notebook cell 9 ---
+nbrt.start_cell("notebook_cell_9")
 df_pca, evr = _call_api_with_parameters(ag3.pca, 'cell_8_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="AG1000G-FR", n_snps=10_000)
 nbrt.display(df_pca)
 
+# --- Notebook cell 10 ---
+nbrt.start_cell("notebook_cell_10")
+nbrt.display(evr)
+
 # --- Notebook cell 11 ---
 nbrt.start_cell("notebook_cell_11")
-nbrt.display(evr)
+nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_10_call_1_ag3_plot_pca_coords', df_pca))
 
 # --- Notebook cell 12 ---
 nbrt.start_cell("notebook_cell_12")
-nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_10_call_1_ag3_plot_pca_coords', df_pca))
+nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_11_call_1_ag3_plot_pca_coords', df_pca, color="location"))
 
 # --- Notebook cell 13 ---
 nbrt.start_cell("notebook_cell_13")
-nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_11_call_1_ag3_plot_pca_coords', df_pca, color="location"))
+df_pca, evr = _call_api_with_parameters(ag3.pca, 'cell_12_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="AG1000G-FR", n_snps=10_000)
 
 # --- Notebook cell 14 ---
 nbrt.start_cell("notebook_cell_14")
-df_pca, evr = _call_api_with_parameters(ag3.pca, 'cell_12_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="AG1000G-FR", n_snps=10_000)
+nbrt.display(_call_api_with_parameters(ag3.plot_pca_variance, 'cell_13_call_1_ag3_plot_pca_variance', evr))
 
 # --- Notebook cell 15 ---
 nbrt.start_cell("notebook_cell_15")
-nbrt.display(_call_api_with_parameters(ag3.plot_pca_variance, 'cell_13_call_1_ag3_plot_pca_variance', evr))
-
-# --- Notebook cell 16 ---
-nbrt.start_cell("notebook_cell_16")
 nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_14_call_1_ag3_plot_pca_coords', df_pca, color="location"))
 
 # ## Burkina Faso
 
+# --- Notebook cell 17 ---
+nbrt.start_cell("notebook_cell_17")
+df_pca, evr = _call_api_with_parameters(ag3.pca, 'cell_16_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="AG1000G-BF-A", n_snps=10_000, max_cohort_size=50)
+
 # --- Notebook cell 18 ---
 nbrt.start_cell("notebook_cell_18")
-df_pca, evr = _call_api_with_parameters(ag3.pca, 'cell_16_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="AG1000G-BF-A", n_snps=10_000, max_cohort_size=50)
+nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_17_call_1_ag3_plot_pca_coords', df_pca, color="taxon", category_orders=dict(taxon=["coluzzii", "gambiae"])))
 
 # --- Notebook cell 19 ---
 nbrt.start_cell("notebook_cell_19")
-nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_17_call_1_ag3_plot_pca_coords', df_pca, color="taxon", category_orders=dict(taxon=["coluzzii", "gambiae"])))
-
-# --- Notebook cell 20 ---
-nbrt.start_cell("notebook_cell_20")
 nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_18_call_1_ag3_plot_pca_coords', df_pca, color="admin1_year", symbol="taxon"))
 
 # ## Ag3.0
 
+# --- Notebook cell 21 ---
+nbrt.start_cell("notebook_cell_21")
+df_pca, evr = _call_api_with_parameters(ag3.pca, 'cell_20_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="3.0", sample_query="country != 'Lab Cross'", n_snps=10_000)
+
 # --- Notebook cell 22 ---
 nbrt.start_cell("notebook_cell_22")
-df_pca, evr = _call_api_with_parameters(ag3.pca, 'cell_20_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="3.0", sample_query="country != 'Lab Cross'", n_snps=10_000)
+df_pca, evr = _call_api_with_parameters(ag3.pca, 'cell_21_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="3.0", sample_query="country != 'Lab Cross'", n_snps=10_000)
 
 # --- Notebook cell 23 ---
 nbrt.start_cell("notebook_cell_23")
-df_pca, evr = _call_api_with_parameters(ag3.pca, 'cell_21_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="3.0", sample_query="country != 'Lab Cross'", n_snps=10_000)
+nbrt.display(_call_api_with_parameters(ag3.plot_pca_variance, 'cell_22_call_1_ag3_plot_pca_variance', evr))
 
 # --- Notebook cell 24 ---
 nbrt.start_cell("notebook_cell_24")
-nbrt.display(_call_api_with_parameters(ag3.plot_pca_variance, 'cell_22_call_1_ag3_plot_pca_variance', evr))
+nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_23_call_1_ag3_plot_pca_coords', df_pca, color="taxon", marker_size=5))
 
 # --- Notebook cell 25 ---
 nbrt.start_cell("notebook_cell_25")
-nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_23_call_1_ag3_plot_pca_coords', df_pca, color="taxon", marker_size=5))
+nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_24_call_1_ag3_plot_pca_coords', df_pca, x="PC3", y="PC4", color="country", marker_size=5))
 
 # --- Notebook cell 26 ---
 nbrt.start_cell("notebook_cell_26")
-nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_24_call_1_ag3_plot_pca_coords', df_pca, x="PC3", y="PC4", color="country", marker_size=5))
+nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords_3d, 'cell_25_call_1_ag3_plot_pca_coords_3d', df_pca, color="taxon", marker_size=2))
 
 # --- Notebook cell 27 ---
 nbrt.start_cell("notebook_cell_27")
-nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords_3d, 'cell_25_call_1_ag3_plot_pca_coords_3d', df_pca, color="taxon", marker_size=2))
-
-# --- Notebook cell 28 ---
-nbrt.start_cell("notebook_cell_28")
 nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords_3d, 'cell_26_call_1_ag3_plot_pca_coords_3d', df_pca, color="taxon", category_orders=dict(
         taxon=["coluzzii", "gambiae", "arabiensis", "gcx1", "gcx2", "gcx3"]
     ), marker_size=2))
 
-# --- Notebook cell 29 ---
-nbrt.start_cell("notebook_cell_29")
+# --- Notebook cell 28 ---
+nbrt.start_cell("notebook_cell_28")
 new_cohorts = {
     "East": "country in ['Malawi', 'Tanzania', 'Kenya', 'Uganda']",
     "West": "country in ['Mali', 'Burkina Faso', 'Cameroon']",
 }
 
-# --- Notebook cell 30 ---
-nbrt.start_cell("notebook_cell_30")
+# --- Notebook cell 29 ---
+nbrt.start_cell("notebook_cell_29")
 nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_28_call_1_ag3_plot_pca_coords', df_pca, color=new_cohorts, marker_size=5))
 
-# --- Notebook cell 31 ---
-nbrt.start_cell("notebook_cell_31")
+# --- Notebook cell 30 ---
+nbrt.start_cell("notebook_cell_30")
 nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords_3d, 'cell_29_call_1_ag3_plot_pca_coords_3d', df_pca, color=new_cohorts, marker_size=2))
 
 # ## Af1.0
 
+# --- Notebook cell 32 ---
+nbrt.start_cell("notebook_cell_32")
+df_pca, evr = _call_api_with_parameters(af1.pca, 'cell_31_call_1_af1_pca', region="3RL:15,000,000-16,000,000", sample_sets="1.0", sample_query="country != 'Ghana'", n_snps=10_000)
+
 # --- Notebook cell 33 ---
 nbrt.start_cell("notebook_cell_33")
-df_pca, evr = _call_api_with_parameters(af1.pca, 'cell_31_call_1_af1_pca', region="3RL:15,000,000-16,000,000", sample_sets="1.0", sample_query="country != 'Ghana'", n_snps=10_000)
+nbrt.display(_call_api_with_parameters(af1.plot_pca_variance, 'cell_32_call_1_af1_plot_pca_variance', evr))
 
 # --- Notebook cell 34 ---
 nbrt.start_cell("notebook_cell_34")
-nbrt.display(_call_api_with_parameters(af1.plot_pca_variance, 'cell_32_call_1_af1_plot_pca_variance', evr))
+nbrt.display(_call_api_with_parameters(af1.plot_pca_coords, 'cell_33_call_1_af1_plot_pca_coords', df_pca, color="country"))
 
 # --- Notebook cell 35 ---
 nbrt.start_cell("notebook_cell_35")
-nbrt.display(_call_api_with_parameters(af1.plot_pca_coords, 'cell_33_call_1_af1_plot_pca_coords', df_pca, color="country"))
-
-# --- Notebook cell 36 ---
-nbrt.start_cell("notebook_cell_36")
 nbrt.display(_call_api_with_parameters(af1.plot_pca_coords, 'cell_34_call_1_af1_plot_pca_coords', df_pca, x="PC3", y="PC4", color="country"))
 
 # ## Excluding samples
 
+# --- Notebook cell 37 ---
+nbrt.start_cell("notebook_cell_37")
+df_pca, evr = _call_api_with_parameters(ag3.pca, 'cell_36_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="AG1000G-BF-A", n_snps=10_000, max_cohort_size=50)
+
 # --- Notebook cell 38 ---
 nbrt.start_cell("notebook_cell_38")
-df_pca, evr = _call_api_with_parameters(ag3.pca, 'cell_36_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="AG1000G-BF-A", n_snps=10_000, max_cohort_size=50)
+nbrt.display(df_pca.head())
 
 # --- Notebook cell 39 ---
 nbrt.start_cell("notebook_cell_39")
-nbrt.display(df_pca.head())
+nbrt.display(_call_api_with_parameters(ag3.plot_pca_variance, 'cell_38_call_1_ag3_plot_pca_variance', evr))
 
 # --- Notebook cell 40 ---
 nbrt.start_cell("notebook_cell_40")
-nbrt.display(_call_api_with_parameters(ag3.plot_pca_variance, 'cell_38_call_1_ag3_plot_pca_variance', evr))
+nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_39_call_1_ag3_plot_pca_coords', df_pca, color="taxon"))
 
 # --- Notebook cell 41 ---
 nbrt.start_cell("notebook_cell_41")
-nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_39_call_1_ag3_plot_pca_coords', df_pca, color="taxon"))
-
-# --- Notebook cell 42 ---
-nbrt.start_cell("notebook_cell_42")
 exclude_samples = ["AB0096-C", "AB0241-C", "AB0275-C", "AB0197-C"]
 
 df_pca_ex, evr_ex = _call_api_with_parameters(ag3.pca, 'cell_40_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="AG1000G-BF-A", n_snps=10_000, max_cohort_size=50, exclude_samples=exclude_samples)
 
+# --- Notebook cell 42 ---
+nbrt.start_cell("notebook_cell_42")
+nbrt.display(df_pca_ex.head())
+
 # --- Notebook cell 43 ---
 nbrt.start_cell("notebook_cell_43")
-nbrt.display(df_pca_ex.head())
+nbrt.display(df_pca_ex.query(f"sample_id in {exclude_samples}"))
 
 # --- Notebook cell 44 ---
 nbrt.start_cell("notebook_cell_44")
-nbrt.display(df_pca_ex.query(f"sample_id in {exclude_samples}"))
+nbrt.display(_call_api_with_parameters(ag3.plot_pca_variance, 'cell_43_call_1_ag3_plot_pca_variance', evr_ex))
 
 # --- Notebook cell 45 ---
 nbrt.start_cell("notebook_cell_45")
-nbrt.display(_call_api_with_parameters(ag3.plot_pca_variance, 'cell_43_call_1_ag3_plot_pca_variance', evr_ex))
-
-# --- Notebook cell 46 ---
-nbrt.start_cell("notebook_cell_46")
 nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_44_call_1_ag3_plot_pca_coords', df_pca_ex, color="taxon"))
 
 # ## Excluding samples during fit
 
-# --- Notebook cell 48 ---
-nbrt.start_cell("notebook_cell_48")
+# --- Notebook cell 47 ---
+nbrt.start_cell("notebook_cell_47")
 fit_exclude_samples = ["AB0096-C", "AB0241-C", "AB0275-C", "AB0197-C"]
 
 df_pca_fex, evr_fex = _call_api_with_parameters(ag3.pca, 'cell_46_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="AG1000G-BF-A", n_snps=10_000, max_cohort_size=50, fit_exclude_samples=fit_exclude_samples)
 
+# --- Notebook cell 48 ---
+nbrt.start_cell("notebook_cell_48")
+nbrt.display(df_pca_fex.head())
+
 # --- Notebook cell 49 ---
 nbrt.start_cell("notebook_cell_49")
-nbrt.display(df_pca_fex.head())
+nbrt.display(df_pca_fex.query(f"sample_id in {fit_exclude_samples}"))
 
 # --- Notebook cell 50 ---
 nbrt.start_cell("notebook_cell_50")
-nbrt.display(df_pca_fex.query(f"sample_id in {fit_exclude_samples}"))
+nbrt.display(_call_api_with_parameters(ag3.plot_pca_variance, 'cell_49_call_1_ag3_plot_pca_variance', evr_fex))
 
 # --- Notebook cell 51 ---
 nbrt.start_cell("notebook_cell_51")
-nbrt.display(_call_api_with_parameters(ag3.plot_pca_variance, 'cell_49_call_1_ag3_plot_pca_variance', evr_fex))
+nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_50_call_1_ag3_plot_pca_coords', df_pca_fex, color="taxon"))
 
 # --- Notebook cell 52 ---
 nbrt.start_cell("notebook_cell_52")
-nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_50_call_1_ag3_plot_pca_coords', df_pca_fex, color="taxon"))
-
-# --- Notebook cell 53 ---
-nbrt.start_cell("notebook_cell_53")
 nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_51_call_1_ag3_plot_pca_coords', df_pca_fex, color="pca_fit"))
 
 # ## PCA with cohort downsampling
 
-# --- Notebook cell 55 ---
-nbrt.start_cell("notebook_cell_55")
+# --- Notebook cell 54 ---
+nbrt.start_cell("notebook_cell_54")
 df_pca_cohorts, evr_cohorts = _call_api_with_parameters(ag3.pca, 'cell_53_call_1_ag3_pca', region="3L:15,000,000-16,000,000", sample_sets="3.0", n_snps=10_000, cohorts="country", max_cohort_size=20)
 nbrt.display(_call_api_with_parameters(ag3.plot_pca_coords, 'cell_53_call_2_ag3_plot_pca_coords', df_pca_cohorts, color="country"))
 

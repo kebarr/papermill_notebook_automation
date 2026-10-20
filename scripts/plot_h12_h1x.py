@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""plot_h12_h1x: the code from notebooks/plot_h12_h1x.ipynb as a runnable script.
+"""plot_h12_h1x: the code from notebooks_fixed_parameters_cells/plot_h12_h1x.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.
@@ -32,7 +32,7 @@ API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
 PERFORMANCE_CSV_PATH = 'executed_runs_scripts/plot_h12_h1x_performance.csv'
 API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_h12_calibration': {'contig': '__KEEP_CALLSITE_VALUE__',
                                             'analysis': 'gamb_colu',
-                                            'sample_query': None,
+                                            'sample_query': '__KEEP_CALLSITE_VALUE__',
                                             'sample_query_options': None,
                                             'sample_sets': '3.0',
                                             'cohort_size': None,
@@ -55,7 +55,7 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_h12_calibration': {'contig': '__K
                                      'window_size': 2000,
                                      'analysis': 'gamb_colu',
                                      'sample_sets': '3.0',
-                                     'sample_query': None,
+                                     'sample_query': '__KEEP_CALLSITE_VALUE__',
                                      'sample_query_options': None,
                                      'cohort_size': 20,
                                      'min_cohort_size': 15,
@@ -81,7 +81,7 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_h12_calibration': {'contig': '__K
                                      'window_size': 2000,
                                      'analysis': 'gamb_colu',
                                      'sample_sets': '3.0',
-                                     'sample_query': None,
+                                     'sample_query': '__KEEP_CALLSITE_VALUE__',
                                      'sample_query_options': None,
                                      'cohort_size': 20,
                                      'min_cohort_size': 15,
@@ -107,7 +107,7 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_h12_calibration': {'contig': '__K
                                       'window_size': 2000,
                                       'analysis': 'gamb_colu',
                                       'sample_sets': '3.0',
-                                      'sample_query': None,
+                                      'sample_query': '__KEEP_CALLSITE_VALUE__',
                                       'sample_query_options': None,
                                       'cohort_size': 20,
                                       'min_cohort_size': 15,
@@ -133,7 +133,7 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_h12_calibration': {'contig': '__K
                                       'window_size': 2000,
                                       'analysis': 'gamb_colu',
                                       'sample_sets': '3.0',
-                                      'sample_query': None,
+                                      'sample_query': '__KEEP_CALLSITE_VALUE__',
                                       'sample_query_options': None,
                                       'cohort_size': 20,
                                       'min_cohort_size': 15,
@@ -272,7 +272,7 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_h12_calibration': {'contig': '__K
                                       'window_size': 2000,
                                       'analysis': 'default',
                                       'sample_sets': '1.0',
-                                      'sample_query': None,
+                                      'sample_query': '__KEEP_CALLSITE_VALUE__',
                                       'sample_query_options': None,
                                       'cohort_size': 20,
                                       'min_cohort_size': 15,
@@ -298,7 +298,7 @@ API_CALL_PARAMETERS = {'cell_7_call_1_ag3_plot_h12_calibration': {'contig': '__K
                                       'window_size': 2000,
                                       'analysis': 'default',
                                       'sample_sets': '1.0',
-                                      'sample_query': None,
+                                      'sample_query': '__KEEP_CALLSITE_VALUE__',
                                       'sample_query_options': None,
                                       'cohort_size': 20,
                                       'min_cohort_size': 15,

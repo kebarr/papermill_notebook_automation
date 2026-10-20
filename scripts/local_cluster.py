@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""local_cluster: the code from notebooks/local_cluster.ipynb as a runnable script.
+"""local_cluster: the code from notebooks_fixed_parameters_cells/local_cluster.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.

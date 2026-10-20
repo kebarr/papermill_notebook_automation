@@ -1,4 +1,4 @@
-# plot_frequencies_space_time: the code from notebooks/plot_frequencies_space_time.ipynb, to paste into a Python console.
+# plot_frequencies_space_time: the code from notebooks_fixed_parameters_cells/plot_frequencies_space_time.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -583,7 +583,8 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_gene_cnv_frequencies_advanced': {'regi
                                                      'period_by': 'year',
                                                      'sample_sets': ['AG1000G-BF-A',
                                                                      'AG1000G-BF-B'],
-                                                     'sample_query': "taxon in ['coluzzii', "
+                                                     'sample_query': 'taxon in '
+                                                                     "['coluzzii', "
                                                                      "'gambiae']",
                                                      'sample_query_options': None,
                                                      'min_cohort_size': 10,
@@ -623,7 +624,8 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_gene_cnv_frequencies_advanced': {'regi
                                                     'legend_sizing': 'constant',
                                                     'show': True,
                                                     'renderer': None,
-                                                    'taxa': ('gambiae', 'arabiensis'),
+                                                    'taxa': ('gambiae',
+                                                             'arabiensis'),
                                                     'areas': None,
                                                     'kwargs': '__KEEP_CALLSITE_VALUE__'},
  'cell_9_call_1_ag3_gene_cnv_frequencies_advanced': {'region': '2R:28,450,000-28,510,000',
@@ -652,11 +654,17 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_gene_cnv_frequencies_advanced': {'regi
                                                        'period_by': 'year',
                                                        'sample_sets': ['AG1000G-BF-A',
                                                                        'AG1000G-BF-B'],
-                                                       'sample_query': "sex_call == 'F' and taxon "
-                                                                       "== 'coluzzii'",
+                                                       'sample_query': 'sex_call '
+                                                                       "== 'F' "
+                                                                       'and '
+                                                                       'taxon '
+                                                                       '== '
+                                                                       "'coluzzii'",
                                                        'sample_query_options': None,
                                                        'min_cohort_size': 10,
-                                                       'variant_query': 'max_af > 0.05',
+                                                       'variant_query': 'max_af '
+                                                                        '> '
+                                                                        '0.05',
                                                        'site_mask': None,
                                                        'nobs_mode': 'called',
                                                        'ci_method': 'wilson',
@@ -681,7 +689,9 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_gene_cnv_frequencies_advanced': {'regi
                                                        'sample_query': None,
                                                        'sample_query_options': None,
                                                        'min_cohort_size': 10,
-                                                       'variant_query': 'max_af > 0.05',
+                                                       'variant_query': 'max_af '
+                                                                        '> '
+                                                                        '0.05',
                                                        'site_mask': None,
                                                        'nobs_mode': 'called',
                                                        'ci_method': 'wilson',
@@ -695,7 +705,8 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_gene_cnv_frequencies_advanced': {'regi
                                                          'title': True,
                                                          'epilogue': True},
  'cell_16_call_1_af1_sample_sets': {'release': None},
- 'cell_17_call_1_af1_genome_features': {'region': None, 'attributes': 'default'},
+ 'cell_17_call_1_af1_genome_features': {'region': None,
+                                        'attributes': 'default'},
  'cell_18_call_1_af1_aa_allele_frequencies_advanced': {'transcript': 'LOC125767311_t1',
                                                        'area_by': 'admin1_iso',
                                                        'period_by': 'year',
@@ -703,7 +714,9 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_gene_cnv_frequencies_advanced': {'regi
                                                        'sample_query': None,
                                                        'sample_query_options': None,
                                                        'min_cohort_size': 10,
-                                                       'variant_query': 'max_af > 0.05',
+                                                       'variant_query': 'max_af '
+                                                                        '> '
+                                                                        '0.05',
                                                        'site_mask': None,
                                                        'nobs_mode': 'called',
                                                        'ci_method': 'wilson',
@@ -723,12 +736,18 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_gene_cnv_frequencies_advanced': {'regi
                                                                         'AG1000G-BF-B',
                                                                         'AG1000G-UG',
                                                                         'AG1000G-TZ'],
-                                                        'sample_query': "taxon in ['gambiae', "
+                                                        'sample_query': 'taxon '
+                                                                        'in '
+                                                                        "['gambiae', "
                                                                         "'coluzzii']",
                                                         'sample_query_options': None,
                                                         'min_cohort_size': 10,
                                                         'drop_invariant': True,
-                                                        'variant_query': 'max_af > 0.05 and effect '
+                                                        'variant_query': 'max_af '
+                                                                         '> '
+                                                                         '0.05 '
+                                                                         'and '
+                                                                         'effect '
                                                                          '== '
                                                                          "'NON_SYNONYMOUS_CODING'",
                                                         'site_mask': None,
@@ -766,18 +785,29 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_gene_cnv_frequencies_advanced': {'regi
                                                      'show': True,
                                                      'renderer': None,
                                                      'taxa': None,
-                                                     'areas': ('BF-09', 'TZ-25'),
+                                                     'areas': ('BF-09',
+                                                               'TZ-25'),
                                                      'kwargs': '__KEEP_CALLSITE_VALUE__'},
  'cell_25_call_1_ag3_snp_allele_frequencies_advanced': {'transcript': 'AGAP004707-RD',
                                                         'area_by': 'admin1_iso',
                                                         'period_by': 'month',
                                                         'sample_sets': '3.0',
-                                                        'sample_query': "country == 'Burkina Faso' "
-                                                                        'and year > 2010',
+                                                        'sample_query': 'country '
+                                                                        '== '
+                                                                        "'Burkina "
+                                                                        "Faso' "
+                                                                        'and '
+                                                                        'year '
+                                                                        '> '
+                                                                        '2010',
                                                         'sample_query_options': None,
                                                         'min_cohort_size': 5,
                                                         'drop_invariant': True,
-                                                        'variant_query': 'max_af > 0.05 and effect '
+                                                        'variant_query': 'max_af '
+                                                                         '> '
+                                                                         '0.05 '
+                                                                         'and '
+                                                                         'effect '
                                                                          '== '
                                                                          "'NON_SYNONYMOUS_CODING'",
                                                         'site_mask': None,
@@ -805,7 +835,11 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_gene_cnv_frequencies_advanced': {'regi
                                                         'sample_query_options': None,
                                                         'min_cohort_size': 10,
                                                         'drop_invariant': True,
-                                                        'variant_query': 'max_af > 0.05 and effect '
+                                                        'variant_query': 'max_af '
+                                                                         '> '
+                                                                         '0.05 '
+                                                                         'and '
+                                                                         'effect '
                                                                          '== '
                                                                          "'NON_SYNONYMOUS_CODING'",
                                                         'site_mask': None,
@@ -828,7 +862,11 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_gene_cnv_frequencies_advanced': {'regi
                                                         'sample_query_options': None,
                                                         'min_cohort_size': 10,
                                                         'drop_invariant': True,
-                                                        'variant_query': 'max_af > 0.05 and effect '
+                                                        'variant_query': 'max_af '
+                                                                         '> '
+                                                                         '0.05 '
+                                                                         'and '
+                                                                         'effect '
                                                                          '== '
                                                                          "'NON_SYNONYMOUS_CODING'",
                                                         'site_mask': None,
@@ -850,12 +888,18 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_gene_cnv_frequencies_advanced': {'regi
                                                                         'AG1000G-BF-B',
                                                                         'AG1000G-UG',
                                                                         'AG1000G-TZ'],
-                                                        'sample_query': 'aim_species in '
-                                                                        "['gambiae', 'coluzzii']",
+                                                        'sample_query': 'aim_species '
+                                                                        'in '
+                                                                        "['gambiae', "
+                                                                        "'coluzzii']",
                                                         'sample_query_options': None,
                                                         'min_cohort_size': 10,
                                                         'drop_invariant': True,
-                                                        'variant_query': 'max_af > 0.05 and effect '
+                                                        'variant_query': 'max_af '
+                                                                         '> '
+                                                                         '0.05 '
+                                                                         'and '
+                                                                         'effect '
                                                                          '== '
                                                                          "'NON_SYNONYMOUS_CODING'",
                                                         'site_mask': None,
@@ -874,7 +918,8 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_gene_cnv_frequencies_advanced': {'regi
                                         'sample_query': None,
                                         'sample_query_options': None,
                                         'sample_indices': None},
- 'cell_43_call_1_ag3_add_extra_metadata': {'data': '__KEEP_CALLSITE_VALUE__', 'on': 'sample_id'},
+ 'cell_43_call_1_ag3_add_extra_metadata': {'data': '__KEEP_CALLSITE_VALUE__',
+                                           'on': 'sample_id'},
  'cell_44_call_1_ag3_sample_metadata': {'sample_sets': None,
                                         'sample_query': None,
                                         'sample_query_options': None,

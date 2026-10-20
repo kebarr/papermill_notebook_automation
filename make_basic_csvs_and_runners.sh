@@ -121,3 +121,27 @@ ds = _call_api_with_parameters(ag3.gene_cnv_frequencies_advanced, 'cell_5_call_1
 # plot haplotype_networks errored with address already in use
 
 python view_performance.py executed_runs_local_papermill console/executed_runs_datalab scripts/executed_runs_datalab notebooks/executed_runs_datalab --output view_performance_each_run.html --open > view_performance_stdout.txt 2> view_performance_stderr.txt
+
+for notebook in ./notebooks_fixed_parameters_cells/*ipynb
+do 
+    notebook_name=$(basename ${notebook%.ipynb})
+    echo "Generating runner and CSV for notebook: $notebook_name"
+    echo ${notebook}
+    python papermill_meta.py ${notebook_name} --notebooks-dir ./notebooks_fixed_parameters_cells   --output-dir runners_and_csvs_new/generated_runners --output-csv executed_runs_notebooks_fixed/${notebook_name}_parameters_fixed.csv
+    python papermill_csv_config.py --notebooks-dir ./notebooks_fixed_parameters_cells create ${notebook_name}   --validate-metadata --output runners_and_csvs_new/${notebook_name}_config.csv
+    python notebook_to_script.py ${notebook} # will use default notebook params
+    python runners_and_csvs_new/generated_runners/papermill_${notebook_name}.py --output-csv executed_runs_notebooks_fixed/${notebook_name}_parameters_fixed.csv --config runners_and_csvs_new/${notebook_name}_config.csv --output-dir executed_runs_notebooks_fixed
+done
+
+
+for notebook in ./notebooks_fixed_parameters_cells/*ipynb
+do 
+    notebook_name=$(basename ${notebook%.ipynb})
+    echo "Generating runner and CSV for notebook: $notebook_name"
+    echo ${notebook}
+    python papermill_meta.py ${notebook_name} --notebooks-dir ./notebooks_fixed_parameters_cells --output-dir runners_and_csvs_new/generated_runners > fixed_parameters_stdout/${notebook_name}_papermill_meta.txt 2> fixed_parameters_stderr/${notebook_name}_papermill_meta.txt
+    python papermill_csv_config.py --notebooks-dir ./notebooks_fixed_parameters_cells create ${notebook_name} --validate-metadata --output runners_and_csvs_new/${notebook_name}_config.csv > fixed_parameters_stdout/${notebook_name}_papermill_csv_maker.txt 2> fixed_parameters_stderr/${notebook_name}_papermill_csv_maker.txt
+    python notebook_to_script.py ${notebook_name} --notebooks-dir ./notebooks_fixed_parameters_cells > fixed_parameters_stdout/${notebook_name}_to_script.txt 2> fixed_parameters_stderr/${notebook_name}_to_script.txt # will use default notebook params
+    python runners_and_csvs_new/generated_runners/papermill_${notebook_name}.py --output-csv executed_runs_notebooks_fixed/${notebook_name}_parameters_fixed.csv --config runners_and_csvs_new/${notebook_name}_config.csv --output-dir executed_runs_notebooks_fixed > fixed_parameters_stdout/${notebook_name}_papermill_run.txt 2> fixed_parameters_stderr_${notebook_name}_papermill_run.txt 
+done
+

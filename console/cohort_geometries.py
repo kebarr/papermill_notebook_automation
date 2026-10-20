@@ -1,4 +1,4 @@
-# cohort_geometries: the code from notebooks/cohort_geometries.ipynb, to paste into a Python console.
+# cohort_geometries: the code from notebooks_fixed_parameters_cells/cohort_geometries.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -599,8 +599,8 @@ OUTPUT_LOG = 'executed_runs_console/cohort_geometries_stdout.txt'
 
 nbrt.begin_console_run(FIGURE_DIR, FIGURE_FORMAT, FIGURE_NAMES, OUTPUT_LOG)
 
-# --- Notebook cell 2 ---
-nbrt.start_cell("notebook_cell_2")
+# --- Notebook cell 1 ---
+nbrt.start_cell("notebook_cell_1")
 import inspect
 from memory_profiler import memory_usage
 import time
@@ -722,14 +722,14 @@ _call_api_with_parameters = nbrt.track_api_calls(_call_api_with_parameters)
 #
 # Demonstrates the `cohort_geometries()` method for accessing GeoJSON boundary data.
 
-# --- Notebook cell 4 ---
-nbrt.start_cell("notebook_cell_4")
+# --- Notebook cell 3 ---
+nbrt.start_cell("notebook_cell_3")
 import malariagen_data
 
 # ## Set up the Ag3 data resource
 
-# --- Notebook cell 6 ---
-nbrt.start_cell("notebook_cell_6")
+# --- Notebook cell 5 ---
+nbrt.start_cell("notebook_cell_5")
 ag3 = malariagen_data.Ag3(
     "simplecache::gs://vo_agam_release_master_us_central1",
     simplecache=dict(cache_storage="../gcs_cache"),
@@ -738,26 +738,26 @@ nbrt.display(ag3)
 
 # ## Access cohort geometries
 
-# --- Notebook cell 8 ---
-nbrt.start_cell("notebook_cell_8")
+# --- Notebook cell 7 ---
+nbrt.start_cell("notebook_cell_7")
 geojson = _call_api_with_parameters(ag3.cohort_geometries, 'cell_6_call_1_ag3_cohort_geometries', cohort_set="admin1_year")
 
 # ## Inspect the returned data
 
+# --- Notebook cell 9 ---
+nbrt.start_cell("notebook_cell_9")
+nbrt.display(type(geojson))
+
 # --- Notebook cell 10 ---
 nbrt.start_cell("notebook_cell_10")
-nbrt.display(type(geojson))
+nbrt.display(geojson.keys())
 
 # --- Notebook cell 11 ---
 nbrt.start_cell("notebook_cell_11")
-nbrt.display(geojson.keys())
+nbrt.display(len(geojson["features"]))
 
 # --- Notebook cell 12 ---
 nbrt.start_cell("notebook_cell_12")
-nbrt.display(len(geojson["features"]))
-
-# --- Notebook cell 13 ---
-nbrt.start_cell("notebook_cell_13")
 for f in geojson["features"][:3]:
     print(f["properties"])
 

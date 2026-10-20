@@ -1,4 +1,4 @@
-# plot_pairwise_average_fst: the code from notebooks/plot_pairwise_average_fst.ipynb, to paste into a Python console.
+# plot_pairwise_average_fst: the code from notebooks_fixed_parameters_cells/plot_pairwise_average_fst.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -579,28 +579,31 @@ API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
 # Relative to where the script is run from.
 PERFORMANCE_CSV_PATH = 'executed_runs_scripts/plot_pairwise_average_fst_performance.csv'
 API_CALL_PARAMETERS = {'cell_5_call_1_ag3_average_fst': {'region': '__KEEP_CALLSITE_VALUE__',
-                                   'cohort1_query': "cohort_admin2_year == 'ML-2_Kati_colu_2014'",
-                                   'cohort2_query': "cohort_admin2_year == 'ML-2_Kati_gamb_2014'",
+                                   'cohort1_query': 'cohort_admin2_year == '
+                                                    "'ML-2_Kati_colu_2014'",
+                                   'cohort2_query': 'cohort_admin2_year == '
+                                                    "'ML-2_Kati_gamb_2014'",
                                    'sample_query_options': None,
                                    'sample_sets': '3.0',
                                    'cohort_size': None,
                                    'min_cohort_size': 15,
                                    'max_cohort_size': 50,
-                                   'n_jack': 200,
-                                   'site_mask': 'default',
+                                   'n_jack': '__KEEP_CALLSITE_VALUE__',
+                                   'site_mask': '__KEEP_CALLSITE_VALUE__',
                                    'site_class': None,
                                    'random_seed': 42},
  'cell_6_call_1_ag3_pairwise_average_fst': {'region': '__KEEP_CALLSITE_VALUE__',
                                             'cohorts': 'cohort_admin1_year',
                                             'sample_sets': '3.0',
-                                            'sample_query': "country == 'Mali' and taxon == "
+                                            'sample_query': "country == 'Mali' "
+                                                            'and taxon == '
                                                             "'gambiae'",
                                             'sample_query_options': None,
                                             'cohort_size': None,
                                             'min_cohort_size': 15,
                                             'max_cohort_size': 50,
-                                            'n_jack': 200,
-                                            'site_mask': 'default',
+                                            'n_jack': '__KEEP_CALLSITE_VALUE__',
+                                            'site_mask': '__KEEP_CALLSITE_VALUE__',
                                             'site_class': None,
                                             'random_seed': 42},
  'cell_7_call_1_ag3_plot_pairwise_average_fst': {'fst_df': '__KEEP_CALLSITE_VALUE__',
@@ -659,14 +662,16 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_average_fst': {'region': '__KEEP_CALLS
                                              'cohorts': 'cohort_admin1_year',
                                              'sample_sets': ['AG1000G-KE',
                                                              '1274-VO-KE-KAMAU-VMF00246'],
-                                             'sample_query': "country == 'Kenya' and taxon == "
+                                             'sample_query': 'country == '
+                                                             "'Kenya' and "
+                                                             'taxon == '
                                                              "'arabiensis'",
                                              'sample_query_options': None,
                                              'cohort_size': None,
                                              'min_cohort_size': 10,
                                              'max_cohort_size': 50,
-                                             'n_jack': 200,
-                                             'site_mask': 'default',
+                                             'n_jack': '__KEEP_CALLSITE_VALUE__',
+                                             'site_mask': '__KEEP_CALLSITE_VALUE__',
                                              'site_class': None,
                                              'random_seed': 42},
  'cell_13_call_1_ag3_plot_pairwise_average_fst': {'fst_df': '__KEEP_CALLSITE_VALUE__',
@@ -683,7 +688,8 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_average_fst': {'region': '__KEEP_CALLS
                                                   'renderer': None,
                                                   'kwargs': '__KEEP_CALLSITE_VALUE__'},
  'cell_14_call_1_ag3_plot_pairwise_average_fst': {'fst_df': '__KEEP_CALLSITE_VALUE__',
-                                                  'annotation': 'standard error',
+                                                  'annotation': 'standard '
+                                                                'error',
                                                   'zmin': 0.0,
                                                   'zmax': None,
                                                   'text_auto': '.3f',

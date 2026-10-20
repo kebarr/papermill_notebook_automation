@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ld_pruning: the code from notebooks/ld_pruning.ipynb as a runnable script.
+"""ld_pruning: the code from notebooks_fixed_parameters_cells/ld_pruning.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.
@@ -29,7 +29,7 @@ import notebook_runtime as nbrt
 # value or the method's default.
 API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
 # Relative to where the script is run from.
-PERFORMANCE_CSV_PATH = 'executed_runs_scripts/plot_biallelic_snps_performance.csv'
+PERFORMANCE_CSV_PATH = 'executed_runs_scripts/ld_pruning_performance.csv'
 API_CALL_PARAMETERS = {'cell_6_call_1_ag3_biallelic_snp_calls_ld_pruned': {'region': '3L',
                                                      'n_snps': 100000,
                                                      'ld_window_size': 500,

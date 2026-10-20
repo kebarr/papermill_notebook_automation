@@ -1,4 +1,4 @@
-# plink_convert: the code from notebooks/plink_convert.ipynb, to paste into a Python console.
+# plink_convert: the code from notebooks_fixed_parameters_cells/plink_convert.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs

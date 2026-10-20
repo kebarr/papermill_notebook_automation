@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""plot_heterozygosity: the code from notebooks/plot_heterozygosity.ipynb as a runnable script.
+"""plot_heterozygosity: the code from notebooks_fixed_parameters_cells/plot_heterozygosity.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.
@@ -115,7 +115,8 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_roh': {'sample': 'AK0050-C',
                                 'gene_labels': None,
                                 'gene_labelset': None},
  'cell_7_call_1_ag3_sample_metadata': {'sample_sets': None,
-                                       'sample_query': "country == 'Burkina Faso'",
+                                       'sample_query': "country == 'Burkina "
+                                                       "Faso'",
                                        'sample_query_options': None,
                                        'sample_indices': None},
  'cell_8_call_1_ag3_plot_heterozygosity': {'sample': 'AB0085-Cx',

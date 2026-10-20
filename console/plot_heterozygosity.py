@@ -1,4 +1,4 @@
-# plot_heterozygosity: the code from notebooks/plot_heterozygosity.ipynb, to paste into a Python console.
+# plot_heterozygosity: the code from notebooks_fixed_parameters_cells/plot_heterozygosity.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -663,7 +663,8 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_roh': {'sample': 'AK0050-C',
                                 'gene_labels': None,
                                 'gene_labelset': None},
  'cell_7_call_1_ag3_sample_metadata': {'sample_sets': None,
-                                       'sample_query': "country == 'Burkina Faso'",
+                                       'sample_query': "country == 'Burkina "
+                                                       "Faso'",
                                        'sample_query_options': None,
                                        'sample_indices': None},
  'cell_8_call_1_ag3_plot_heterozygosity': {'sample': 'AB0085-Cx',

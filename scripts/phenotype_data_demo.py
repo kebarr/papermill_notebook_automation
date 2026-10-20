@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""phenotype_data_demo: the code from notebooks/phenotype_data_demo.ipynb as a runnable script.
+"""phenotype_data_demo: the code from notebooks_fixed_parameters_cells/phenotype_data_demo.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.
@@ -29,47 +29,52 @@ import notebook_runtime as nbrt
 # value or the method's default.
 API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
 # Relative to where the script is run from.
-PERFORMANCE_CSV_PATH = 'executed_runs_scripts/phenotype_data_demo.csv'
+PERFORMANCE_CSV_PATH = 'executed_runs_scripts/phenotype_data_demo_performance.csv'
 API_CALL_PARAMETERS = {'cell_5_call_1_ag3_phenotype_sample_sets': {},
- 'cell_8_call_1_ag3_phenotype_data': {'sample_sets': None,
-                                      'sample_query': "insecticide == 'Deltamethrin'",
+ 'cell_8_call_1_ag3_phenotype_data': {'sample_sets': '__KEEP_CALLSITE_VALUE__',
+                                      'sample_query': 'insecticide == '
+                                                      "'Deltamethrin'",
                                       'sample_query_options': None,
                                       'cohort_size': None,
                                       'min_cohort_size': None,
                                       'max_cohort_size': None},
- 'cell_10_call_1_ag3_phenotype_data': {'sample_sets': None,
-                                       'sample_query': "insecticide == 'Deltamethrin' and dose >= "
-                                                       '1.0',
+ 'cell_10_call_1_ag3_phenotype_data': {'sample_sets': '__KEEP_CALLSITE_VALUE__',
+                                       'sample_query': 'insecticide == '
+                                                       "'Deltamethrin' and "
+                                                       'dose >= 1.0',
                                        'sample_query_options': None,
                                        'cohort_size': None,
                                        'min_cohort_size': None,
                                        'max_cohort_size': None},
- 'cell_12_call_1_ag3_phenotype_data': {'sample_sets': None,
-                                       'sample_query': "insecticide == 'Deltamethrin'",
+ 'cell_12_call_1_ag3_phenotype_data': {'sample_sets': '__KEEP_CALLSITE_VALUE__',
+                                       'sample_query': 'insecticide == '
+                                                       "'Deltamethrin'",
                                        'sample_query_options': None,
                                        'cohort_size': None,
                                        'min_cohort_size': 10,
                                        'max_cohort_size': None},
- 'cell_13_call_1_ag3_phenotype_binary': {'sample_sets': None,
+ 'cell_13_call_1_ag3_phenotype_binary': {'sample_sets': '__KEEP_CALLSITE_VALUE__',
                                          'insecticide': None,
                                          'dose': None,
                                          'phenotype': None,
-                                         'sample_query': "insecticide == 'Deltamethrin'",
+                                         'sample_query': 'insecticide == '
+                                                         "'Deltamethrin'",
                                          'sample_query_options': None,
                                          'cohort_size': None,
                                          'min_cohort_size': None,
                                          'max_cohort_size': None},
- 'cell_13_call_2_ag3_phenotype_binary': {'sample_sets': None,
+ 'cell_13_call_2_ag3_phenotype_binary': {'sample_sets': '__KEEP_CALLSITE_VALUE__',
                                          'insecticide': None,
                                          'dose': None,
                                          'phenotype': None,
-                                         'sample_query': "insecticide == 'Deltamethrin' and "
+                                         'sample_query': 'insecticide == '
+                                                         "'Deltamethrin' and "
                                                          "phenotype == 'alive'",
                                          'sample_query_options': None,
                                          'cohort_size': None,
                                          'min_cohort_size': None,
                                          'max_cohort_size': None},
- 'cell_13_call_3_ag3_phenotype_binary': {'sample_sets': None,
+ 'cell_13_call_3_ag3_phenotype_binary': {'sample_sets': '__KEEP_CALLSITE_VALUE__',
                                          'insecticide': None,
                                          'dose': None,
                                          'phenotype': None,
@@ -78,26 +83,28 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_phenotype_sample_sets': {},
                                          'cohort_size': None,
                                          'min_cohort_size': None,
                                          'max_cohort_size': None},
- 'cell_15_call_1_ag3_phenotype_binary': {'sample_sets': None,
+ 'cell_15_call_1_ag3_phenotype_binary': {'sample_sets': '__KEEP_CALLSITE_VALUE__',
                                          'insecticide': None,
                                          'dose': None,
                                          'phenotype': None,
-                                         'sample_query': "insecticide == 'Deltamethrin'",
+                                         'sample_query': 'insecticide == '
+                                                         "'Deltamethrin'",
                                          'sample_query_options': None,
                                          'cohort_size': None,
                                          'min_cohort_size': None,
                                          'max_cohort_size': None},
- 'cell_15_call_2_ag3_phenotype_binary': {'sample_sets': None,
+ 'cell_15_call_2_ag3_phenotype_binary': {'sample_sets': '__KEEP_CALLSITE_VALUE__',
                                          'insecticide': None,
                                          'dose': None,
                                          'phenotype': None,
-                                         'sample_query': "insecticide == 'Deltamethrin' and "
+                                         'sample_query': 'insecticide == '
+                                                         "'Deltamethrin' and "
                                                          "phenotype == 'alive'",
                                          'sample_query_options': None,
                                          'cohort_size': None,
                                          'min_cohort_size': None,
                                          'max_cohort_size': None},
- 'cell_15_call_3_ag3_phenotype_binary': {'sample_sets': None,
+ 'cell_15_call_3_ag3_phenotype_binary': {'sample_sets': '__KEEP_CALLSITE_VALUE__',
                                          'insecticide': None,
                                          'dose': None,
                                          'phenotype': None,
@@ -107,17 +114,23 @@ API_CALL_PARAMETERS = {'cell_5_call_1_ag3_phenotype_sample_sets': {},
                                          'min_cohort_size': None,
                                          'max_cohort_size': None},
  'cell_17_call_1_ag3_phenotypes_with_snps': {'region': '__KEEP_CALLSITE_VALUE__',
-                                             'sample_sets': None,
-                                             'sample_query': "insecticide == 'Deltamethrin' and "
-                                                             "phenotype == 'alive'",
+                                             'sample_sets': '__KEEP_CALLSITE_VALUE__',
+                                             'sample_query': 'insecticide == '
+                                                             "'Deltamethrin' "
+                                                             'and phenotype == '
+                                                             "'alive'",
                                              'sample_query_options': None,
                                              'cohort_size': None,
                                              'min_cohort_size': None,
                                              'max_cohort_size': None},
  'cell_19_call_1_ag3_phenotypes_with_haplotypes': {'region': '__KEEP_CALLSITE_VALUE__',
-                                                   'sample_sets': None,
-                                                   'sample_query': "insecticide == 'Deltamethrin' "
-                                                                   "and phenotype == 'dead'",
+                                                   'sample_sets': '__KEEP_CALLSITE_VALUE__',
+                                                   'sample_query': 'insecticide '
+                                                                   '== '
+                                                                   "'Deltamethrin' "
+                                                                   'and '
+                                                                   'phenotype '
+                                                                   "== 'dead'",
                                                    'sample_query_options': None,
                                                    'cohort_size': None,
                                                    'min_cohort_size': None,

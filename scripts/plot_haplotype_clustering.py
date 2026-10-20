@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""plot_haplotype_clustering: the code from notebooks/plot_haplotype_clustering.ipynb as a runnable script.
+"""plot_haplotype_clustering: the code from notebooks_fixed_parameters_cells/plot_haplotype_clustering.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.
@@ -32,7 +32,8 @@ API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
 PERFORMANCE_CSV_PATH = 'executed_runs_scripts/plot_haplotype_clustering_performance.csv'
 API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region': '2L:2,410,000-2,430,000',
                                                  'analysis': 'gamb_colu',
-                                                 'sample_sets': ['AG1000G-GH', 'AG1000G-BF-B'],
+                                                 'sample_sets': ['AG1000G-GH',
+                                                                 'AG1000G-BF-B'],
                                                  'sample_query': None,
                                                  'sample_query_options': None,
                                                  'cohort_size': None,
@@ -62,7 +63,8 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region':
                                                  'inline_array': True},
  'cell_7_call_1_ag3_plot_haplotype_clustering': {'region': '2L:2,410,000-2,430,000',
                                                  'analysis': 'gamb_colu',
-                                                 'sample_sets': ['AG1000G-GH', 'AG1000G-BF-B'],
+                                                 'sample_sets': ['AG1000G-GH',
+                                                                 'AG1000G-BF-B'],
                                                  'sample_query': None,
                                                  'sample_query_options': None,
                                                  'cohort_size': None,
@@ -92,7 +94,8 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region':
                                                  'inline_array': True},
  'cell_8_call_1_ag3_plot_haplotype_clustering': {'region': '2L:2,410,000-2,430,000',
                                                  'analysis': 'gamb_colu',
-                                                 'sample_sets': ['AG1000G-GH', 'AG1000G-BF-B'],
+                                                 'sample_sets': ['AG1000G-GH',
+                                                                 'AG1000G-BF-B'],
                                                  'sample_query': None,
                                                  'sample_query_options': None,
                                                  'cohort_size': None,
@@ -122,7 +125,8 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region':
                                                  'inline_array': True},
  'cell_9_call_1_ag3_plot_haplotype_clustering': {'region': '2L:2,410,000-2,430,000',
                                                  'analysis': 'gamb_colu',
-                                                 'sample_sets': ['AG1000G-GH', 'AG1000G-BF-B'],
+                                                 'sample_sets': ['AG1000G-GH',
+                                                                 'AG1000G-BF-B'],
                                                  'sample_query': None,
                                                  'sample_query_options': None,
                                                  'cohort_size': None,
@@ -152,7 +156,8 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region':
                                                  'inline_array': True},
  'cell_10_call_1_ag3_plot_haplotype_clustering': {'region': '2L:2,410,000-2,430,000',
                                                   'analysis': 'gamb_colu',
-                                                  'sample_sets': ['AG1000G-GH', 'AG1000G-BF-B'],
+                                                  'sample_sets': ['AG1000G-GH',
+                                                                  'AG1000G-BF-B'],
                                                   'sample_query': None,
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
@@ -214,7 +219,8 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region':
  'cell_12_call_1_ag3_plot_haplotype_clustering': {'region': '2R:28,480,000-28,490,000',
                                                   'analysis': 'gamb_colu_arab',
                                                   'sample_sets': ['3.0'],
-                                                  'sample_query': "taxon == 'arabiensis'",
+                                                  'sample_query': 'taxon == '
+                                                                  "'arabiensis'",
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
                                                   'random_seed': 42,
@@ -244,7 +250,8 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region':
  'cell_13_call_1_ag3_plot_haplotype_clustering': {'region': '2R:28,480,000-28,490,000',
                                                   'analysis': 'gamb_colu_arab',
                                                   'sample_sets': ['3.0'],
-                                                  'sample_query': "taxon == 'arabiensis'",
+                                                  'sample_query': 'taxon == '
+                                                                  "'arabiensis'",
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
                                                   'random_seed': 42,
@@ -274,7 +281,8 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region':
  'cell_14_call_1_ag3_plot_haplotype_clustering': {'region': '2R:28,480,000-28,490,000',
                                                   'analysis': 'gamb_colu_arab',
                                                   'sample_sets': ['3.0'],
-                                                  'sample_query': "taxon == 'arabiensis'",
+                                                  'sample_query': 'taxon == '
+                                                                  "'arabiensis'",
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
                                                   'random_seed': 42,
@@ -304,11 +312,12 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region':
  'cell_16_call_1_ag3_plot_haplotype_clustering': {'region': '2R:28,480,000-28,490,000',
                                                   'analysis': 'gamb_colu_arab',
                                                   'sample_sets': ['3.0'],
-                                                  'sample_query': "taxon == 'arabiensis'",
+                                                  'sample_query': 'taxon == '
+                                                                  "'arabiensis'",
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
                                                   'random_seed': 42,
-                                                  'color': None,
+                                                  'color': '__KEEP_CALLSITE_VALUE__',
                                                   'symbol': None,
                                                   'linkage_method': 'single',
                                                   'distance_metric': 'hamming',
@@ -334,11 +343,12 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region':
  'cell_17_call_1_ag3_plot_haplotype_clustering': {'region': '2R:28,480,000-28,490,000',
                                                   'analysis': 'gamb_colu_arab',
                                                   'sample_sets': ['3.0'],
-                                                  'sample_query': "taxon == 'arabiensis'",
+                                                  'sample_query': 'taxon == '
+                                                                  "'arabiensis'",
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
                                                   'random_seed': 42,
-                                                  'color': None,
+                                                  'color': '__KEEP_CALLSITE_VALUE__',
                                                   'symbol': None,
                                                   'linkage_method': 'single',
                                                   'distance_metric': 'hamming',
@@ -366,13 +376,16 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region':
                                                            'snp_transcript': 'AGAP002863-RA',
                                                            'snp_colorscale': 'Greys',
                                                            'snp_filter_min_maf': 0.05,
-                                                           'snp_query': 'effect in '
+                                                           'snp_query': 'effect '
+                                                                        'in '
                                                                         "['NON_SYNONYMOUS_CODING', "
                                                                         "'START_LOST', "
                                                                         "'STOP_LOST', "
                                                                         "'STOP_GAINED']",
                                                            'sample_sets': ['3.0'],
-                                                           'sample_query': "taxon == 'arabiensis'",
+                                                           'sample_query': 'taxon '
+                                                                           '== '
+                                                                           "'arabiensis'",
                                                            'sample_query_options': None,
                                                            'random_seed': 42,
                                                            'cohort_size': None,
@@ -381,7 +394,7 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region':
                                                            'min_cluster_size': 5,
                                                            'cluster_criterion': 'distance',
                                                            'color': 'year',
-                                                           'symbol': None,
+                                                           'symbol': '__KEEP_CALLSITE_VALUE__',
                                                            'linkage_method': 'complete',
                                                            'count_sort': None,
                                                            'distance_sort': None,
@@ -408,7 +421,8 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region':
                                                            'snp_transcript': 'AGAP004707-RD',
                                                            'snp_colorscale': 'Greys',
                                                            'snp_filter_min_maf': 0.05,
-                                                           'snp_query': 'effect in '
+                                                           'snp_query': 'effect '
+                                                                        'in '
                                                                         "['NON_SYNONYMOUS_CODING', "
                                                                         "'START_LOST', "
                                                                         "'STOP_LOST', "
@@ -510,7 +524,8 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_haplotype_clustering': {'region':
  'cell_24_call_1_af1_plot_haplotype_clustering': {'region': '2RL:28,480,000-28,490,000',
                                                   'analysis': 'default',
                                                   'sample_sets': ['1.0'],
-                                                  'sample_query': "country == 'Ghana'",
+                                                  'sample_query': 'country == '
+                                                                  "'Ghana'",
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
                                                   'random_seed': 42,

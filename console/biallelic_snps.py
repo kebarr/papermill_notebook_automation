@@ -1,4 +1,4 @@
-# biallelic_snps: the code from notebooks/biallelic_snps.ipynb, to paste into a Python console.
+# biallelic_snps: the code from notebooks_fixed_parameters_cells/biallelic_snps.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -577,7 +577,7 @@ def end_console_run():
 # value or the method's default.
 API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
 # Relative to where the script is run from.
-PERFORMANCE_CSV_PATH = 'executed_runs_scripts/plot_biallelic_snps_performance.csv'
+PERFORMANCE_CSV_PATH = 'executed_runs_scripts/biallelic_snps_performance.csv'
 API_CALL_PARAMETERS = {'cell_2_call_1_ag3_snp_calls': {'region': '3L',
                                  'sample_sets': 'AG1000G-BF-A',
                                  'sample_query': None,

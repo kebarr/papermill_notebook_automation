@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""plot_ihs_gwss: the code from notebooks/plot_ihs_gwss.ipynb as a runnable script.
+"""plot_ihs_gwss: the code from notebooks_fixed_parameters_cells/plot_ihs_gwss.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.
@@ -33,7 +33,8 @@ PERFORMANCE_CSV_PATH = 'executed_runs_scripts/plot_ihs_gwss_performance.csv'
 API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_ihs_gwss_track': {'contig': '2L',
                                            'analysis': 'gamb_colu',
                                            'sample_sets': '3.0',
-                                           'sample_query': 'cohort_admin2_year == '
+                                           'sample_query': 'cohort_admin2_year '
+                                                           '== '
                                                            "'ML-2_Kati_colu_2014'",
                                            'sample_query_options': None,
                                            'window_size': 1000,
@@ -65,7 +66,8 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_ihs_gwss_track': {'contig': '2L',
  'cell_4_call_1_ag3_plot_ihs_gwss_track': {'contig': '2L',
                                            'analysis': 'gamb_colu',
                                            'sample_sets': '3.0',
-                                           'sample_query': 'cohort_admin2_year == '
+                                           'sample_query': 'cohort_admin2_year '
+                                                           '== '
                                                            "'ML-2_Kati_colu_2014'",
                                            'sample_query_options': None,
                                            'window_size': 1000,
@@ -97,7 +99,8 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_ihs_gwss_track': {'contig': '2L',
  'cell_5_call_1_ag3_plot_ihs_gwss': {'contig': '2L',
                                      'analysis': 'gamb_colu',
                                      'sample_sets': '3.0',
-                                     'sample_query': "cohort_admin2_year == 'ML-2_Kati_colu_2014'",
+                                     'sample_query': 'cohort_admin2_year == '
+                                                     "'ML-2_Kati_colu_2014'",
                                      'sample_query_options': None,
                                      'window_size': 100,
                                      'percentiles': (50, 75, 100),
@@ -130,7 +133,8 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_ihs_gwss_track': {'contig': '2L',
  'cell_6_call_1_ag3_plot_ihs_gwss': {'contig': '2L',
                                      'analysis': 'gamb_colu',
                                      'sample_sets': '3.0',
-                                     'sample_query': "cohort_admin2_year == 'ML-2_Kati_colu_2014'",
+                                     'sample_query': 'cohort_admin2_year == '
+                                                     "'ML-2_Kati_colu_2014'",
                                      'sample_query_options': None,
                                      'window_size': 1000,
                                      'percentiles': (50, 75, 100),
@@ -167,7 +171,8 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_ihs_gwss_track': {'contig': '2L',
  'cell_8_call_1_af1_plot_ihs_gwss': {'contig': 'X',
                                      'analysis': 'default',
                                      'sample_sets': '1.0',
-                                     'sample_query': "cohort_admin1_year == 'KE-03_fune_2016'",
+                                     'sample_query': 'cohort_admin1_year == '
+                                                     "'KE-03_fune_2016'",
                                      'sample_query_options': None,
                                      'window_size': 2000,
                                      'percentiles': (50, 75, 100),
@@ -200,7 +205,8 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_ihs_gwss_track': {'contig': '2L',
  'cell_9_call_1_af1_plot_ihs_gwss': {'contig': 'X',
                                      'analysis': 'default',
                                      'sample_sets': '1.0',
-                                     'sample_query': "cohort_admin1_year == 'KE-03_fune_2016'",
+                                     'sample_query': 'cohort_admin1_year == '
+                                                     "'KE-03_fune_2016'",
                                      'sample_query_options': None,
                                      'window_size': 200,
                                      'percentiles': (50, 75, 100),

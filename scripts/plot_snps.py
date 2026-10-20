@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""plot_snps: the code from notebooks/plot_snps.ipynb as a runnable script.
+"""plot_snps: the code from notebooks_fixed_parameters_cells/plot_snps.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.
@@ -374,16 +374,11 @@ def run(API_KEEP_CALLSITE_VALUE, PERFORMANCE_CSV_PATH, API_CALL_PARAMETERS):
     nbrt.display(ag3)
     # --- Notebook cell 4 ---
     nbrt.start_cell("notebook_cell_4")
-    start_time = time.perf_counter()
-    peak_memory_mib = memory_usage((lambda: _call_api_with_parameters(ag3.snp_variants, 'cell_3_call_1_ag3_snp_variants', region="3L"), ()), max_usage=True)
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_3_call_1_ag3_snp_variants {runtime_sec}, peak memory {peak_memory_mib}"))
+    nbrt.display(_call_api_with_parameters(ag3.snp_variants, 'cell_3_call_1_ag3_snp_variants', region="3L"))
     # --- Notebook cell 5 ---
     nbrt.start_cell("notebook_cell_5")
-    start_time = time.perf_counter()
-    peak_memory_mib, ds = memory_usage((lambda: _call_api_with_parameters(ag3.snp_calls, 'cell_4_call_1_ag3_snp_calls', region="3L", sample_sets="AG1000G-FR"), ()), max_usage=True, retval=True)
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_4_call_1_ag3_snp_calls {runtime_sec}, peak memory {peak_memory_mib}"))
+    ds = _call_api_with_parameters(ag3.snp_calls, 'cell_4_call_1_ag3_snp_calls', region="3L", sample_sets="AG1000G-FR")
+    nbrt.display(ds)
     # --- Notebook cell 6 ---
     nbrt.start_cell("notebook_cell_6")
     nbrt.display(ds["variant_position"])
@@ -392,46 +387,25 @@ def run(API_KEEP_CALLSITE_VALUE, PERFORMANCE_CSV_PATH, API_CALL_PARAMETERS):
     nbrt.display(ds["call_genotype"])
     # --- Notebook cell 8 ---
     nbrt.start_cell("notebook_cell_8")
-    start_time = time.perf_counter()
-    _call_api_with_parameters(ag3.plot_snps_track, 'cell_7_call_1_ag3_plot_snps_track', region="2L:2,350,000-2,450,000", sample_sets="AG1000G-FR")
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_7_call_1_ag3_plot_snps_track {runtime_sec}, peak memory {peak_memory_mib}"))
+    nbrt.display(_call_api_with_parameters(ag3.plot_snps_track, 'cell_7_call_1_ag3_plot_snps_track', region="2L:2,350,000-2,450,000", sample_sets="AG1000G-FR"))
     # --- Notebook cell 9 ---
     nbrt.start_cell("notebook_cell_9")
-    start_time = time.perf_counter()
-    _call_api_with_parameters(ag3.plot_snps_track, 'cell_8_call_1_ag3_plot_snps_track', region="2L:2,363,000-2,364,000", sample_sets="AG1000G-FR")
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_8_call_1_ag3_plot_snps_track {runtime_sec}, peak memory {peak_memory_mib}"))
+    nbrt.display(_call_api_with_parameters(ag3.plot_snps_track, 'cell_8_call_1_ag3_plot_snps_track', region="2L:2,363,000-2,364,000", sample_sets="AG1000G-FR"))
     # --- Notebook cell 10 ---
     nbrt.start_cell("notebook_cell_10")
-    start_time = time.perf_counter()
-    _call_api_with_parameters(ag3.plot_snps_track, 'cell_9_call_1_ag3_plot_snps_track', region="2L:2,364,000-2,366,000", sample_sets="AG1000G-FR")
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_9_call_1_ag3_plot_snps_track {runtime_sec}, peak memory {peak_memory_mib}"))
+    nbrt.display(_call_api_with_parameters(ag3.plot_snps_track, 'cell_9_call_1_ag3_plot_snps_track', region="2L:2,364,000-2,366,000", sample_sets="AG1000G-FR"))
     # --- Notebook cell 11 ---
     nbrt.start_cell("notebook_cell_11")
-    start_time = time.perf_counter()
-    _call_api_with_parameters(ag3.plot_snps_track, 'cell_10_call_1_ag3_plot_snps_track', region="2L:2,364,000-2,364,500", sample_sets="AG1000G-FR")
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_10_call_1_ag3_plot_snps_track {runtime_sec}, peak memory {peak_memory_mib}"))
+    nbrt.display(_call_api_with_parameters(ag3.plot_snps_track, 'cell_10_call_1_ag3_plot_snps_track', region="2L:2,364,000-2,364,500", sample_sets="AG1000G-FR"))
     # --- Notebook cell 12 ---
     nbrt.start_cell("notebook_cell_12")
-    start_time = time.perf_counter()
-    _call_api_with_parameters(ag3.plot_snps_track, 'cell_11_call_1_ag3_plot_snps_track', region="2L:2,350,000-2,450,000", sample_sets="AG1000G-BF-A", cohort_size=20)
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_11_call_1_ag3_plot_snps_track {runtime_sec}, peak memory {peak_memory_mib}"))
+    nbrt.display(_call_api_with_parameters(ag3.plot_snps_track, 'cell_11_call_1_ag3_plot_snps_track', region="2L:2,350,000-2,450,000", sample_sets="AG1000G-BF-A", cohort_size=20))
     # --- Notebook cell 13 ---
     nbrt.start_cell("notebook_cell_13")
-    start_time = time.perf_counter()
-    _call_api_with_parameters(ag3.plot_snps, 'cell_12_call_1_ag3_plot_snps', region="2L:2,350,000-2,450,000", sample_sets="AG1000G-FR")
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_12_call_1_ag3_plot_snps {runtime_sec}, peak memory {peak_memory_mib}"))
+    nbrt.display(_call_api_with_parameters(ag3.plot_snps, 'cell_12_call_1_ag3_plot_snps', region="2L:2,350,000-2,450,000", sample_sets="AG1000G-FR"))
     # --- Notebook cell 14 ---
     nbrt.start_cell("notebook_cell_14")
-    start_time = time.perf_counter()
-    _call_api_with_parameters(ag3.plot_snps, 'cell_13_call_1_ag3_plot_snps', region="3R:28,550,000-28,650,000", sample_sets="AG1000G-BF-A", cohort_size=10)
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_13_call_1_ag3_plot_snps {runtime_sec}, peak memory {peak_memory_mib}"))
+    nbrt.display(_call_api_with_parameters(ag3.plot_snps, 'cell_13_call_1_ag3_plot_snps', region="3R:28,550,000-28,650,000", sample_sets="AG1000G-BF-A", cohort_size=10))
     # --- Notebook cell 15 ---
     nbrt.start_cell("notebook_cell_15")
     af1 = malariagen_data.Af1(
@@ -441,45 +415,22 @@ def run(API_KEEP_CALLSITE_VALUE, PERFORMANCE_CSV_PATH, API_CALL_PARAMETERS):
     nbrt.display(af1)
     # --- Notebook cell 16 ---
     nbrt.start_cell("notebook_cell_16")
-    start_time = time.perf_counter()
-    _call_api_with_parameters(af1.snp_variants, 'cell_15_call_1_af1_snp_variants', region="3RL")
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_15_call_1_af1_snp_variants {runtime_sec}, peak memory {peak_memory_mib}"))
+    nbrt.display(_call_api_with_parameters(af1.snp_variants, 'cell_15_call_1_af1_snp_variants', region="3RL"))
     # --- Notebook cell 17 ---
     nbrt.start_cell("notebook_cell_17")
-    start_time = time.perf_counter()
-    _call_api_with_parameters(af1.sample_sets, 'cell_16_call_1_af1_sample_sets')
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_16_call_1_af1_sample_sets {runtime_sec}, peak memory {peak_memory_mib}"))
+    nbrt.display(_call_api_with_parameters(af1.sample_sets, 'cell_16_call_1_af1_sample_sets'))
     # --- Notebook cell 18 ---
     nbrt.start_cell("notebook_cell_18")
-    start_time = time.perf_counter()
-    _call_api_with_parameters(af1.snp_calls, 'cell_17_call_1_af1_snp_calls', region="3RL", sample_sets="1229-VO-GH-DADZIE-VMF00095")
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_17_call_1_af1_snp_calls {runtime_sec}, peak memory {peak_memory_mib}"))
+    nbrt.display(_call_api_with_parameters(af1.snp_calls, 'cell_17_call_1_af1_snp_calls', region="3RL", sample_sets="1229-VO-GH-DADZIE-VMF00095"))
     # --- Notebook cell 19 ---
     nbrt.start_cell("notebook_cell_19")
-    start_time = time.perf_counter()
-    _call_api_with_parameters(af1.plot_snps_track, 'cell_18_call_1_af1_plot_snps_track', region="2RL:2,420,000-2,450,000", sample_sets="1229-VO-GH-DADZIE-VMF00095")
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_18_call_1_af1_plot_snps_track {runtime_sec}, peak memory {peak_memory_mib}"))
+    nbrt.display(_call_api_with_parameters(af1.plot_snps_track, 'cell_18_call_1_af1_plot_snps_track', region="2RL:2,420,000-2,450,000", sample_sets="1229-VO-GH-DADZIE-VMF00095"))
     # --- Notebook cell 20 ---
     nbrt.start_cell("notebook_cell_20")
-    start_time = time.perf_counter()
-    _call_api_with_parameters(af1.plot_snps, 'cell_19_call_1_af1_plot_snps', region="2RL:2,420,000-2,450,000", sample_sets="1229-VO-GH-DADZIE-VMF00095")
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_19_call_1_af1_plot_snps {runtime_sec}, peak memory {peak_memory_mib}"))
+    nbrt.display(_call_api_with_parameters(af1.plot_snps, 'cell_19_call_1_af1_plot_snps', region="2RL:2,420,000-2,450,000", sample_sets="1229-VO-GH-DADZIE-VMF00095"))
     # --- Notebook cell 21 ---
     nbrt.start_cell("notebook_cell_21")
-    start_time = time.perf_counter()
-    _call_api_with_parameters(af1.plot_snps, 'cell_20_call_1_af1_plot_snps', region="2RL:2,420,000-2,450,000", sample_sets="1229-VO-GH-DADZIE-VMF00095", cohort_size=10)
-    runtime_sec = time.perf_counter() - start_time
-    nbrt.display(print(f"Runtime for cell_20_call_1_af1_plot_snps {runtime_sec}, peak memory {peak_memory_mib}"))
-    # --- Notebook cell 22 ---
-    nbrt.start_cell("notebook_cell_22")
-    import datetime
-
-    nbrt.display(print(f"Finished run at {datetime.datetime.now()}"))
+    nbrt.display(_call_api_with_parameters(af1.plot_snps, 'cell_20_call_1_af1_plot_snps', region="2RL:2,420,000-2,450,000", sample_sets="1229-VO-GH-DADZIE-VMF00095", cohort_size=10))
 
 
 if __name__ == "__main__":

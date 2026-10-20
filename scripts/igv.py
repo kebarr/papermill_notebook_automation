@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""igv: the code from notebooks/igv.ipynb as a runnable script.
+"""igv: the code from notebooks_fixed_parameters_cells/igv.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.
@@ -30,7 +30,9 @@ import notebook_runtime as nbrt
 API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
 # Relative to where the script is run from.
 PERFORMANCE_CSV_PATH = 'executed_runs_scripts/igv_performance.csv'
-API_CALL_PARAMETERS = {'cell_3_call_1_ag3_igv': {'region': '2L:2,422,600-2,422,700', 'tracks': None, 'init': True},
+API_CALL_PARAMETERS = {'cell_3_call_1_ag3_igv': {'region': '2L:2,422,600-2,422,700',
+                           'tracks': None,
+                           'init': True},
  'cell_4_call_1_ag3_view_alignments': {'region': '2L:2,422,600-2,422,700',
                                        'sample': 'AR0002-C',
                                        'visibility_window': 20000,
@@ -95,7 +97,9 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_igv': {'region': '2L:2,422,600-2,422,7
                                         'sample_query': None,
                                         'sample_query_options': None,
                                         'sample_indices': None},
- 'cell_14_call_1_af1_igv': {'region': '2RL:2,441,878-2,468,205', 'tracks': None, 'init': True},
+ 'cell_14_call_1_af1_igv': {'region': '2RL:2,441,878-2,468,205',
+                            'tracks': None,
+                            'init': True},
  'cell_15_call_1_af1_sample_sets': {'release': None},
  'cell_16_call_1_af1_view_alignments': {'region': '2RL:2,447,600-2,447,700',
                                         'sample': '__KEEP_CALLSITE_VALUE__',
@@ -115,7 +119,7 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_igv': {'region': '2L:2,422,600-2,422,7
                                         'sample_query': None,
                                         'sample_query_options': None,
                                         'sample_indices': None},
- 'cell_19_call_1_af1_sample_metadata': {'sample_sets': None,
+ 'cell_19_call_1_af1_sample_metadata': {'sample_sets': '__KEEP_CALLSITE_VALUE__',
                                         'sample_query': None,
                                         'sample_query_options': None,
                                         'sample_indices': None},
@@ -134,7 +138,7 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_igv': {'region': '2L:2,422,600-2,422,7
                                         'sample': '__KEEP_CALLSITE_VALUE__',
                                         'visibility_window': 20000,
                                         'init': True,
-                                        'snp_vcf_path': None},
+                                        'snp_vcf_path': '__KEEP_CALLSITE_VALUE__'},
  'cell_20_call_1_af1_view_alignments': {'region': '__KEEP_CALLSITE_VALUE__',
                                         'sample': '__KEEP_CALLSITE_VALUE__',
                                         'visibility_window': 20000,

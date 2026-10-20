@@ -1,4 +1,4 @@
-# plot_aims: the code from notebooks/plot_aims.ipynb, to paste into a Python console.
+# plot_aims: the code from notebooks_fixed_parameters_cells/plot_aims.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -590,8 +590,10 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_aim_heatmap': {'aims': 'gambcolu_
                                         'show': True,
                                         'renderer': None},
  'cell_4_call_1_ag3_plot_aim_heatmap': {'aims': 'gamb_vs_colu',
-                                        'sample_sets': ['AG1000G-BF-A', 'AG1000G-BF-B'],
-                                        'sample_query': "aim_species != 'arabiensis'",
+                                        'sample_sets': ['AG1000G-BF-A',
+                                                        'AG1000G-BF-B'],
+                                        'sample_query': 'aim_species != '
+                                                        "'arabiensis'",
                                         'sample_query_options': None,
                                         'sort': True,
                                         'row_height': 4,

@@ -1,4 +1,4 @@
-# plot_frequencies_heatmap: the code from notebooks/plot_frequencies_heatmap.ipynb, to paste into a Python console.
+# plot_frequencies_heatmap: the code from notebooks_fixed_parameters_cells/plot_frequencies_heatmap.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -581,7 +581,8 @@ PERFORMANCE_CSV_PATH = 'executed_runs_scripts/plot_frequencies_heatmap_performan
 API_CALL_PARAMETERS = {'cell_4_call_1_ag3_snp_allele_frequencies': {'transcript': 'AGAP004707-RD',
                                               'region': None,
                                               'cohorts': 'admin1_year',
-                                              'sample_query': "taxon == 'coluzzii'",
+                                              'sample_query': 'taxon == '
+                                                              "'coluzzii'",
                                               'sample_query_options': None,
                                               'min_cohort_size': 10,
                                               'site_mask': None,
@@ -657,12 +658,14 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_snp_allele_frequencies': {'transcript'
                                                 'text_auto': '.0%',
                                                 'aspect': 'auto',
                                                 'color_continuous_scale': 'Reds',
-                                                'title': 'SNP frequencies: Vgsc',
+                                                'title': 'SNP frequencies: '
+                                                         'Vgsc',
                                                 'show': True,
                                                 'renderer': None,
                                                 'kwargs': '__KEEP_CALLSITE_VALUE__'},
  'cell_10_call_1_af1_sample_sets': {'release': None},
- 'cell_11_call_1_af1_genome_features': {'region': None, 'attributes': 'default'},
+ 'cell_11_call_1_af1_genome_features': {'region': None,
+                                        'attributes': 'default'},
  'cell_12_call_1_af1_snp_allele_frequencies': {'transcript': 'LOC125767311_t1',
                                                'region': None,
                                                'cohorts': 'admin1_year',
@@ -696,7 +699,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_snp_allele_frequencies': {'transcript'
                                                  'kwargs': '__KEEP_CALLSITE_VALUE__'},
  'cell_16_call_1_ag3_aa_allele_frequencies': {'transcript': 'AGAP004707-RD',
                                               'cohorts': 'admin1_year',
-                                              'sample_query': "taxon == 'coluzzii'",
+                                              'sample_query': 'taxon == '
+                                                              "'coluzzii'",
                                               'sample_query_options': None,
                                               'min_cohort_size': 10,
                                               'site_mask': None,
@@ -726,7 +730,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_snp_allele_frequencies': {'transcript'
                                                  'kwargs': '__KEEP_CALLSITE_VALUE__'},
  'cell_20_call_1_ag3_aa_allele_frequencies': {'transcript': 'AGAP004707-RD',
                                               'cohorts': 'admin1_year',
-                                              'sample_query': "taxon == 'coluzzii'",
+                                              'sample_query': 'taxon == '
+                                                              "'coluzzii'",
                                               'sample_query_options': None,
                                               'min_cohort_size': 10,
                                               'site_mask': None,
@@ -811,7 +816,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_snp_allele_frequencies': {'transcript'
                                                  'kwargs': '__KEEP_CALLSITE_VALUE__'},
  'cell_27_call_1_ag3_gene_cnv_frequencies': {'region': '__KEEP_CALLSITE_VALUE__',
                                              'cohorts': 'admin1_year',
-                                             'sample_query': "taxon == 'coluzzii'",
+                                             'sample_query': 'taxon == '
+                                                             "'coluzzii'",
                                              'sample_query_options': None,
                                              'min_cohort_size': 10,
                                              'max_coverage_variance': 0.2,
@@ -869,13 +875,15 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_snp_allele_frequencies': {'transcript'
                                                  'text_auto': '.0%',
                                                  'aspect': 'auto',
                                                  'color_continuous_scale': 'Blues',
-                                                 'title': 'Cyp6p/aa gene CNV frequencies',
+                                                 'title': 'Cyp6p/aa gene CNV '
+                                                          'frequencies',
                                                  'show': True,
                                                  'renderer': None,
                                                  'kwargs': '__KEEP_CALLSITE_VALUE__'},
  'cell_32_call_1_ag3_gene_cnv_frequencies': {'region': '__KEEP_CALLSITE_VALUE__',
                                              'cohorts': 'admin1_year',
-                                             'sample_query': "taxon == 'coluzzii'",
+                                             'sample_query': 'taxon == '
+                                                             "'coluzzii'",
                                              'sample_query_options': None,
                                              'min_cohort_size': 10,
                                              'max_coverage_variance': 0.2,
@@ -899,7 +907,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_snp_allele_frequencies': {'transcript'
                                                  'text_auto': '.0%',
                                                  'aspect': 'auto',
                                                  'color_continuous_scale': 'Blues',
-                                                 'title': 'Cyp gene CNV frequencies',
+                                                 'title': 'Cyp gene CNV '
+                                                          'frequencies',
                                                  'show': True,
                                                  'renderer': None,
                                                  'kwargs': '__KEEP_CALLSITE_VALUE__'}}

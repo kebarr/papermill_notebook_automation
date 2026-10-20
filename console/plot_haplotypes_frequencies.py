@@ -1,4 +1,4 @@
-# plot_haplotypes_frequencies: the code from notebooks/plot_haplotypes_frequencies.ipynb, to paste into a Python console.
+# plot_haplotypes_frequencies: the code from notebooks_fixed_parameters_cells/plot_haplotypes_frequencies.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs

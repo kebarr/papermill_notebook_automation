@@ -1,4 +1,4 @@
-# auto_chunks: the code from notebooks/auto_chunks.ipynb, to paste into a Python console.
+# auto_chunks: the code from notebooks_fixed_parameters_cells/auto_chunks.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs

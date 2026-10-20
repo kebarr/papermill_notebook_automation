@@ -1,4 +1,4 @@
-# plot_fst_gwss: the code from notebooks/plot_fst_gwss.ipynb, to paste into a Python console.
+# plot_fst_gwss: the code from notebooks_fixed_parameters_cells/plot_fst_gwss.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -580,9 +580,11 @@ API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
 PERFORMANCE_CSV_PATH = 'executed_runs_scripts/plot_fst_gwss_performance.csv'
 API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_fst_gwss_track': {'contig': '2L',
                                            'window_size': 10000,
-                                           'cohort1_query': 'cohort_admin2_year == '
+                                           'cohort1_query': 'cohort_admin2_year '
+                                                            '== '
                                                             "'ML-2_Kati_colu_2014'",
-                                           'cohort2_query': 'cohort_admin2_year == '
+                                           'cohort2_query': 'cohort_admin2_year '
+                                                            '== '
                                                             "'ML-2_Kati_gamb_2014'",
                                            'sample_query_options': None,
                                            'sample_sets': '3.0',
@@ -601,9 +603,11 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_fst_gwss_track': {'contig': '2L',
                                            'clip_min': 0.0},
  'cell_5_call_1_ag3_plot_fst_gwss_track': {'contig': '2L',
                                            'window_size': 10000,
-                                           'cohort1_query': 'cohort_admin2_year == '
+                                           'cohort1_query': 'cohort_admin2_year '
+                                                            '== '
                                                             "'ML-2_Kati_colu_2014'",
-                                           'cohort2_query': 'cohort_admin2_year == '
+                                           'cohort2_query': 'cohort_admin2_year '
+                                                            '== '
                                                             "'ML-2_Kati_gamb_2014'",
                                            'sample_query_options': None,
                                            'sample_sets': '3.0',
@@ -622,8 +626,10 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_fst_gwss_track': {'contig': '2L',
                                            'clip_min': 0.0},
  'cell_6_call_1_ag3_plot_fst_gwss': {'contig': '2L',
                                      'window_size': 10000,
-                                     'cohort1_query': "cohort_admin2_year == 'ML-2_Kati_colu_2014'",
-                                     'cohort2_query': "cohort_admin2_year == 'ML-2_Kati_gamb_2014'",
+                                     'cohort1_query': 'cohort_admin2_year == '
+                                                      "'ML-2_Kati_colu_2014'",
+                                     'cohort2_query': 'cohort_admin2_year == '
+                                                      "'ML-2_Kati_gamb_2014'",
                                      'sample_query_options': None,
                                      'sample_sets': '3.0',
                                      'site_mask': 'gamb_colu',
@@ -643,8 +649,10 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_fst_gwss_track': {'contig': '2L',
                                      'gene_labelset': None},
  'cell_7_call_1_ag3_plot_fst_gwss': {'contig': '2L',
                                      'window_size': 10000,
-                                     'cohort1_query': "cohort_admin2_year == 'ML-2_Kati_colu_2014'",
-                                     'cohort2_query': "country == 'Mayotte' and taxon == 'gambiae'",
+                                     'cohort1_query': 'cohort_admin2_year == '
+                                                      "'ML-2_Kati_colu_2014'",
+                                     'cohort2_query': "country == 'Mayotte' "
+                                                      "and taxon == 'gambiae'",
                                      'sample_query_options': None,
                                      'sample_sets': '3.0',
                                      'site_mask': 'gamb_colu',
@@ -664,8 +672,10 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_fst_gwss_track': {'contig': '2L',
                                      'gene_labelset': None},
  'cell_8_call_1_af1_plot_fst_gwss': {'contig': 'X',
                                      'window_size': 20000,
-                                     'cohort1_query': "cohort_admin1_year == 'KE-03_fune_2016'",
-                                     'cohort2_query': "cohort_admin1_year == 'MZ-L_fune_2016'",
+                                     'cohort1_query': 'cohort_admin1_year == '
+                                                      "'KE-03_fune_2016'",
+                                     'cohort2_query': 'cohort_admin1_year == '
+                                                      "'MZ-L_fune_2016'",
                                      'sample_query_options': None,
                                      'sample_sets': '1.0',
                                      'site_mask': 'default',
@@ -685,8 +695,10 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_fst_gwss_track': {'contig': '2L',
                                      'gene_labelset': None},
  'cell_9_call_1_af1_plot_fst_gwss': {'contig': 'X',
                                      'window_size': 20000,
-                                     'cohort1_query': "cohort_admin1_year == 'KE-03_fune_2016'",
-                                     'cohort2_query': "cohort_admin1_year == 'MZ-L_fune_2016'",
+                                     'cohort1_query': 'cohort_admin1_year == '
+                                                      "'KE-03_fune_2016'",
+                                     'cohort2_query': 'cohort_admin1_year == '
+                                                      "'MZ-L_fune_2016'",
                                      'sample_query_options': None,
                                      'sample_sets': '1.0',
                                      'site_mask': 'default',

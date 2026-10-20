@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""igv_testing: the code from notebooks/igv_testing.ipynb as a runnable script.
+"""igv_testing: the code from notebooks_fixed_parameters_cells/igv_testing.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.
@@ -30,7 +30,9 @@ import notebook_runtime as nbrt
 API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
 # Relative to where the script is run from.
 PERFORMANCE_CSV_PATH = 'executed_runs_scripts/igv_testing_performance.csv'
-API_CALL_PARAMETERS = {'cell_4_call_1_af1_igv': {'region': '2RL:2,441,878-2,468,205', 'tracks': None, 'init': True},
+API_CALL_PARAMETERS = {'cell_4_call_1_af1_igv': {'region': '2RL:2,441,878-2,468,205',
+                           'tracks': None,
+                           'init': True},
  'cell_5_call_1_af1_view_alignments': {'region': '2RL:2,447,600-2,447,700',
                                        'sample': '__KEEP_CALLSITE_VALUE__',
                                        'visibility_window': 20000,
@@ -40,7 +42,7 @@ API_CALL_PARAMETERS = {'cell_4_call_1_af1_igv': {'region': '2RL:2,441,878-2,468,
                                        'sample_query': None,
                                        'sample_query_options': None,
                                        'sample_indices': None},
- 'cell_7_call_1_af1_sample_metadata': {'sample_sets': None,
+ 'cell_7_call_1_af1_sample_metadata': {'sample_sets': '__KEEP_CALLSITE_VALUE__',
                                        'sample_query': None,
                                        'sample_query_options': None,
                                        'sample_indices': None},
@@ -59,7 +61,7 @@ API_CALL_PARAMETERS = {'cell_4_call_1_af1_igv': {'region': '2RL:2,441,878-2,468,
                                         'sample': '__KEEP_CALLSITE_VALUE__',
                                         'visibility_window': 20000,
                                         'init': True,
-                                        'snp_vcf_path': None}}
+                                        'snp_vcf_path': '__KEEP_CALLSITE_VALUE__'}}
 
 # ---------------------------------------------------------------------------
 # Figure parameters

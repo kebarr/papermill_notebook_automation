@@ -1,4 +1,4 @@
-# plot_diplotype_clustering: the code from notebooks/plot_diplotype_clustering.ipynb, to paste into a Python console.
+# plot_diplotype_clustering: the code from notebooks_fixed_parameters_cells/plot_diplotype_clustering.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -584,9 +584,11 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
                                                           'snp_transcript': 'AGAP002862-RA',
                                                           'snp_colorscale': 'Greys',
                                                           'snp_filter_min_maf': 0.05,
-                                                          'snp_query': 'effect in '
+                                                          'snp_query': 'effect '
+                                                                       'in '
                                                                        "['NON_SYNONYMOUS_CODING', "
-                                                                       "'START_LOST', 'STOP_LOST', "
+                                                                       "'START_LOST', "
+                                                                       "'STOP_LOST', "
                                                                        "'STOP_GAINED']",
                                                           'cnv_region': '2R:28,480,000-28,500,000',
                                                           'cnv_colorscale': None,
@@ -630,7 +632,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
                                                                              'AGAP002864-RA'],
                                                           'snp_colorscale': 'Greys',
                                                           'snp_filter_min_maf': 0.1,
-                                                          'snp_query': 'effect == '
+                                                          'snp_query': 'effect '
+                                                                       '== '
                                                                        "'NON_SYNONYMOUS_CODING'",
                                                           'cnv_region': None,
                                                           'cnv_colorscale': None,
@@ -673,9 +676,11 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
                                                           'snp_transcript': None,
                                                           'snp_colorscale': 'Greys',
                                                           'snp_filter_min_maf': 0.05,
-                                                          'snp_query': 'effect in '
+                                                          'snp_query': 'effect '
+                                                                       'in '
                                                                        "['NON_SYNONYMOUS_CODING', "
-                                                                       "'START_LOST', 'STOP_LOST', "
+                                                                       "'START_LOST', "
+                                                                       "'STOP_LOST', "
                                                                        "'STOP_GAINED']",
                                                           'cnv_region': '2R:28,480,000-28,500,000',
                                                           'cnv_colorscale': None,
@@ -715,7 +720,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
                                                           'inline_array': True},
  'cell_7_call_1_ag3_plot_diplotype_clustering': {'region': '2L:2,410,000-2,430,000',
                                                  'site_mask': 'gamb_colu',
-                                                 'sample_sets': ['AG1000G-GH', 'AG1000G-BF-B'],
+                                                 'sample_sets': ['AG1000G-GH',
+                                                                 'AG1000G-BF-B'],
                                                  'sample_query': None,
                                                  'sample_query_options': None,
                                                  'cohort_size': None,
@@ -745,7 +751,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
                                                  'inline_array': True},
  'cell_8_call_1_ag3_plot_diplotype_clustering': {'region': '2L:2,410,000-2,430,000',
                                                  'site_mask': None,
-                                                 'sample_sets': ['AG1000G-GH', 'AG1000G-BF-B'],
+                                                 'sample_sets': ['AG1000G-GH',
+                                                                 'AG1000G-BF-B'],
                                                  'sample_query': None,
                                                  'sample_query_options': None,
                                                  'cohort_size': None,
@@ -775,7 +782,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
                                                  'inline_array': True},
  'cell_9_call_1_ag3_plot_diplotype_clustering': {'region': '2L:2,410,000-2,430,000',
                                                  'site_mask': 'gamb_colu',
-                                                 'sample_sets': ['AG1000G-GH', 'AG1000G-BF-B'],
+                                                 'sample_sets': ['AG1000G-GH',
+                                                                 'AG1000G-BF-B'],
                                                  'sample_query': None,
                                                  'sample_query_options': None,
                                                  'cohort_size': None,
@@ -837,7 +845,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
  'cell_11_call_1_ag3_plot_diplotype_clustering': {'region': '2R:28,480,000-28,490,000',
                                                   'site_mask': 'gamb_colu_arab',
                                                   'sample_sets': ['3.0'],
-                                                  'sample_query': "taxon == 'arabiensis'",
+                                                  'sample_query': 'taxon == '
+                                                                  "'arabiensis'",
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
                                                   'random_seed': 42,
@@ -867,7 +876,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
  'cell_12_call_1_ag3_plot_diplotype_clustering': {'region': '2R:28,480,000-28,490,000',
                                                   'site_mask': 'gamb_colu_arab',
                                                   'sample_sets': ['3.0'],
-                                                  'sample_query': "taxon == 'arabiensis'",
+                                                  'sample_query': 'taxon == '
+                                                                  "'arabiensis'",
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
                                                   'random_seed': 42,
@@ -897,7 +907,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
  'cell_13_call_1_ag3_plot_diplotype_clustering': {'region': '2R:28,480,000-28,490,000',
                                                   'site_mask': 'gamb_colu_arab',
                                                   'sample_sets': ['3.0'],
-                                                  'sample_query': "taxon == 'arabiensis'",
+                                                  'sample_query': 'taxon == '
+                                                                  "'arabiensis'",
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
                                                   'random_seed': 42,
@@ -927,11 +938,12 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
  'cell_15_call_1_ag3_plot_diplotype_clustering': {'region': '2R:28,480,000-28,490,000',
                                                   'site_mask': 'gamb_colu_arab',
                                                   'sample_sets': ['3.0'],
-                                                  'sample_query': "taxon == 'arabiensis'",
+                                                  'sample_query': 'taxon == '
+                                                                  "'arabiensis'",
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
                                                   'random_seed': 42,
-                                                  'color': None,
+                                                  'color': '__KEEP_CALLSITE_VALUE__',
                                                   'symbol': None,
                                                   'linkage_method': 'complete',
                                                   'distance_metric': 'euclidean',
@@ -957,11 +969,12 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
  'cell_16_call_1_ag3_plot_diplotype_clustering': {'region': '2R:28,480,000-28,490,000',
                                                   'site_mask': 'gamb_colu_arab',
                                                   'sample_sets': ['3.0'],
-                                                  'sample_query': "taxon == 'arabiensis'",
+                                                  'sample_query': 'taxon == '
+                                                                  "'arabiensis'",
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
                                                   'random_seed': 42,
-                                                  'color': None,
+                                                  'color': '__KEEP_CALLSITE_VALUE__',
                                                   'symbol': None,
                                                   'linkage_method': 'complete',
                                                   'distance_metric': 'cityblock',
@@ -987,12 +1000,13 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
  'cell_17_call_1_ag3_plot_diplotype_clustering': {'region': '2R:28,480,000-28,490,000',
                                                   'site_mask': 'gamb_colu_arab',
                                                   'sample_sets': ['3.0'],
-                                                  'sample_query': "taxon == 'arabiensis'",
+                                                  'sample_query': 'taxon == '
+                                                                  "'arabiensis'",
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
                                                   'random_seed': 42,
                                                   'color': 'year',
-                                                  'symbol': None,
+                                                  'symbol': '__KEEP_CALLSITE_VALUE__',
                                                   'linkage_method': 'complete',
                                                   'distance_metric': 'cityblock',
                                                   'count_sort': None,
@@ -1079,7 +1093,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
  'cell_22_call_1_af1_plot_diplotype_clustering': {'region': '2RL:28,480,000-28,490,000',
                                                   'site_mask': 'default',
                                                   'sample_sets': ['1.0'],
-                                                  'sample_query': "country == 'Ghana'",
+                                                  'sample_query': 'country == '
+                                                                  "'Ghana'",
                                                   'sample_query_options': None,
                                                   'cohort_size': None,
                                                   'random_seed': 42,
@@ -1112,7 +1127,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
                                                            'snp_transcript': ['LOC125764232_t1'],
                                                            'snp_colorscale': 'Greys',
                                                            'snp_filter_min_maf': 0.05,
-                                                           'snp_query': 'effect in '
+                                                           'snp_query': 'effect '
+                                                                        'in '
                                                                         "['NON_SYNONYMOUS_CODING', "
                                                                         "'START_LOST', "
                                                                         "'STOP_LOST', "
@@ -1124,9 +1140,14 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_diplotype_clustering_advanced': {
                                                            'sample_sets': ['1232-VO-KE-OCHOMO-VMF00044',
                                                                            '1231-VO-MULTI-WONDJI-VMF00043',
                                                                            '1236-VO-TZ-OKUMU-VMF00090'],
-                                                           'sample_query': "country in ['Kenya', "
-                                                                           "'Uganda', 'Tanzania'] "
-                                                                           'and taxon == '
+                                                           'sample_query': 'country '
+                                                                           'in '
+                                                                           "['Kenya', "
+                                                                           "'Uganda', "
+                                                                           "'Tanzania'] "
+                                                                           'and '
+                                                                           'taxon '
+                                                                           '== '
                                                                            "'funestus'",
                                                            'sample_query_options': None,
                                                            'random_seed': 42,

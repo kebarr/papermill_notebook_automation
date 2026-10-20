@@ -1,4 +1,4 @@
-# plot_njt: the code from notebooks/plot_njt.ipynb, to paste into a Python console.
+# plot_njt: the code from notebooks_fixed_parameters_cells/plot_njt.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -704,7 +704,7 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_njt': {'region': '3L:15,000,000-16,000
                                 'marker_size': 5,
                                 'color_discrete_sequence': None,
                                 'color_discrete_map': None,
-                                'category_orders': None,
+                                'category_orders': '__KEEP_CALLSITE_VALUE__',
                                 'edge_legend': False,
                                 'leaf_legend': True,
                                 'legend_sizing': 'constant',
@@ -1003,7 +1003,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_njt': {'region': '3L:15,000,000-16,000
                                  'leaf_legend': True,
                                  'legend_sizing': 'constant',
                                  'thin_offset': 0,
-                                 'sample_sets': ['AG1000G-BF-A', 'AG1000G-BF-B'],
+                                 'sample_sets': ['AG1000G-BF-A',
+                                                 'AG1000G-BF-B'],
                                  'sample_query': None,
                                  'sample_query_options': None,
                                  'sample_indices': None,
@@ -1045,7 +1046,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_njt': {'region': '3L:15,000,000-16,000
                                  'leaf_legend': True,
                                  'legend_sizing': 'constant',
                                  'thin_offset': 0,
-                                 'sample_sets': ['AG1000G-BF-A', 'AG1000G-BF-B'],
+                                 'sample_sets': ['AG1000G-BF-A',
+                                                 'AG1000G-BF-B'],
                                  'sample_query': None,
                                  'sample_query_options': None,
                                  'sample_indices': None,
@@ -1271,7 +1273,7 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_njt': {'region': '3L:15,000,000-16,000
                                  'chunks': 'native'},
  'cell_23_call_1_af1_plot_njt': {'region': '3RL:15,000,000-16,000,000',
                                  'n_snps': 10000,
-                                 'color': None,
+                                 'color': '__KEEP_CALLSITE_VALUE__',
                                  'symbol': None,
                                  'algorithm': 'dynamic',
                                  'metric': 'euclidean',
@@ -1547,7 +1549,7 @@ nbrt.display(_call_api_with_parameters(ag3.plot_njt, 'cell_18_call_1_ag3_plot_nj
 # --- Notebook cell 20 ---
 nbrt.start_cell("notebook_cell_20")
 af1 = malariagen_data.Af1(
-    "simplecache::gs://vo_afun_release_master_us_central1",
+    "simplecache::gs://vo_afun_release",
     simplecache=dict(cache_storage="../gcs_cache"),
     results_cache="results_cache",
 )

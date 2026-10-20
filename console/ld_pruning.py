@@ -1,4 +1,4 @@
-# ld_pruning: the code from notebooks/ld_pruning.ipynb, to paste into a Python console.
+# ld_pruning: the code from notebooks_fixed_parameters_cells/ld_pruning.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -577,7 +577,7 @@ def end_console_run():
 # value or the method's default.
 API_KEEP_CALLSITE_VALUE = '__KEEP_CALLSITE_VALUE__'
 # Relative to where the script is run from.
-PERFORMANCE_CSV_PATH = 'executed_runs_scripts/plot_biallelic_snps_performance.csv'
+PERFORMANCE_CSV_PATH = 'executed_runs_scripts/ld_pruning_performance.csv'
 API_CALL_PARAMETERS = {'cell_6_call_1_ag3_biallelic_snp_calls_ld_pruned': {'region': '3L',
                                                      'n_snps': 100000,
                                                      'ld_window_size': 500,

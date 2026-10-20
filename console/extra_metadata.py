@@ -1,4 +1,4 @@
-# extra_metadata: the code from notebooks/extra_metadata.ipynb, to paste into a Python console.
+# extra_metadata: the code from notebooks_fixed_parameters_cells/extra_metadata.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -582,14 +582,15 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_sample_metadata': {'sample_sets': '3.0
                                        'sample_query': None,
                                        'sample_query_options': None,
                                        'sample_indices': None},
- 'cell_5_call_1_ag3_add_extra_metadata': {'data': '__KEEP_CALLSITE_VALUE__', 'on': 'sample_id'},
+ 'cell_5_call_1_ag3_add_extra_metadata': {'data': '__KEEP_CALLSITE_VALUE__',
+                                          'on': 'sample_id'},
  'cell_7_call_1_ag3_sample_metadata': {'sample_sets': '3.0',
-                                       'sample_query': None,
+                                       'sample_query': '__KEEP_CALLSITE_VALUE__',
                                        'sample_query_options': None,
                                        'sample_indices': None},
  'cell_8_call_1_ag3_snp_calls': {'region': '3R',
                                  'sample_sets': '3.0',
-                                 'sample_query': None,
+                                 'sample_query': '__KEEP_CALLSITE_VALUE__',
                                  'sample_query_options': None,
                                  'sample_indices': None,
                                  'site_mask': None,
@@ -602,7 +603,7 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_sample_metadata': {'sample_sets': '3.0
                                  'random_seed': 42},
  'cell_9_call_1_ag3_cnv_hmm': {'region': '3R',
                                'sample_sets': '3.0',
-                               'sample_query': None,
+                               'sample_query': '__KEEP_CALLSITE_VALUE__',
                                'sample_query_options': None,
                                'max_coverage_variance': 0.2,
                                'inline_array': True,
@@ -610,7 +611,7 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_sample_metadata': {'sample_sets': '3.0
  'cell_10_call_1_ag3_haplotypes': {'region': '3R',
                                    'analysis': 'gamb_colu_arab',
                                    'sample_sets': '3.0',
-                                   'sample_query': None,
+                                   'sample_query': '__KEEP_CALLSITE_VALUE__',
                                    'sample_query_options': None,
                                    'inline_array': True,
                                    'chunks': 'native',

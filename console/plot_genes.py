@@ -1,4 +1,4 @@
-# plot_genes: the code from notebooks/plot_genes.ipynb, to paste into a Python console.
+# plot_genes: the code from notebooks_fixed_parameters_cells/plot_genes.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -622,7 +622,8 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_genes': {'region': '2R',
                                   'output_backend': 'webgl',
                                   'gene_labels': None,
                                   'gene_labelset': None},
- 'cell_6_call_1_ag3_genome_feature_children': {'parent': 'AGAP004707-RD', 'attributes': 'default'},
+ 'cell_6_call_1_ag3_genome_feature_children': {'parent': 'AGAP004707-RD',
+                                               'attributes': 'default'},
  'cell_7_call_1_ag3_plot_transcript': {'transcript': 'AGAP004707-RD',
                                        'sizing_mode': 'stretch_width',
                                        'width': None,
@@ -631,7 +632,8 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_genes': {'region': '2R',
                                        'x_range': None,
                                        'toolbar_location': 'above',
                                        'title': True},
- 'cell_8_call_1_ag3_genome_feature_children': {'parent': 'AGAP004050-RA', 'attributes': 'default'},
+ 'cell_8_call_1_ag3_genome_feature_children': {'parent': 'AGAP004050-RA',
+                                               'attributes': 'default'},
  'cell_9_call_1_ag3_plot_transcript': {'transcript': 'AGAP004050-RA',
                                        'sizing_mode': 'stretch_width',
                                        'width': None,
@@ -653,7 +655,7 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_genes': {'region': '2R',
                                         'width': None,
                                         'height': 100,
                                         'show': False,
-                                        'x_range': None,
+                                        'x_range': '__KEEP_CALLSITE_VALUE__',
                                         'toolbar_location': None,
                                         'title': True},
  'cell_12_call_1_af1_plot_genes': {'region': '3RL',
@@ -703,12 +705,18 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_genes': {'region': '2R',
                                    'x_range': None,
                                    'title': None,
                                    'output_backend': 'webgl',
-                                   'gene_labels': {'AGAP001096': 'far left + gene',
-                                                   'AGAP001099': 'far left - gene',
-                                                   'AGAP002942': 'central + gene',
-                                                   'AGAP002949': 'central - gene',
-                                                   'AGAP004676': 'far right + gene',
-                                                   'AGAP004674': 'far right - gene'},
+                                   'gene_labels': {'AGAP001096': 'far left + '
+                                                                 'gene',
+                                                   'AGAP001099': 'far left - '
+                                                                 'gene',
+                                                   'AGAP002942': 'central + '
+                                                                 'gene',
+                                                   'AGAP002949': 'central - '
+                                                                 'gene',
+                                                   'AGAP004676': 'far right + '
+                                                                 'gene',
+                                                   'AGAP004674': 'far right - '
+                                                                 'gene'},
                                    'gene_labelset': None},
  'cell_17_call_1_ag3_plot_genes': {'region': '2R',
                                    'sizing_mode': 'stretch_width',
@@ -720,7 +728,7 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_genes': {'region': '2R',
                                    'title': None,
                                    'output_backend': 'webgl',
                                    'gene_labels': None,
-                                   'gene_labelset': None}}
+                                   'gene_labelset': '__KEEP_CALLSITE_VALUE__'}}
 
 # ---------------------------------------------------------------------------
 # Figure parameters

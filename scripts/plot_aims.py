@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""plot_aims: the code from notebooks/plot_aims.ipynb as a runnable script.
+"""plot_aims: the code from notebooks_fixed_parameters_cells/plot_aims.ipynb as a runnable script.
 
 Figures the notebook displays are saved to FIGURE_DIR instead, named from
 FIGURE_NAMES. Other cell outputs are printed.
@@ -42,8 +42,10 @@ API_CALL_PARAMETERS = {'cell_3_call_1_ag3_plot_aim_heatmap': {'aims': 'gambcolu_
                                         'show': True,
                                         'renderer': None},
  'cell_4_call_1_ag3_plot_aim_heatmap': {'aims': 'gamb_vs_colu',
-                                        'sample_sets': ['AG1000G-BF-A', 'AG1000G-BF-B'],
-                                        'sample_query': "aim_species != 'arabiensis'",
+                                        'sample_sets': ['AG1000G-BF-A',
+                                                        'AG1000G-BF-B'],
+                                        'sample_query': 'aim_species != '
+                                                        "'arabiensis'",
                                         'sample_query_options': None,
                                         'sort': True,
                                         'row_height': 4,

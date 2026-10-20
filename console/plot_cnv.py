@@ -1,4 +1,4 @@
-# plot_cnv: the code from notebooks/plot_cnv.ipynb, to paste into a Python console.
+# plot_cnv: the code from notebooks_fixed_parameters_cells/plot_cnv.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -685,7 +685,8 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_cnv_hmm_coverage_track': {'sample
                                                    'show': True,
                                                    'output_backend': 'webgl'},
  'cell_17_call_1_ag3_plot_cnv_hmm_heatmap_track': {'region': '2R:28,460,000-28,580,000',
-                                                   'sample_sets': ['AG1000G-FR', 'AG1000G-GQ'],
+                                                   'sample_sets': ['AG1000G-FR',
+                                                                   'AG1000G-GQ'],
                                                    'sample_query': None,
                                                    'sample_query_options': None,
                                                    'max_coverage_variance': 0.2,
@@ -712,7 +713,8 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_cnv_hmm_coverage_track': {'sample
                                              'gene_labelset': None},
  'cell_19_call_1_ag3_plot_cnv_hmm_heatmap': {'region': '2R:28,460,000-28,580,000',
                                              'sample_sets': 'AG1000G-BF-A',
-                                             'sample_query': "taxon == 'gambiae'",
+                                             'sample_query': 'taxon == '
+                                                             "'gambiae'",
                                              'sample_query_options': None,
                                              'max_coverage_variance': 0.2,
                                              'sizing_mode': 'stretch_width',
@@ -726,7 +728,8 @@ API_CALL_PARAMETERS = {'cell_6_call_1_ag3_plot_cnv_hmm_coverage_track': {'sample
                                              'gene_labelset': None},
  'cell_20_call_1_ag3_plot_cnv_hmm_heatmap': {'region': '2R:28,460,000-28,580,000',
                                              'sample_sets': 'AG1000G-BF-A',
-                                             'sample_query': "taxon == 'coluzzii'",
+                                             'sample_query': 'taxon == '
+                                                             "'coluzzii'",
                                              'sample_query_options': None,
                                              'max_coverage_variance': 0.2,
                                              'sizing_mode': 'stretch_width',

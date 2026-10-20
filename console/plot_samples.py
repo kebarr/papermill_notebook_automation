@@ -1,4 +1,4 @@
-# plot_samples: the code from notebooks/plot_samples.ipynb, to paste into a Python console.
+# plot_samples: the code from notebooks_fixed_parameters_cells/plot_samples.ipynb, to paste into a Python console.
 #
 # Paste the whole file. It runs once with the notebook's default parameters,
 # saving figures to FIGURE_DIR instead of displaying them; other cell outputs
@@ -618,7 +618,8 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_samples_bar': {'x': 'country',
                                         'renderer': None,
                                         'kwargs': '__KEEP_CALLSITE_VALUE__'},
  'cell_7_call_1_ag3_plot_samples_interactive_map': {'sample_sets': ['3.0'],
-                                                    'sample_query': 'year > 2009',
+                                                    'sample_query': 'year > '
+                                                                    '2009',
                                                     'sample_query_options': None,
                                                     'sample_indices': None,
                                                     'basemap': 'mapnik',
@@ -632,7 +633,7 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_samples_bar': {'x': 'country',
                                                     'sample_query': None,
                                                     'sample_query_options': None,
                                                     'sample_indices': None,
-                                                    'basemap': 'mapnik',
+                                                    'basemap': '__KEEP_CALLSITE_VALUE__',
                                                     'center': (-2, 20),
                                                     'zoom': 3,
                                                     'height': 500,
@@ -651,21 +652,43 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_samples_bar': {'x': 'country',
                                                      'min_samples': 1,
                                                      'count_by': 'taxon'},
  'cell_11_call_1_ag3_plot_sample_location_mapbox': {'sample_sets': ['3.0'],
-                                                    'sample_query': 'year > 2012',
+                                                    'sample_query': 'year > '
+                                                                    '2012',
                                                     'sample_query_options': None,
                                                     'marker_size': 10,
                                                     'color': 'country',
-                                                    'color_discrete_sequence': ['rgb(95, 70, 144)',
-                                                                                'rgb(29, 105, 150)',
-                                                                                'rgb(56, 166, 165)',
-                                                                                'rgb(15, 133, 84)',
-                                                                                'rgb(115, 175, 72)',
-                                                                                'rgb(237, 173, 8)',
-                                                                                'rgb(225, 124, 5)',
-                                                                                'rgb(204, 80, 62)',
-                                                                                'rgb(148, 52, 110)',
-                                                                                'rgb(111, 64, 112)',
-                                                                                'rgb(102, 102, '
+                                                    'color_discrete_sequence': ['rgb(95, '
+                                                                                '70, '
+                                                                                '144)',
+                                                                                'rgb(29, '
+                                                                                '105, '
+                                                                                '150)',
+                                                                                'rgb(56, '
+                                                                                '166, '
+                                                                                '165)',
+                                                                                'rgb(15, '
+                                                                                '133, '
+                                                                                '84)',
+                                                                                'rgb(115, '
+                                                                                '175, '
+                                                                                '72)',
+                                                                                'rgb(237, '
+                                                                                '173, '
+                                                                                '8)',
+                                                                                'rgb(225, '
+                                                                                '124, '
+                                                                                '5)',
+                                                                                'rgb(204, '
+                                                                                '80, '
+                                                                                '62)',
+                                                                                'rgb(148, '
+                                                                                '52, '
+                                                                                '110)',
+                                                                                'rgb(111, '
+                                                                                '64, '
+                                                                                '112)',
+                                                                                'rgb(102, '
+                                                                                '102, '
                                                                                 '102)'],
                                                     'category_orders': None,
                                                     'hover_name': 'location',
@@ -681,17 +704,39 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_samples_bar': {'x': 'country',
                                                  'sample_indices': None,
                                                  'marker_size': 10,
                                                  'color': 'country',
-                                                 'color_discrete_sequence': ['rgb(95, 70, 144)',
-                                                                             'rgb(29, 105, 150)',
-                                                                             'rgb(56, 166, 165)',
-                                                                             'rgb(15, 133, 84)',
-                                                                             'rgb(115, 175, 72)',
-                                                                             'rgb(237, 173, 8)',
-                                                                             'rgb(225, 124, 5)',
-                                                                             'rgb(204, 80, 62)',
-                                                                             'rgb(148, 52, 110)',
-                                                                             'rgb(111, 64, 112)',
-                                                                             'rgb(102, 102, 102)'],
+                                                 'color_discrete_sequence': ['rgb(95, '
+                                                                             '70, '
+                                                                             '144)',
+                                                                             'rgb(29, '
+                                                                             '105, '
+                                                                             '150)',
+                                                                             'rgb(56, '
+                                                                             '166, '
+                                                                             '165)',
+                                                                             'rgb(15, '
+                                                                             '133, '
+                                                                             '84)',
+                                                                             'rgb(115, '
+                                                                             '175, '
+                                                                             '72)',
+                                                                             'rgb(237, '
+                                                                             '173, '
+                                                                             '8)',
+                                                                             'rgb(225, '
+                                                                             '124, '
+                                                                             '5)',
+                                                                             'rgb(204, '
+                                                                             '80, '
+                                                                             '62)',
+                                                                             'rgb(148, '
+                                                                             '52, '
+                                                                             '110)',
+                                                                             'rgb(111, '
+                                                                             '64, '
+                                                                             '112)',
+                                                                             'rgb(102, '
+                                                                             '102, '
+                                                                             '102)'],
                                                  'category_orders': None,
                                                  'hover_name': 'location',
                                                  'fitbounds': 'locations',
@@ -731,7 +776,7 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_samples_bar': {'x': 'country',
                                                      'sample_query': None,
                                                      'sample_query_options': None,
                                                      'sample_indices': None,
-                                                     'basemap': 'mapnik',
+                                                     'basemap': '__KEEP_CALLSITE_VALUE__',
                                                      'center': (-2, 20),
                                                      'zoom': 3,
                                                      'height': 500,
@@ -739,21 +784,43 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_samples_bar': {'x': 'country',
                                                      'min_samples': 1,
                                                      'count_by': 'taxon'},
  'cell_18_call_1_af1_plot_sample_location_mapbox': {'sample_sets': ['1.0'],
-                                                    'sample_query': 'year > 2015',
+                                                    'sample_query': 'year > '
+                                                                    '2015',
                                                     'sample_query_options': None,
                                                     'marker_size': 10,
                                                     'color': 'country',
-                                                    'color_discrete_sequence': ['rgb(95, 70, 144)',
-                                                                                'rgb(29, 105, 150)',
-                                                                                'rgb(56, 166, 165)',
-                                                                                'rgb(15, 133, 84)',
-                                                                                'rgb(115, 175, 72)',
-                                                                                'rgb(237, 173, 8)',
-                                                                                'rgb(225, 124, 5)',
-                                                                                'rgb(204, 80, 62)',
-                                                                                'rgb(148, 52, 110)',
-                                                                                'rgb(111, 64, 112)',
-                                                                                'rgb(102, 102, '
+                                                    'color_discrete_sequence': ['rgb(95, '
+                                                                                '70, '
+                                                                                '144)',
+                                                                                'rgb(29, '
+                                                                                '105, '
+                                                                                '150)',
+                                                                                'rgb(56, '
+                                                                                '166, '
+                                                                                '165)',
+                                                                                'rgb(15, '
+                                                                                '133, '
+                                                                                '84)',
+                                                                                'rgb(115, '
+                                                                                '175, '
+                                                                                '72)',
+                                                                                'rgb(237, '
+                                                                                '173, '
+                                                                                '8)',
+                                                                                'rgb(225, '
+                                                                                '124, '
+                                                                                '5)',
+                                                                                'rgb(204, '
+                                                                                '80, '
+                                                                                '62)',
+                                                                                'rgb(148, '
+                                                                                '52, '
+                                                                                '110)',
+                                                                                'rgb(111, '
+                                                                                '64, '
+                                                                                '112)',
+                                                                                'rgb(102, '
+                                                                                '102, '
                                                                                 '102)'],
                                                     'category_orders': None,
                                                     'hover_name': 'location',
@@ -769,17 +836,39 @@ API_CALL_PARAMETERS = {'cell_4_call_1_ag3_plot_samples_bar': {'x': 'country',
                                                  'sample_indices': None,
                                                  'marker_size': 10,
                                                  'color': 'country',
-                                                 'color_discrete_sequence': ['rgb(95, 70, 144)',
-                                                                             'rgb(29, 105, 150)',
-                                                                             'rgb(56, 166, 165)',
-                                                                             'rgb(15, 133, 84)',
-                                                                             'rgb(115, 175, 72)',
-                                                                             'rgb(237, 173, 8)',
-                                                                             'rgb(225, 124, 5)',
-                                                                             'rgb(204, 80, 62)',
-                                                                             'rgb(148, 52, 110)',
-                                                                             'rgb(111, 64, 112)',
-                                                                             'rgb(102, 102, 102)'],
+                                                 'color_discrete_sequence': ['rgb(95, '
+                                                                             '70, '
+                                                                             '144)',
+                                                                             'rgb(29, '
+                                                                             '105, '
+                                                                             '150)',
+                                                                             'rgb(56, '
+                                                                             '166, '
+                                                                             '165)',
+                                                                             'rgb(15, '
+                                                                             '133, '
+                                                                             '84)',
+                                                                             'rgb(115, '
+                                                                             '175, '
+                                                                             '72)',
+                                                                             'rgb(237, '
+                                                                             '173, '
+                                                                             '8)',
+                                                                             'rgb(225, '
+                                                                             '124, '
+                                                                             '5)',
+                                                                             'rgb(204, '
+                                                                             '80, '
+                                                                             '62)',
+                                                                             'rgb(148, '
+                                                                             '52, '
+                                                                             '110)',
+                                                                             'rgb(111, '
+                                                                             '64, '
+                                                                             '112)',
+                                                                             'rgb(102, '
+                                                                             '102, '
+                                                                             '102)'],
                                                  'category_orders': None,
                                                  'hover_name': 'location',
                                                  'fitbounds': 'locations',
