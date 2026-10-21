@@ -1549,7 +1549,7 @@ nbrt.display(_call_api_with_parameters(ag3.plot_njt, 'cell_18_call_1_ag3_plot_nj
 # --- Notebook cell 20 ---
 nbrt.start_cell("notebook_cell_20")
 af1 = malariagen_data.Af1(
-    "simplecache::gs://vo_afun_release",
+    "simplecache::gs://vo_agam_release_master_us_central1",
     simplecache=dict(cache_storage="../gcs_cache"),
     results_cache="results_cache",
 )

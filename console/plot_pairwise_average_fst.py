@@ -896,7 +896,7 @@ import plotly.express as px
 # --- Notebook cell 3 ---
 nbrt.start_cell("notebook_cell_3")
 ag3 = malariagen_data.Ag3(
-    "simplecache::gs://vo_agam_release",
+    "simplecache::gs://vo_agam_release_master_us_central1",
     simplecache=dict(cache_storage="../gcs_cache"),
     cohorts_analysis="20240717",
     results_cache="results_cache",

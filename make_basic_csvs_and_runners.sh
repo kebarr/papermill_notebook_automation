@@ -120,7 +120,7 @@ ds = _call_api_with_parameters(ag3.gene_cnv_frequencies_advanced, 'cell_5_call_1
 # g123_gwss failed in 6GB notebook not sure if due to going idle or memory
 # plot haplotype_networks errored with address already in use
 
-python view_performance.py executed_runs_local_papermill console/executed_runs_datalab scripts/executed_runs_datalab notebooks/executed_runs_datalab --output view_performance_each_run.html --open > view_performance_stdout.txt 2> view_performance_stderr.txt
+python view_performance.py executed_runs_notebooks_fixed console/executed_runs_datalab scripts/executed_runs_datalab notebooks/executed_runs_datalab --output view_performance_each_run.html --open > view_performance_stdout.txt 2> view_performance_stderr.txt
 
 for notebook in ./notebooks_fixed_parameters_cells/*ipynb
 do 
@@ -145,3 +145,19 @@ do
     python runners_and_csvs_new/generated_runners/papermill_${notebook_name}.py --output-csv executed_runs_notebooks_fixed/${notebook_name}_parameters_fixed.csv --config runners_and_csvs_new/${notebook_name}_config.csv --output-dir executed_runs_notebooks_fixed > fixed_parameters_stdout/${notebook_name}_papermill_run.txt 2> fixed_parameters_stderr_${notebook_name}_papermill_run.txt 
 done
 
+python extra_metadata.py --output-csv extra_metadata.csv --workdir > extra_metadata_stdout.txt 2> extra_metadata_stderr.txt
+python igv.py --output-csv igv.csv > igv_stdout.txt 2> igv_stderr.txt
+python karyotype.py --output-csv karyotype.csv > karyotype_stdout.txt 2> karyotype_stderr.txt
+python plot_h12_h1x.py --output-csv plot_h12_h1x.csv > plot_h12_h1x_stdout.txt 2> plot_h12_h1x_stderr.txt
+python plot_g123_gwss.py --output-csv plot_g123_gwss.csv > plot_g123_gwss_stdout.txt 2> plot_g123_gwss_stderr.txt
+python phenotype_data_demo.py --output-csv phenotype_data_demo.csv > phenotype_data_demo_stdout.txt 2> phenotype_data_demo_stderr.txt
+python plot_pairwise_average_fst.py --output-csv plot_pairwise_average_fst.csv > plot_pairwise_average_fst_stdout.txt 2> plot_pairwise_average_fst_stderr.txt
+python plot_pca.py --output-csv plot_pca.csv > plot_pca_average_fst_stdout.txt 2> plot_pca_average_fst_stderr.txt
+
+# still missing, notebooks: haplotype_clustering, haplotype networks, xpehh, repr, spike_test_dat
+#  script: local_cluster, fst_gwss, haplotype networks, pairwise fst, repr, spike_sim_data
+# console: frequencies_space_time, g123_gwss, heterozygosity
+
+# notebooks and scripts g12_gwss broke at cell 14 of 16 
+
+# Something that affects your runtime estimates: memory_profiler.memory_usage reruns the measured call until it has at least 5 memory samples, taken every 0.1 s. Any call faster than about half a second is executed 2–3 times, and the helper's runtime_sec includes all the repeats. Slow calls aren't affected, but the times for fast calls are inflated. In the hand-edited old plot_snps, where memory_usage wraps the helper itself, the repeats also write extra rows. I can fix the helper to time just one execution if you want.

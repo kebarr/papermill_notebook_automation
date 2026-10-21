@@ -922,24 +922,24 @@ nbrt.display(_call_api_with_parameters(af1.view_alignments, 'cell_17_call_1_af1_
 
 # --- Notebook cell 20 ---
 nbrt.start_cell("notebook_cell_20")
-from pathlib import Path
+# from pathlib import Path
 
 
-sample_set = "1240-VO-MZ-KOEKEMOER-VMF00101"
-sample_id = str(
-    _call_api_with_parameters(af1.sample_metadata, 'cell_19_call_1_af1_sample_metadata', sample_sets=sample_set).iloc[0]["sample_id"]
-)
-region = "2RL:2,440,000-2,445,000"
+# sample_set = "1240-VO-MZ-KOEKEMOER-VMF00101"
+# sample_id = str(
+#     _call_api_with_parameters(af1.sample_metadata, 'cell_19_call_1_af1_sample_metadata', sample_sets=sample_set).iloc[0]["sample_id"]
+# )
+# region = "2RL:2,440,000-2,445,000"
 
-local_vcf_path = Path("local_igv_vcfs") / f"{sample_id}.vcf.gz"
-local_vcf_path.parent.mkdir(parents=True, exist_ok=True)
+# local_vcf_path = Path("local_igv_vcfs") / f"{sample_id}.vcf.gz"
+# local_vcf_path.parent.mkdir(parents=True, exist_ok=True)
 
-_call_api_with_parameters(af1.snp_calls_to_vcf, 'cell_19_call_2_af1_snp_calls_to_vcf', output_path=str(local_vcf_path), region=region, sample_sets=[sample_set], sample_query=f"sample_id == '{sample_id}'", overwrite=True)
+# _call_api_with_parameters(af1.snp_calls_to_vcf, 'cell_19_call_2_af1_snp_calls_to_vcf', output_path=str(local_vcf_path), region=region, sample_sets=[sample_set], sample_query=f"sample_id == '{sample_id}'", overwrite=True)
 
-nbrt.display(_call_api_with_parameters(af1.view_alignments, 'cell_19_call_3_af1_view_alignments', sample=sample_id, region=region, snp_vcf_path=local_vcf_path))
+# nbrt.display(_call_api_with_parameters(af1.view_alignments, 'cell_19_call_3_af1_view_alignments', sample=sample_id, region=region, snp_vcf_path=local_vcf_path))
 
-# --- Notebook cell 21 ---
-nbrt.start_cell("notebook_cell_21")
-nbrt.display(_call_api_with_parameters(af1.view_alignments, 'cell_20_call_1_af1_view_alignments', sample=sample_id, region=region))
+# # --- Notebook cell 21 ---
+# nbrt.start_cell("notebook_cell_21")
+# nbrt.display(_call_api_with_parameters(af1.view_alignments, 'cell_20_call_1_af1_view_alignments', sample=sample_id, region=region))
 
 nbrt.end_console_run()

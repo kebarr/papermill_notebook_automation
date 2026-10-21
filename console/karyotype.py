@@ -972,7 +972,7 @@ import malariagen_data
 nbrt.start_cell("notebook_cell_3")
 ag3 = malariagen_data.Ag3(
     "simplecache::gs://vo_agam_release_master_us_central1",
-    simplecache=dict(cache_storage="../gcs_cache"),
+    simplecache=dict(cache_storage="gcs_cache"),
     results_cache="results_cache",
 )
 nbrt.display(ag3)

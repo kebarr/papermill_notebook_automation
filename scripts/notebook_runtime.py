@@ -634,7 +634,12 @@ def _print_parameters(parameters):
 
 def main(*, notebook, run, parameters):
     """Run a converted notebook from the command line."""
+    # Run where the notebooks are, as Jupyter does, when the scripts sit next
+    # to a notebooks folder; otherwise (e.g. scripts copied elsewhere on their
+    # own) run in the current directory.
     default_workdir = Path(__file__).resolve().parent.parent / "notebooks"
+    if not default_workdir.is_dir():
+        default_workdir = Path.cwd()
     parser = argparse.ArgumentParser(
         description=(
             f"Run the code from {notebook}, saving figures instead of showing "
@@ -653,8 +658,10 @@ def main(*, notebook, run, parameters):
         type=Path,
         default=default_workdir,
         help=(
-            "Directory to run in, so relative paths in the notebook code "
-            f"resolve as they did in Jupyter (default: {default_workdir})."
+            "Directory to run in; relative paths in the notebook code (e.g. "
+            "../gcs_cache) resolve against it. Default: the notebooks folder "
+            "next to this script's folder if there is one, otherwise the "
+            f"current directory (here: {default_workdir})."
         ),
     )
     parser.add_argument(
@@ -704,6 +711,9 @@ def main(*, notebook, run, parameters):
 
     invocation_dir = Path.cwd()
     workdir = args.workdir.resolve()
+    if not workdir.is_dir():
+        parser.error(f"--workdir {args.workdir} is not a directory.")
+    print(f"Running in {workdir}")
     failures = []
     for index, overrides in enumerate(runs, start=1):
         label = f"run {index}/{len(runs)}"
