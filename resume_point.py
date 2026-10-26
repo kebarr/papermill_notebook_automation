@@ -84,6 +84,102 @@ def _match_runs(runs, api_parameters):
     return matches
 
 
+def find_notebook(config_path, results_path, api_parameters):
+    """The notebook a sweep came from: the one whose call keys match the
+    config's, falling back to matching file names."""
+    notebooks = vp._find_notebooks([d for d in vp.DEFAULT_NOTEBOOK_DIRS if d.is_dir()])
+    config_keys = set().union(*(set(p) for p in api_parameters)) if api_parameters else set()
+    if config_keys:
+        index = vp._key_index(notebooks)
+        owners = [index.get(key, set()) for key in config_keys]
+        common = set.intersection(*owners) if owners else set()
+        if common:
+            return notebooks[sorted(common)[0]]
+    return vp._notebook_for(config_path, notebooks) or vp._notebook_for(results_path, notebooks)
+
+
+def match_results(config_path, results_path, notebook=None):
+    """Split a results CSV into runs and match each run to a config row.
+
+    Returns the notebook, config rows and API_CALL_PARAMETERS per row, the
+    expected call counts, and the runs: each a dict with "rows" (the results
+    rows, as loaded by view_performance), "verdict" and "info" (as from
+    view_performance._judge_run) and "config_row" (an index, or None).
+    """
+    fieldnames, config_rows, api_parameters = _read_config(config_path)
+    _, results = vp._load(results_path)
+    if notebook is None:
+        notebook = find_notebook(config_path, results_path, api_parameters)
+    if notebook is None:
+        raise ValueError(
+            f"Could not tell which notebook {config_path} is for; pass the notebook."
+        )
+    expected = vp._ExpectedCalls(notebook).counts
+    known = {k: c for k, c in expected.items() if c is not None}
+
+    anchors = sorted((k for k, c in known.items() if c == 1), key=vp._call_order)
+    runs, current = [], []
+    for row in results:
+        key = row["values"].get("call_key")
+        if key not in known:
+            continue
+        if anchors and key == anchors[0] and current:
+            runs.append(current)
+            current = []
+        current.append(row)
+    if current:
+        runs.append(current)
+
+    judged = []
+    for rows in runs:
+        verdict, info = vp._judge_run(
+            collections.Counter(r["values"].get("call_key") for r in rows), known
+        )
+        used = [
+            (r["values"].get("call_key"), r["parameters"] if isinstance(r["parameters"], dict) else {})
+            for r in rows
+        ]
+        judged.append({"rows": rows, "used": used, "verdict": verdict, "info": info})
+    matches = _match_runs(
+        [(run["used"], run["verdict"] == "complete") for run in judged], api_parameters
+    )
+    for run, row in zip(judged, matches):
+        run["config_row"] = row
+    return {
+        "notebook": notebook,
+        "fieldnames": fieldnames,
+        "config_rows": config_rows,
+        "api_parameters": api_parameters,
+        "expected": expected,
+        "results": results,
+        "runs": judged,
+    }
+
+
+def describe(run):
+    verdict, info = run["verdict"], run["info"]
+    if verdict == "complete":
+        return "complete"
+    if verdict == "stopped":
+        return f"stopped at or before {info} (notebook cell {vp._call_order(info)[0]})"
+    if verdict == "gaps":
+        return f"{len(info)} call(s) missing"
+    return "row counts differ from the notebook"
+
+
+def row_status(runs, n_rows):
+    """Per config row: (description, run number, run), preferring a complete
+    run over an earlier failure."""
+    status = {}
+    for number, run in enumerate(runs, start=1):
+        row = run["config_row"]
+        if row is None:
+            continue
+        if status.get(row, ("",))[0] != "complete":
+            status[row] = (describe(run), number, run)
+    return [status.get(i, ("not started", None, None)) for i in range(n_rows)]
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Report which config rows a results CSV covers, and where to resume."
@@ -104,68 +200,28 @@ def main():
     )
     args = parser.parse_args()
 
-    fieldnames, config_rows, api_parameters = _read_config(args.config)
-    _, results = vp._load(args.results)
-
-    notebook = args.notebook
-    if notebook is None:
-        notebooks = vp._find_notebooks([d for d in vp.DEFAULT_NOTEBOOK_DIRS if d.is_dir()])
-        notebook = vp._notebook_for(args.config, notebooks) or vp._notebook_for(args.results, notebooks)
-    if notebook is None:
-        raise SystemExit("Could not tell which notebook these are from; pass --notebook.")
-    expected = vp._ExpectedCalls(notebook).counts
-    known = {k: c for k, c in expected.items() if c is not None}
-
-    keyed = []
-    for row in results:
-        key = row["values"].get("call_key")
-        if key in known:
-            used = row["parameters"] if isinstance(row["parameters"], dict) else {}
-            keyed.append((key, used))
-
-    # Split into runs, as the viewer does, keeping each call's arguments.
-    runs, current = [], []
-    anchors = sorted((k for k, c in known.items() if c == 1), key=vp._call_order)
-    for key, used in keyed:
-        if anchors and key == anchors[0] and current:
-            runs.append(current)
-            current = []
-        current.append((key, used))
-    if current:
-        runs.append(current)
-    judged = []
-    for run in runs:
-        verdict, info = vp._judge_run(collections.Counter(k for k, _ in run), known)
-        judged.append((run, verdict, info))
-
-    matches = _match_runs([(run, verdict == "complete") for run, verdict, _ in judged], api_parameters)
-
-    status = {}
-    for (run, verdict, info), row, number in zip(judged, matches, range(1, len(judged) + 1)):
-        if row is None:
+    try:
+        analysis = match_results(args.config, args.results, args.notebook)
+    except ValueError as exc:
+        raise SystemExit(str(exc))
+    notebook = analysis["notebook"]
+    config_rows = analysis["config_rows"]
+    fieldnames = analysis["fieldnames"]
+    results = analysis["results"]
+    runs = analysis["runs"]
+    for number, run in enumerate(runs, start=1):
+        if run["config_row"] is None:
             print(f"Run {number}: matches no config row (different config or notebook?)")
-            continue
-        if verdict == "complete":
-            text = "complete"
-        elif verdict == "stopped":
-            text = f"stopped at or before {info} (notebook cell {vp._call_order(info)[0]})"
-        elif verdict == "gaps":
-            text = f"{len(info)} call(s) missing"
-        else:
-            text = "row counts differ from the notebook"
-        # A later complete run of the same row supersedes an earlier failure.
-        if status.get(row, ("",))[0] != "complete":
-            status[row] = (text, number)
+    statuses = row_status(runs, len(config_rows))
 
     print(f"Notebook: {notebook}")
     print(f"Config:   {args.config} ({len(config_rows)} row(s))")
     print(f"Results:  {args.results} ({len(results)} row(s), {len(runs)} run(s))\n")
-    for index in range(len(config_rows)):
-        text, run = status.get(index, ("not started", None))
+    for index, (text, run, _) in enumerate(statuses):
         source = f" (run {run})" if run else ""
         print(f"  config row {index + 1} (CSV line {index + 2}): {text}{source}")
 
-    todo = [i for i in range(len(config_rows)) if status.get(i, ("",))[0] != "complete"]
+    todo = [i for i, (text, _, _) in enumerate(statuses) if text != "complete"]
     if not todo:
         print("\nAll config rows are complete.")
         return
