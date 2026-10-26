@@ -1,0 +1,36 @@
+You can already decide this from evidence rather than guesswork: one completed real sweep, complete runs of the fixed notebooks, and the code. One caveat throughout: all measurements are from your Mac with warm caches, and Linux reports somewhat more memory.
+
+## What actually drives cost
+
+- **Every kernel starts at about 1–1.3 GB** before any analysis (the lowest per-call peaks in your runs). On the 3 GB server, that leaves well under 2 GB for work.
+- **PCA:** the number of samples and the amount of data read dominate; the number of SNPs barely matters. In your `plot_pca_n_snps` sweep, the `3.0` release PCA (~2,500 samples, 26 Mbp of 3L) peaked at **4.5–4.9 GB for every value from 10k to 100k SNPs**. The same call capped at 20 samples peaked at ~2.1–2.4 GB, a 50-sample BF-A PCA at ~2.3 GB, and France (`AG1000G-FR`) at ~1.4–1.6 GB.
+- **Selection scans (G123, H12, iHS, XP-EHH):** with 10–50-sample cohorts these took seconds and peaked at about 1.5–3.5 GB. G123 with **no** cohort cap, i.e. all of BF-A's gambiae samples, reached **5 GB**. Cost grows with samples × sites read.
+- **Network and cache matter more than CPU on first runs.** The first PCA run took **868 s** versus ~150 s later, because it downloaded data that later runs read from the local cache. On a fresh server, the first run of anything is mostly download time.
+- **XP-EHH uses at most 4 threads, and iHS at most 2.** That's a hard limit in `scikit-allel` (`ThreadPool(min(4, cpu_count))`). So 15 or 30 CPUs don't speed up a single scan; they let you run several at once.
+- **PCA has a hard ceiling around 20,000 samples on every server,** from the 32-bit maths library in your scipy (the karyotype error), however much RAM you add.
+
+**Rules of thumb that follow:**
+- **Memory headroom:** keep the Mac-measured peak below roughly 60–70% of a server's RAM, to allow for Linux's higher counts.
+- **Threads:** set `THREADS` (or `DASK_NUM_WORKERS`) to match the server: 1 on the two small servers, 2 on the 12 GB server, and around 8 on the large ones. Otherwise Dask starts one thread per core it detects, and memory grows with it.
+
+## Server by server
+
+| Server | Research use | Sensible parameters | Which of your sweep rows fit |
+|---|---|---|---|
+| **3 GB, 0.5 CPU** | Teaching and quick looks: one small population | PCA on one small sample set (≤ ~50 samples, ≤ 10 Mbp); H12/iHS/XP-EHH on X or 2L with cohorts ≤ 20 and `filter_min_maf` ≥ 0.05; short calibration lists; `use_threads=false`, `THREADS=1`. Avoid G123 on the autosomes. | Essentially none as configured. Each sweep runs a whole notebook, and every one includes a call over ~3 GB. Needs cut-down configs. |
+| **6 GB, 1 CPU** | Analysis of one population | PCA of one sample set, or up to ~500 samples over ≤ 10 Mbp; G123/H12 cohorts 20–50; XP-EHH 20 per population at MAF 0.05; standard calibration windows | `plot_pca_region` (1 and 10 Mbp), `plot_pca_samples` 250/500, `plot_g123_cohort` 20/40, `plot_h12_cohort` 20/50, `plot_xpehh_cohort` 20, `plot_xpehh_maf` 0.05/0.1 |
+| **12 GB, 2 CPU** | Standard research scale; **the reference tier** | Release-wide PCA (`3.0`, ~2,500 samples, arm-scale region, 50k–100k SNPs); scans with 50–100 per cohort; full calibration grids; XP-EHH at MAF 0.01 with moderate cohorts | Every current sweep, including uncapped G123 and full-release PCA. Run everything here first, to produce comparable baseline numbers. |
+| **27 GB, 15 CPU** | Studies across several populations, genome-wide | Scans over all contigs and many cohorts (the `multi_overlay`/`multi_panel` calls); cohorts of 100–200; PCA across releases (several thousand samples, under the ~20k ceiling); clustering/NJT with hundreds of samples | Extend the sweeps upward, e.g. `max_cohort_size` 100/200/400. Run 2–3 sweeps at once with `THREADS=4–6` each. |
+| **115 GB, 15 CPU** | Finding the limits | Uncapped cohorts on the largest contig (3R) with `sites="all"`; G123/H12 on whole release-sized cohorts; PCA near the 20k-sample ceiling; whole-genome results held in memory | Only the top end of each sweep, to find where memory runs out and fit the scaling curves. It's wasted on small jobs. |
+| **27 GB, 30 CPU** | Running many jobs at once | Many independent jobs in parallel (sweep rows, contigs, cohorts), each `THREADS=4`, ~3–4 GB each, so about 6 at once. Not suited to single large jobs: it has less memory per CPU than the 27 GB/15 CPU server. | `plot_xpehh_*`, `plot_h12_*` and `plot_g123_contig` across contigs and cohorts in parallel. Also `plot_xpehh_threads`, compared against the 2- and 15-CPU servers, to show the 4-thread limit. |
+
+**The research reasoning behind those ranges:**
+- **Cohort size for selection statistics:** about 20 per population is the minimum for G123/H12/XP-EHH to be meaningful (the notebooks' `min_cohort_size`); 50–100 is typical in Ag1000G scans. So the 6 GB server handles real single-population analyses, while larger studies start at 12 GB.
+- **PCA:** one sample set answers within-region questions; `3.0`-scale answers continent-scale population structure. 10k SNPs already resolves the major structure, and your sweep shows more SNPs cost almost nothing extra. Spend capacity on samples and region size instead.
+- **`filter_min_maf` and `min_ehh`:** 0.05 is the usual choice and suits every server. Values of 0.01 (rarer variants, longer haplotypes) are worth it for older or weaker selection signals, and belong on the CPU-rich servers.
+
+## Practical notes
+
+- **Running sweeps in parallel:** `run_sweeps_locally.sh` runs sweeps one after another. On the 15- and 30-CPU servers, start separate invocations with different sweep names (e.g. `THREADS=4 ./run_sweeps_locally.sh plot_xpehh_maf &`). Start them a few seconds apart, because each one regenerates the shared runner files.
+- **The 3 GB server needs its own configs:** none of the current sweeps fit it, because each runs a whole notebook. I can generate cut-down sweep configs for it (and for the 6 GB server): France/BF-A-only PCA, X-chromosome scans with cohorts of 10–20. Each server would then get its own set of CSVs in the same format as now.
+- **These are estimates:** they come from one completed sweep plus small-cohort runs. Running the full sweep set on the 12 GB server first gives the real reference numbers, and `sweep_report.py` will show where each server's limit falls.
