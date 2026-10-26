@@ -161,3 +161,13 @@ python plot_pca.py --output-csv plot_pca.csv > plot_pca_average_fst_stdout.txt 2
 # notebooks and scripts g12_gwss broke at cell 14 of 16 
 
 # Something that affects your runtime estimates: memory_profiler.memory_usage reruns the measured call until it has at least 5 memory samples, taken every 0.1 s. Any call faster than about half a second is executed 2–3 times, and the helper's runtime_sec includes all the repeats. Slow calls aren't affected, but the times for fast calls are inflated. In the hand-edited old plot_snps, where memory_usage wraps the helper itself, the repeats also write extra rows. I can fix the helper to time just one execution if you want.
+
+
+for notebook in /Users/katie.barr/malariagen-data-python/notebooks/*ipynb
+do 
+    notebook_name=$(basename ${notebook%.ipynb})
+    echo "Generating memit for notebook: $notebook_name"
+    echo ${notebook}
+    python ../add_memit.py $notebook -o ${notebook_name}_memit.ipynb
+done
+
