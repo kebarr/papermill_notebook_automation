@@ -68,9 +68,16 @@ def _render_runner(notebook_path: Path, parameter_names: list[str]) -> str:
 import argparse
 import csv
 import json
+import logging
 from pathlib import Path
 
 import papermill as pm
+
+# Before running, papermill reads the parameters cell line by line to list the
+# parameter names, and warns "Unable to parse line ..." for any line with more
+# than one "=", e.g. a query string containing "==". The parameters are still
+# injected in full, so the warning is noise; hide it.
+logging.getLogger("papermill.translators").setLevel(logging.ERROR)
 
 NOTEBOOK_PATH = Path(__NOTEBOOK_PATH__).resolve()
 PARAMETER_NAMES = __PARAMETER_NAMES__
