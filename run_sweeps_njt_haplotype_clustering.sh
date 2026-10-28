@@ -1,16 +1,9 @@
 #!/usr/bin/env bash
-# Sweep configs for the neighbour-joining tree and clustering notebooks.
-# Each command writes one config CSV; run them with run_sweeps_locally.sh
-# (add the sweep names to its SWEEPS list) or the generated runners.
 #
 # Notes on the notebooks that shape these sweeps:
-# - plot_njt cell_18 runs the slow 'canonical' algorithm on the whole 3.0
-#   release, so it is left out of the region / n_snps sweeps (patterns list the
-#   other calls explicitly) and gets its own sample-size sweep instead.
 # - Ag3 and Af1 calls need different contigs (3L vs 3RL), so their region
 #   sweeps are paired value-by-value with --zip rather than combined.
-# - The clustering notebooks look at several loci; region sweeps only touch
-#   the calls at one locus, so each example still studies its own gene.
+
 
 CFG="python papermill_csv_config.py --notebooks-dir notebooks_fixed_parameters_cells create"
 OUT=${OUT:-runners_and_csvs_new}
@@ -45,14 +38,14 @@ $CFG plot_njt \
 
 # samples: tree size for the whole-release call (cell_18). Distance matrices
 # grow with samples squared and tree building faster still.
+# - plot_njt cell_18 runs the slow 'canonical' algorithm on the whole 3.0
+#   release, so it is left out of the region / n_snps sweeps (patterns list the
+#   other calls explicitly) and gets its own sample-size sweep instead.
 $CFG plot_njt \
-    --sweep 'cell_18_call_1_ag3_plot_njt.max_cohort_size=[100,250,500,1000,null]' \
+    --sweep 'cell_18_call_1_ag3_plot_njt.max_cohort_size=[100,250,500,1000]' \
     --output $OUT/plot_njt_samples.csv
 
-# ---------------------------------------------------------------------------
-# Haplotype clustering (plot_haplotype_clustering)
-# ---------------------------------------------------------------------------
-
+#  region sweeps only touch the calls at one locus, so each example still studies its own gene.
 # region: widen the window at the Vgsc locus (Ag3 cells 6-10, Ghana + Burkina
 # Faso) and at the Af1 2RL:28.48 Mbp locus (cell_24), paired value-by-value.
 $CFG plot_haplotype_clustering --zip \
@@ -63,7 +56,7 @@ $CFG plot_haplotype_clustering --zip \
 # samples: the whole-release calls at the Cyp6 locus (cells 12-18). Pairwise
 # distances grow with haplotypes squared, so this is the steepest lever.
 $CFG plot_haplotype_clustering \
-    --sweep 'cell_1[2-7]_call_1_ag3_plot_haplotype_clustering,cell_18_call_1_ag3_plot_haplotype_clustering_advanced.cohort_size=[100,250,500,1000,null]' \
+    --sweep 'cell_1[2-7]_call_1_ag3_plot_haplotype_clustering,cell_18_call_1_ag3_plot_haplotype_clustering_advanced.cohort_size=[100,250,500,1000]' \
     --output $OUT/plot_haplotype_clustering_samples.csv
 
 # snp_filter_min_maf: SNPs kept for clustering in the advanced calls. Allele
@@ -72,10 +65,6 @@ $CFG plot_haplotype_clustering \
     --sweep 'cell_18_call_1_ag3_plot_haplotype_clustering_advanced,cell_19_call_1_ag3_plot_haplotype_clustering_advanced.snp_filter_min_maf=[0.01,0.05,0.1]' \
     --output $OUT/plot_haplotype_clustering_min_maf.csv
 
-# ---------------------------------------------------------------------------
-# Diplotype clustering (plot_diplotype_clustering): the unphased counterpart
-# ---------------------------------------------------------------------------
-
 # region: widen the window at the Vgsc locus (cells 7-9, Ghana + Burkina Faso).
 $CFG plot_diplotype_clustering \
     --sweep 'cell_[7-9]_call_1_ag3_plot_diplotype_clustering.region=["2L:2,410,000-2,430,000","2L:2,410,000-2,460,000","2L:2,410,000-2,510,000"]' \
@@ -83,5 +72,5 @@ $CFG plot_diplotype_clustering \
 
 # samples: Ghana + Burkina Faso at the Cyp6 locus (cell_6, ~280 samples).
 $CFG plot_diplotype_clustering \
-    --sweep 'cell_6_call_1_ag3_plot_diplotype_clustering_advanced.cohort_size=[50,100,200,null]' \
+    --sweep 'cell_6_call_1_ag3_plot_diplotype_clustering_advanced.cohort_size=[50,100,200]' \
     --output $OUT/plot_diplotype_clustering_samples.csv
