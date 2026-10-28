@@ -152,10 +152,13 @@ def _parse_assignment(text: str, option: str):
 
 
 def _resolve_target(call_pattern: str, parameter_name: str, defaults: dict):
+    # Several patterns may be given, separated by commas; their matches are
+    # combined. This lets one override cover chosen calls but not others.
+    patterns = [p.strip() for p in call_pattern.split(",") if p.strip()]
     matching_calls = [
         call_key
         for call_key in defaults
-        if fnmatch.fnmatchcase(call_key, call_pattern)
+        if any(fnmatch.fnmatchcase(call_key, pattern) for pattern in patterns)
     ]
     if not matching_calls:
         raise ValueError(
@@ -204,10 +207,21 @@ def _prepare_overrides(defaults: dict, set_values: list[str], sweep_values: list
     return constants, sweeps
 
 
-def _configuration_rows(defaults: dict, constants: dict, sweeps: list):
-    sweep_combinations = itertools.product(
-        *(values for _, values in sweeps)
-    ) if sweeps else [()]
+def _configuration_rows(defaults: dict, constants: dict, sweeps: list, zipped: bool = False):
+    if not sweeps:
+        sweep_combinations = [()]
+    elif zipped:
+        # Pair the sweeps' values position by position, e.g. so an Ag3 region
+        # and an Af1 region change together, instead of every combination.
+        lengths = {len(values) for _, values in sweeps}
+        if len(lengths) != 1:
+            raise ValueError(
+                "--zip needs every --sweep to have the same number of values; "
+                f"got {sorted(len(values) for _, values in sweeps)}."
+            )
+        sweep_combinations = zip(*(values for _, values in sweeps))
+    else:
+        sweep_combinations = itertools.product(*(values for _, values in sweeps))
 
     for combination in sweep_combinations:
         settings = deepcopy(defaults)
@@ -392,7 +406,10 @@ def _create_parser():
         action="append",
         default=[],
         metavar="CALL.PARAM=JSON",
-        help="Set one argument value; may be repeated. Supports * in CALL.",
+        help=(
+            "Set one argument value; may be repeated. Supports * in CALL, and "
+            "several patterns separated by commas."
+        ),
     )
     create.add_argument(
         "--sweep",
@@ -400,7 +417,19 @@ def _create_parser():
         action="append",
         default=[],
         metavar="CALL.PARAM=[JSON,...]",
-        help="Create a sweep over a non-empty JSON array; may be repeated.",
+        help=(
+            "Create a sweep over a non-empty JSON array; may be repeated. CALL may "
+            "list several patterns separated by commas. Sweeps are combined in "
+            "every combination, unless --zip is given."
+        ),
+    )
+    create.add_argument(
+        "--zip",
+        action="store_true",
+        help=(
+            "Pair the --sweep values position by position (all sweeps must have "
+            "the same number of values), giving one row per position."
+        ),
     )
     create.add_argument(
         "--validate-metadata",
@@ -450,7 +479,7 @@ def main(argv=None):
     output_path = output_path.resolve()
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    rows = list(_configuration_rows(defaults, constants, sweeps))
+    rows = list(_configuration_rows(defaults, constants, sweeps, zipped=args.zip))
     if args.validate_metadata:
         for settings in rows:
             _validate_metadata(settings, dataset_urls)
