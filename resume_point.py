@@ -66,21 +66,34 @@ def _consistent(run_rows, call_parameters):
     return True
 
 
-def _match_runs(runs, api_parameters):
-    """Config row index for each run, assuming rows are run in order and a
-    fresh invocation of the runner starts again from the first row."""
+def _expected_for_row(known, api_parameters, row):
+    """The calls a config row should produce. A call another row configures
+    but this row leaves out (e.g. cells commented out for that row) isn't
+    expected."""
+    if row is None:
+        return known
+    configured = api_parameters[row]
+    elsewhere = set().union(*(set(p) for p in api_parameters))
+    return {k: c for k, c in known.items() if k in configured or k not in elsewhere}
+
+
+def _match_runs(runs, api_parameters, known):
+    """Config row index, verdict and info for each run, assuming rows are run
+    in order and a fresh invocation of the runner starts again from the first
+    row."""
     matches, next_row = [], 0
-    for run, complete in runs:
+    for run, counts in runs:
         candidates = [
             index for index, parameters in enumerate(api_parameters)
             if _consistent(run, parameters)
         ]
-        if not candidates:
-            matches.append(None)
-            continue
-        row = next_row if next_row in candidates else min(candidates)
-        matches.append(row)
-        next_row = row + 1 if complete else row
+        row = None
+        if candidates:
+            row = next_row if next_row in candidates else min(candidates)
+        verdict, info = vp._judge_run(counts, _expected_for_row(known, api_parameters, row))
+        matches.append((row, verdict, info))
+        if row is not None:
+            next_row = row + 1 if verdict == "complete" else row
     return matches
 
 
@@ -117,34 +130,38 @@ def match_results(config_path, results_path, notebook=None):
     expected = vp._ExpectedCalls(notebook).counts
     known = {k: c for k, c in expected.items() if c is not None}
 
-    anchors = sorted((k for k, c in known.items() if c == 1), key=vp._call_order)
-    runs, current = [], []
+    # A new run starts when the calls go back to an earlier cell, or a call
+    # repeats more often than one run makes it (so runs that skip the first
+    # cells still split).
+    runs, current, seen = [], [], collections.Counter()
     for row in results:
         key = row["values"].get("call_key")
         if key not in known:
             continue
-        if anchors and key == anchors[0] and current:
+        if current and (
+            vp._call_order(key) < vp._call_order(current[-1]["values"]["call_key"])
+            or seen[key] >= known[key]
+        ):
             runs.append(current)
-            current = []
+            current, seen = [], collections.Counter()
         current.append(row)
+        seen[key] += 1
     if current:
         runs.append(current)
 
     judged = []
     for rows in runs:
-        verdict, info = vp._judge_run(
-            collections.Counter(r["values"].get("call_key") for r in rows), known
-        )
         used = [
             (r["values"].get("call_key"), r["parameters"] if isinstance(r["parameters"], dict) else {})
             for r in rows
         ]
-        judged.append({"rows": rows, "used": used, "verdict": verdict, "info": info})
+        counts = collections.Counter(r["values"].get("call_key") for r in rows)
+        judged.append({"rows": rows, "used": used, "counts": counts})
     matches = _match_runs(
-        [(run["used"], run["verdict"] == "complete") for run in judged], api_parameters
+        [(run["used"], run["counts"]) for run in judged], api_parameters, known
     )
-    for run, row in zip(judged, matches):
-        run["config_row"] = row
+    for run, (row, verdict, info) in zip(judged, matches):
+        run.update(config_row=row, verdict=verdict, info=info)
     return {
         "notebook": notebook,
         "fieldnames": fieldnames,

@@ -71,8 +71,9 @@ def _short(value):
 
 def _factors(api_parameters):
     """The parameters whose values differ between config rows, grouped so a
-    parameter swept across several calls with the same values is one factor."""
-    keys = sorted(set().union(*(set(p) for p in api_parameters)), key=vp._call_order)
+    parameter swept across several calls with the same values is one factor.
+    Calls some rows leave out (not run for those rows) aren't factors."""
+    keys = sorted(set.intersection(*(set(p) for p in api_parameters)), key=vp._call_order)
     groups = collections.OrderedDict()
     for key in keys:
         names = list(dict.fromkeys(n for p in api_parameters for n in p.get(key, {})))
